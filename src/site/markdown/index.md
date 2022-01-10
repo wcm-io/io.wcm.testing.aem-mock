@@ -55,6 +55,11 @@ The mock implementation supports:
 * [adaptTo() 2014 Lightning Talk: Mock AEM & Co for Unit Tests][adaptto-talk-2014-mock-aem-unit-tests]
 
 
+### GitHub Repository
+
+Sources: https://github.com/wcm-io/io.wcm.testing.aem-mock
+
+
 [osgi-mock]: https://sling.apache.org/documentation/development/osgi-mock.html
 [jcr-mock]: https://sling.apache.org/documentation/development/jcr-mock.html
 [sling-mock]: https://sling.apache.org/documentation/development/sling-mock.html

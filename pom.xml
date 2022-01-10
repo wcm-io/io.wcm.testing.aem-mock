@@ -38,9 +38,9 @@
   <url>${site.url}/${site.url.module.prefix}/</url>
 
   <scm>
-    <connection>scm:git:https://github.com/wcm-io/wcm-io-testing.git</connection>
-    <developerConnection>scm:git:https://github.com/wcm-io/wcm-io-testing.git</developerConnection>
-    <url>https://github.com/wcm-io/wcm-io-testing</url>
+    <connection>scm:git:https://github.com/wcm-io/io.wcm.testing.aem-mock.git</connection>
+    <developerConnection>scm:git:https://github.com/wcm-io/io.wcm.testing.aem-mock.git</developerConnection>
+    <url>https://github.com/wcm-io/io.wcm.testing.aem-mock</url>
     <tag>HEAD</tag>
   </scm>
 
@@ -69,13 +69,48 @@
         </configuration>
       </plugin>
 
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <configuration>
+          <topSiteURL>${site.deploy.url}</topSiteURL>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-scm-publish-plugin</artifactId>
+        <configuration>
+          <subDirectory>${site.url.module.prefix}</subDirectory>
+          <skipDeletedFiles>true</skipDeletedFiles>
+        </configuration>
+      </plugin>
+
     </plugins>
+    <pluginManagement>
+      <plugins>
+      
+        <plugin>
+          <groupId>com.amashchenko.maven.plugin</groupId>
+          <artifactId>gitflow-maven-plugin</artifactId>
+          <configuration>
+            <!-- Do not prefix release numbers with artifactId - GIT contains only one released artifact -->
+            <gitFlowConfig combine.self="override">
+              <releaseBranchPrefix>release/</releaseBranchPrefix>
+              <hotfixBranchPrefix>hotfix/</hotfixBranchPrefix>
+              <versionTagPrefix />
+            </gitFlowConfig>
+          </configuration>
+        </plugin>
+
+      </plugins>
+    </pluginManagement>
   </build>
 
   <distributionManagement>
     <site>
       <id>${site.deploy.id}</id>
-      <url>${site.deploy.url}/${site.url.module.prefix}</url>
+      <url>${site.deploy.url}</url>
     </site>
   </distributionManagement>
 
