@@ -113,10 +113,10 @@ public final class MockTagManager implements TagManager {
     if (defaultNamespace != null) {
       return;
     }
-    Map<String, Object> etcProperties = new HashMap<String, Object>();
+    Map<String, Object> etcProperties = new HashMap<>();
     etcProperties.put(JcrConstants.JCR_PRIMARYTYPE, "sling:Folder");
 
-    Map<String, Object> tagsProperties = new HashMap<String, Object>();
+    Map<String, Object> tagsProperties = new HashMap<>();
     tagsProperties.put(JcrConstants.JCR_PRIMARYTYPE, "sling:Folder");
     tagsProperties.put(JcrConstants.JCR_TITLE, "Tags");
     // locale strings that are recognized languages in child tags

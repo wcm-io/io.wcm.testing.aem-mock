@@ -19,21 +19,8 @@
  */
 package io.wcm.testing.mock.aem;
 
-import com.day.cq.commons.Filter;
-import com.day.cq.commons.LanguageUtil;
-import com.day.cq.commons.jcr.JcrConstants;
-import com.day.cq.tagging.Tag;
-import com.day.cq.tagging.TagConstants;
-import com.day.cq.tagging.TagManager;
-import com.day.cq.wcm.api.NameConstants;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.jackrabbit.util.ISO9075;
-import org.apache.sling.api.adapter.SlingAdaptable;
-import org.apache.sling.api.resource.Resource;
-import org.apache.sling.api.resource.ValueMap;
-import org.jetbrains.annotations.NotNull;
+import static com.day.cq.tagging.TagConstants.NAMESPACE_DELIMITER;
+import static com.day.cq.tagging.TagConstants.SEPARATOR;
 
 import java.util.Calendar;
 import java.util.Collection;
@@ -45,8 +32,23 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.function.BinaryOperator;
 
-import static com.day.cq.tagging.TagConstants.NAMESPACE_DELIMITER;
-import static com.day.cq.tagging.TagConstants.SEPARATOR;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.jackrabbit.util.ISO9075;
+import org.apache.sling.api.adapter.SlingAdaptable;
+import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ValueMap;
+import org.jetbrains.annotations.NotNull;
+
+import com.day.cq.commons.Filter;
+import com.day.cq.commons.LanguageUtil;
+import com.day.cq.commons.jcr.JcrConstants;
+import com.day.cq.tagging.Tag;
+import com.day.cq.tagging.TagConstants;
+import com.day.cq.tagging.TagManager;
+import com.day.cq.wcm.api.NameConstants;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 
 /**
@@ -186,7 +188,7 @@ class MockTag extends SlingAdaptable implements Tag, Comparable<Tag> {
   @Override
   public Map<Locale, String> getLocalizedTitles() {
     ValueMap properties = resource.getValueMap();
-    Map<Locale, String> localeTitles = new HashMap<Locale, String>();
+    Map<Locale, String> localeTitles = new HashMap<>();
     for (Map.Entry<String, Object> propEntry : properties.entrySet()) {
       String propName = propEntry.getKey();
       if (!propName.startsWith(JcrConstants.JCR_TITLE + ".")) {
@@ -283,8 +285,8 @@ class MockTag extends SlingAdaptable implements Tag, Comparable<Tag> {
   }
 
   private Iterator<Tag> listChildren(Filter<Tag> filter, boolean recurse) {
-    Collection<Tag> tags = new LinkedList<Tag>();
-    Queue<Resource> resources = new LinkedList<Resource>();
+    Collection<Tag> tags = new LinkedList<>();
+    Queue<Resource> resources = new LinkedList<>();
     CollectionUtils.addAll(resources, resource.listChildren());
 
     while (!resources.isEmpty()) {

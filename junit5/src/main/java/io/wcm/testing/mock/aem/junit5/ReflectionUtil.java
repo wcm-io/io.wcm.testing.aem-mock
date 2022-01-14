@@ -101,9 +101,7 @@ final class ReflectionUtil {
 
   private static boolean hasParameter(Method method, @NotNull Class<?> parameterType) {
     return Arrays.stream(method.getParameters())
-        .filter(item -> parameterType.isAssignableFrom(item.getType()))
-        .findFirst()
-        .isPresent();
+        .anyMatch(item -> parameterType.isAssignableFrom(item.getType()));
   }
 
 }

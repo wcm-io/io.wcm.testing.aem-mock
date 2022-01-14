@@ -111,12 +111,12 @@ class MockPageManager extends SlingAdaptable implements PageManager {
     Resource pageResource;
     try {
       // page node
-      Map<String, Object> props = new HashMap<String, Object>();
+      Map<String, Object> props = new HashMap<>();
       props.put(JCR_PRIMARYTYPE, NT_PAGE);
       pageResource = this.resourceResolver.create(parentResource, childResourceName, props);
 
       // page content node
-      props = new HashMap<String, Object>();
+      props = new HashMap<>();
       props.put(JCR_PRIMARYTYPE, "cq:PageContent");
       props.put(JCR_TITLE, title);
       props.put(PN_TEMPLATE, template);
