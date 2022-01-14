@@ -194,7 +194,7 @@ public final class MockTagManager implements TagManager {
     }
 
     // otherwise it needs to be made
-    Map<String, Object> tagProps = new HashMap<String, Object>();
+    Map<String, Object> tagProps = new HashMap<>();
     tagProps.put(JcrConstants.JCR_PRIMARYTYPE, TagConstants.NT_TAG);
     tagProps.put(ResourceResolver.PROPERTY_RESOURCE_TYPE, TAG_RESOURCE_TYPE);
     if (title != null) {
@@ -259,10 +259,10 @@ public final class MockTagManager implements TagManager {
   public RangeIterator<Resource> find(String basePath, String[] tagIDs, boolean oneMatchIsEnough) {
     Resource base = resourceResolver.getResource(basePath);
     if (base == null) {
-      return new CollectionRangeIterator<Resource>(Collections.<Resource>emptyList());
+      return new CollectionRangeIterator<>(Collections.<Resource>emptyList());
     }
 
-    Collection<String> tagPaths = new HashSet<String>(tagIDs.length);
+    Collection<String> tagPaths = new HashSet<>(tagIDs.length);
     for (String tagID : tagIDs) {
       Tag tag = resolve(tagID);
       // clause - if tag does not exist, should return null.
@@ -275,10 +275,10 @@ public final class MockTagManager implements TagManager {
       }
     }
 
-    Queue<Resource> searchResources = new LinkedList<Resource>();
+    Queue<Resource> searchResources = new LinkedList<>();
     searchResources.add(base);
 
-    Collection<Resource> matchedResources = new ArrayList<Resource>();
+    Collection<Resource> matchedResources = new ArrayList<>();
 
     while (!searchResources.isEmpty()) {
       Resource resource = searchResources.poll();
@@ -291,7 +291,7 @@ public final class MockTagManager implements TagManager {
         continue;
       }
 
-      List<String> resourceTagPaths = new ArrayList<String>(resourceTags.length);
+      List<String> resourceTagPaths = new ArrayList<>(resourceTags.length);
       try {
         for (String resourceTag : resourceTags) {
           resourceTagPaths.add(getPathFromID(resourceTag));
@@ -338,7 +338,7 @@ public final class MockTagManager implements TagManager {
       }
     }
 
-    return new CollectionRangeIterator<Resource>(matchedResources);
+    return new CollectionRangeIterator<>(matchedResources);
   }
 
   /**
@@ -353,7 +353,7 @@ public final class MockTagManager implements TagManager {
   }
 
   private List<Tag> getNamespacesList() {
-    List<Tag> namespaces = new ArrayList<Tag>();
+    List<Tag> namespaces = new ArrayList<>();
     Resource tagRoot = resourceResolver.getResource(getTagRootPath());
     if (tagRoot != null) {
       for (Iterator<Resource> resources = tagRoot.listChildren(); resources.hasNext();) {
@@ -398,8 +398,8 @@ public final class MockTagManager implements TagManager {
     if (resource == null) {
       return Collections.emptyList();
     }
-    Set<Tag> treeTags = new HashSet<Tag>();
-    Queue<Resource> searchResources = new LinkedList<Resource>();
+    Set<Tag> treeTags = new HashSet<>();
+    Queue<Resource> searchResources = new LinkedList<>();
     searchResources.add(resource);
 
     while (!searchResources.isEmpty()) {
