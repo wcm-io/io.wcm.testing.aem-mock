@@ -25,6 +25,9 @@
 
     <release version="5.0.0" date="not released">
       <action type="update" dev="sseifert">
+        Update to latest ResourceResolver Mock.
+      </action>
+      <action type="update" dev="sseifert">
         Switch to AEM 6.5 as minimum version.
       </action>
     </release>
