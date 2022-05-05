@@ -68,12 +68,36 @@
     <sling-mock-oak.version>4.0.0-1.62.0</sling-mock-oak.version>
 
     <!-- Loggin in unit tests (testing dependency only) -->
-    <logging-logback.version>1.0.0</logging-logback.version>
+    <logging-mock.version>2.0.0</logging-mock.version>
 
     <!-- Enable reproducible builds -->
     <project.build.outputTimestamp>2024-12-16T12:22:57Z</project.build.outputTimestamp>
 
+    <!-- Test against this AEMaaCS version -->
+    <aem-cloud-dependencies.version>2024.11.18751.20241128T090041Z-241100.0000</aem-cloud-dependencies.version>
+
   </properties>
+
+  <dependencyManagement>
+    <dependencies>
+
+      <dependency>
+        <groupId>io.wcm.maven</groupId>
+        <artifactId>io.wcm.maven.aem-cloud-dependencies-mixin-jsonp11</artifactId>
+        <version>1.0.0</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.wcm.maven</groupId>
+        <artifactId>io.wcm.maven.aem-cloud-dependencies</artifactId>
+        <version>${aem-cloud-dependencies.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+    </dependencies>
+  </dependencyManagement>
 
   <build>
     <plugins>
