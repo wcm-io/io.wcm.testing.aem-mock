@@ -70,7 +70,7 @@
     <!-- (other versions of this APIs use other artifact ids) -->
     <dependency>
       <groupId>com.adobe.aem</groupId>
-      <artifactId>uber-jar</artifactId>
+      <artifactId>aem-sdk-api</artifactId>
       <scope>provided</scope>
     </dependency>
 
@@ -107,9 +107,9 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>io.wcm</groupId>
-      <artifactId>io.wcm.testing.logging.logback</artifactId>
-      <version>${logging-logback.version}</version>
+      <groupId>org.apache.sling</groupId>
+      <artifactId>org.apache.sling.testing.logging-mock</artifactId>
+      <version>${logging-mock.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
