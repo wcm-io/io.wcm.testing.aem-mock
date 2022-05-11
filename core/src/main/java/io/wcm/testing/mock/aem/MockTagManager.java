@@ -19,7 +19,8 @@
  */
 package io.wcm.testing.mock.aem;
 
-import java.lang.reflect.Field;
+import static com.day.cq.tagging.TagConstants.TAG_ROOT_PATH;
+
 import java.security.AccessControlException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -67,10 +68,6 @@ public final class MockTagManager implements TagManager {
   /** resource type for created tags */
   private static final String TAG_RESOURCE_TYPE = "cq/tagging/components/tag";
 
-  /** Root location in the JCR where tags lie */
-  private static final String TAG_ROOT_PATH = detectTagRootPath();
-  private static final String LEGACY_TAG_ROOT_PATH = "/etc/tags";
-
   private final ResourceResolver resourceResolver;
   private final Logger log;
 
@@ -87,24 +84,6 @@ public final class MockTagManager implements TagManager {
    */
   public static String getTagRootPath() {
     return TAG_ROOT_PATH;
-  }
-
-  /**
-   * Get tag root path. If AEM 6.4+ dependency is present it returns the root path from TagConstants class
-   * (/content/cq:tags).
-   * Otherwise the legacy root paths used by 6.4 and below (/etc/tags).
-   * @return Tag root path
-   */
-  private static String detectTagRootPath() {
-    try {
-      Class tagConstantsClass = MockTagManager.class.getClassLoader().loadClass("com.day.cq.tagging.TagConstants");
-      Field field = tagConstantsClass.getField("TAG_ROOT_PATH");
-      return (String)field.get(null);
-    }
-    catch (ClassNotFoundException | NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
-      // ignore - fallback to legacy path
-      return LEGACY_TAG_ROOT_PATH;
-    }
   }
 
   private void initTagsStructure() {
