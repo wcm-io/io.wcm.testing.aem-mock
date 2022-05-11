@@ -39,6 +39,7 @@ The mock implementation supports:
 
 |AEM Mock version |AEM version supported |JUnit version supported
 |-----------------|----------------------|------------------------
+|AEM Mock 5.x     |AEM 6.5.7+, AEMaaCS   |JUnit 4, JUnit 5
 |AEM Mock 4.x     |AEM 6.4+, AEMaaCS     |JUnit 4, JUnit 5
 |AEM Mock 3.x     |AEM 6.3+              |JUnit 4, JUnit 5
 |AEM Mock 2.x     |AEM 6.2+              |JUnit 4, JUnit 5
@@ -52,6 +53,11 @@ The mock implementation supports:
 * [adaptTo() 2018 Talk: JUnit 5 and Sling/AEM Mocks][adaptto-talk-2018-junit5-sling-aem-mocks]
 * [adaptTo() 2016 Talk: Unit Testing with Sling & AEM Mocks][adaptto-talk-2016-unittesting-sling-aem-mocks]
 * [adaptTo() 2014 Lightning Talk: Mock AEM & Co for Unit Tests][adaptto-talk-2014-mock-aem-unit-tests]
+
+
+### GitHub Repository
+
+Sources: https://github.com/wcm-io/io.wcm.testing.aem-mock
 
 
 [osgi-mock]: https://sling.apache.org/documentation/development/osgi-mock.html
