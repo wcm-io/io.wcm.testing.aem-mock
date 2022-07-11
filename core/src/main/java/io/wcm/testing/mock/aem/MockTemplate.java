@@ -122,6 +122,11 @@ class MockTemplate extends ResourceWrapper implements Template {
   }
 
   @Override
+  public ValueMap getProperties() {
+    return properties;
+  }
+
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof MockTemplate)) {
       return false;
@@ -180,11 +185,6 @@ class MockTemplate extends ResourceWrapper implements Template {
 
   @Override
   public String getPageTypePath() {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public ValueMap getProperties() {
     throw new UnsupportedOperationException();
   }
 

@@ -25,6 +25,9 @@
 
     <release version="5.0.2" date="not released">
       <action type="update" dev="sseifert">
+        Implement MockTemplate.getProperties method.
+      </action>
+      <action type="update" dev="sseifert">
         Update to latest Sling Mock.
       </action>
     </release>
