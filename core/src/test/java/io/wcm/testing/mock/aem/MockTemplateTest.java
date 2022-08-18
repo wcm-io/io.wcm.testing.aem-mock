@@ -74,4 +74,17 @@ public class MockTemplateTest {
     assertNotEquals(template1, template3);
   }
 
+  @Test
+  public void testEditableTemplateProperties() {
+    context.load().folderFileVaultXml("src/test/resources/folder-content-sample/conf-filevault", "/conf/myproject1");
+    Resource resource = context.resourceResolver().getResource("/conf/myproject1/settings/wcm/templates/contentpage");
+    this.template = resource.adaptTo(Template.class);
+
+    assertEquals("/conf/myproject1/settings/wcm/templates/contentpage", this.template.getPath());
+    assertEquals("contentpage", this.template.getName());
+    assertEquals("myproject1 Content", this.template.getTitle());
+    assertEquals((Long)10L, this.template.getRanking());
+    assertEquals((Integer)10, this.template.getProperties().get("ranking", 0));
+  }
+
 }

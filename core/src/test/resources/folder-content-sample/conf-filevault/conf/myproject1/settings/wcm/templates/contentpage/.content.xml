@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:primaryType="cq:Template">
+    <jcr:content
+        cq:templateType="/conf/myproject1/settings/wcm/template-types/content"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="myproject1 Content"
+        allowedPaths="^/content/myproject1/.+$"
+        ranking="{Long}10"
+        status="enabled"
+        jcr:mixinTypes="[cq:ReplicationStatus]"
+        cq:lastReplicated="{Date}2022-08-18T00:00:00.000+02:00"
+        cq:lastReplicationAction="Activate"/>
+</jcr:root>
