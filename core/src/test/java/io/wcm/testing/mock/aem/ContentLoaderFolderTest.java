@@ -26,6 +26,7 @@ import static org.junit.Assert.assertNotNull;
 import java.io.File;
 
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.testing.mock.sling.ResourceResolverType;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -55,6 +56,11 @@ public class ContentLoaderFolderTest {
   @Test
   @SuppressWarnings("null")
   public void testAppsJSON() {
+    if (context.resourceResolverType() == ResourceResolverType.RESOURCERESOLVER_MOCK) {
+      // skip - FsResourceProvider not supported
+      return;
+    }
+
     context.load().folderJson(new File(FOLDER_CONTENT_SAMPLE, "apps-json"), "/apps/myproject1");
 
     Resource templateResource = context.resourceResolver().getResource(STRUCTURE_ELEMENT_TEMPLATE_PATH);
@@ -73,6 +79,11 @@ public class ContentLoaderFolderTest {
   @Test
   @SuppressWarnings("null")
   public void testAppsFileVault() {
+    if (context.resourceResolverType() == ResourceResolverType.RESOURCERESOLVER_MOCK) {
+      // skip - FsResourceProvider not supported
+      return;
+    }
+
     context.load().folderFileVaultXml(new File(FOLDER_CONTENT_SAMPLE, "apps-filevault"), "/apps/myproject1");
 
     Resource templateResource = context.resourceResolver().getResource(STRUCTURE_ELEMENT_TEMPLATE_PATH);
@@ -90,6 +101,11 @@ public class ContentLoaderFolderTest {
 
   @Test
   public void testContentConfFileVault() {
+    if (context.resourceResolverType() == ResourceResolverType.RESOURCERESOLVER_MOCK) {
+      // skip - FsResourceProvider not supported
+      return;
+    }
+
     context.load().folderFileVaultXml(new File(FOLDER_CONTENT_SAMPLE, "conf-filevault"), "/conf/myproject1");
     context.load().folderFileVaultXml(new File(FOLDER_CONTENT_SAMPLE, "content-filevault"), "/content/myproject1");
 
@@ -105,6 +121,11 @@ public class ContentLoaderFolderTest {
   @Test
   @SuppressWarnings("null")
   public void testAsset() {
+    if (context.resourceResolverType() == ResourceResolverType.RESOURCERESOLVER_MOCK) {
+      // skip - FsResourceProvider not supported
+      return;
+    }
+
     context.load().folderFileVaultXml(new File(FOLDER_CONTENT_SAMPLE, "content-filevault"), "/content/dam/myproject1");
 
     Resource assetResource = context.resourceResolver().getResource("/content/dam/myproject1/sample.jpg");

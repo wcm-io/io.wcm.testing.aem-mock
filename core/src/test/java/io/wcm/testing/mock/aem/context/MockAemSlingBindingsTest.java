@@ -79,7 +79,8 @@ public class MockAemSlingBindingsTest {
     assertNotNull(model.getResource());
     assertNotNull(model.getRequest());
     assertNotNull(model.getResponse());
-    if (context.resourceResolverType() == ResourceResolverType.RESOURCERESOLVER_MOCK) {
+    if (context.resourceResolverType() == ResourceResolverType.RESOURCERESOLVER_MOCK
+        || context.resourceResolverType() == ResourceResolverType.RESOURCEPROVIDER_MOCK) {
       assertNull(model.getCurrentNode());
       assertNull(model.getcurrentSession());
     }
@@ -147,7 +148,8 @@ public class MockAemSlingBindingsTest {
     assertNotNull(model.getResource());
     assertNotNull(model.getRequest());
     assertNotNull(model.getResponse());
-    if (context.resourceResolverType() == ResourceResolverType.RESOURCERESOLVER_MOCK) {
+    if (context.resourceResolverType() == ResourceResolverType.RESOURCERESOLVER_MOCK
+        || context.resourceResolverType() == ResourceResolverType.RESOURCEPROVIDER_MOCK) {
       assertNull(model.getCurrentNode());
       assertNull(model.getcurrentSession());
     }
@@ -183,7 +185,8 @@ public class MockAemSlingBindingsTest {
     assertNotNull(model.getResource());
     assertNotNull(model.getRequest());
     assertNotNull(model.getResponse());
-    if (context.resourceResolverType() == ResourceResolverType.RESOURCERESOLVER_MOCK) {
+    if (context.resourceResolverType() == ResourceResolverType.RESOURCERESOLVER_MOCK
+        || context.resourceResolverType() == ResourceResolverType.RESOURCEPROVIDER_MOCK) {
       assertNull(model.getCurrentNode());
       assertNull(model.getcurrentSession());
     }

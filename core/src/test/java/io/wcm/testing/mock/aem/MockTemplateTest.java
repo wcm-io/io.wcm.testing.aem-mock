@@ -25,6 +25,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.testing.mock.sling.ResourceResolverType;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -76,6 +77,11 @@ public class MockTemplateTest {
 
   @Test
   public void testEditableTemplateProperties() {
+    if (context.resourceResolverType() == ResourceResolverType.RESOURCERESOLVER_MOCK) {
+      // skip - FsResourceProvider not supported
+      return;
+    }
+
     context.load().folderFileVaultXml("src/test/resources/folder-content-sample/conf-filevault", "/conf/myproject1");
     Resource resource = context.resourceResolver().getResource("/conf/myproject1/settings/wcm/templates/contentpage");
     this.template = resource.adaptTo(Template.class);

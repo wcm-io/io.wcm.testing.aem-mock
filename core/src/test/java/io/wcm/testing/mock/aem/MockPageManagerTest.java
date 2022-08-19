@@ -285,7 +285,8 @@ public class MockPageManagerTest {
   @Test
   public void testTouch() throws WCMException, PersistenceException {
     // RESOURCERESOLVER_MOCK doesn't support JCR API - skip test
-    if (ResourceResolverType.RESOURCERESOLVER_MOCK.equals(context.resourceResolverType())) {
+    if (context.resourceResolverType() == ResourceResolverType.RESOURCERESOLVER_MOCK
+        || context.resourceResolverType() == ResourceResolverType.RESOURCEPROVIDER_MOCK) {
       return;
     }
     // set custom page properties
