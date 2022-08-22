@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:exif="http://ns.adobe.com/exif/1.0/" xmlns:photoshop="http://ns.adobe.com/photoshop/1.0/" xmlns:tiff="http://ns.adobe.com/tiff/1.0/" xmlns:xmp="http://ns.adobe.com/xap/1.0/" xmlns:xmpMM="http://ns.adobe.com/xap/1.0/mm/" xmlns:stRef="http://ns.adobe.com/xap/1.0/sType/ResourceRef#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dam="http://www.day.com/dam/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="dam:Asset">
+    <jcr:content jcr:primaryType="dam:AssetContent">
+        <metadata
+            dam:Bitsperpixel="{Long}24"
+            dam:Fileformat="JPEG"
+            dam:MIMEtype="image/jpeg"
+            dam:Numberofimages="{Long}1"
+            dam:Numberoftextualcomments="{Long}0"
+            dam:Physicalheightindpi="{Long}72"
+            dam:Physicalheightininches="{Decimal}0.6944444179534912"
+            dam:Physicalwidthindpi="{Long}72"
+            dam:Physicalwidthininches="{Decimal}1.3888888359069824"
+            dam:Progressive="no"
+            dam:size="{Long}16175"
+            dc:format="image/jpeg"
+            exif:ColorSpace="{Long}65535"
+            exif:PixelXDimension="{Long}100"
+            exif:PixelYDimension="{Long}50"
+            jcr:primaryType="nt:unstructured"
+            photoshop:ColorMode="{Long}3"
+            tiff:ImageLength="{Long}50"
+            tiff:ImageWidth="{Long}100"
+            tiff:Orientation="{Long}1"
+            tiff:ResolutionUnit="{Long}2"
+            tiff:XResolution="720000/10000"
+            tiff:YResolution="720000/10000"
+            xmp:CreateDate="{Date}2019-08-05T15:00:49.000+02:00"
+            xmp:CreatorTool="Adobe Photoshop CC 2019 (Windows)"
+            xmp:MetadataDate="{Date}2019-08-05T15:01:57.000+02:00"
+            xmp:ModifyDate="{Date}2019-08-05T15:01:57.000+02:00"
+            xmpMM:DocumentID="adobe:docid:photoshop:17c616de-1726-df47-855d-5a90fc21c281"
+            xmpMM:InstanceID="xmp.iid:c2466eae-9c44-1547-b9ba-8ceb1f554b39"
+            xmpMM:OriginalDocumentID="xmp.did:038ffe90-719d-7b42-ac20-ea509665ddde">
+            <photoshop:TextLayers
+                jcr:primaryType="nt:unstructured"
+                xmpArraySize="{Long}1"
+                xmpArrayType="rdf:Bag"
+                xmpNodeType="xmpArray">
+                <_x0031_
+                    jcr:primaryType="nt:unstructured"
+                    photoshop:LayerName="JPEG"
+                    photoshop:LayerText="JPEG"
+                    xmpNodeType="xmpStruct"/>
+            </photoshop:TextLayers>
+            <xmpMM:DerivedFrom
+                jcr:primaryType="nt:unstructured"
+                stRef:documentID="xmp.did:038ffe90-719d-7b42-ac20-ea509665ddde"
+                stRef:instanceID="xmp.iid:92dacdbd-5baa-d942-820b-e137a0196bf9"
+                stRef:originalDocumentID="xmp.did:038ffe90-719d-7b42-ac20-ea509665ddde"
+                xmpNodeType="xmpStruct"/>
+        </metadata>
+        <related jcr:primaryType="nt:unstructured"/>
+        <renditionsMetadata jcr:primaryType="nt:unstructured">
+            <cq5dam.thumbnail.48.48.png
+                jcr:primaryType="nt:unstructured"
+                imageHeight="{Long}24"
+                imageWidth="{Long}48"/>
+            <cq5dam.thumbnail.319.319.png
+                jcr:primaryType="nt:unstructured"
+                imageHeight="{Long}50"
+                imageWidth="{Long}100"/>
+            <cq5dam.thumbnail.140.100.png
+                jcr:primaryType="nt:unstructured"
+                imageHeight="{Long}50"
+                imageWidth="{Long}100"/>
+            <cq5dam.web.1280.1280.jpeg
+                jcr:primaryType="nt:unstructured"
+                imageHeight="{Long}50"
+                imageWidth="{Long}100"/>
+        </renditionsMetadata>
+    </jcr:content>
+</jcr:root>

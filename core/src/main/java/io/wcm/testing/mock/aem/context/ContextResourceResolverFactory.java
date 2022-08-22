@@ -64,6 +64,9 @@ final class ContextResourceResolverFactory {
         case RESOURCERESOLVER_MOCK:
           initializeResourceResolverMock(factory);
           break;
+        case RESOURCEPROVIDER_MOCK:
+          initializeResourceProviderMock(factory);
+          break;
         case NONE:
           initializeResourceResolverNone(factory);
           break;
@@ -98,6 +101,11 @@ final class ContextResourceResolverFactory {
 
   @SuppressWarnings("unused")
   private static void initializeResourceResolverMock(ResourceResolverFactory factory) {
+    // nothing to do
+  }
+
+  @SuppressWarnings("unused")
+  private static void initializeResourceProviderMock(ResourceResolverFactory factory) {
     // nothing to do
   }
 

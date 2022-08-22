@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:rep="internal"
+    jcr:mixinTypes="[rep:AccessControllable]"
+    jcr:primaryType="cq:Page">
+    <rep:policy/>
+    <myproject1 jcr:primaryType="nt:unstructured">
+        <core jcr:primaryType="nt:unstructured">
+            <components jcr:primaryType="nt:unstructured">
+                <container jcr:primaryType="nt:unstructured">
+                    <container jcr:primaryType="nt:unstructured">
+                        <root-container
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Root Container"
+                            sling:resourceType="wcm/core/components/policy/policy"
+                            components="[/apps/myproject1/core/components/container/container,group:myproject1 Templating]">
+                            <jcr:content
+                                jcr:primaryType="nt:unstructured"
+                                jcr:mixinTypes="[cq:ReplicationStatus]"
+                                cq:lastReplicated="{Date}2022-08-18T00:00:00.000+02:00"
+                                cq:lastReplicationAction="Activate"/>
+                        </root-container>
+                        <experience-fragment
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Experience Fragment"
+                            sling:resourceType="wcm/core/components/policy/policy"
+                            components="[group:myproject1 Container,group:myproject1 Content]">
+                            <jcr:content
+                                jcr:primaryType="nt:unstructured"
+                                jcr:mixinTypes="[cq:ReplicationStatus]"
+                                cq:lastReplicated="{Date}2022-08-18T00:00:00.000+02:00"
+                                cq:lastReplicationAction="Activate"/>
+                            <cq:authoring jcr:primaryType="nt:unstructured">
+                                <assetToComponentMapping jcr:primaryType="nt:unstructured">
+                                    <image
+                                        jcr:primaryType="nt:unstructured"
+                                        assetGroup="media"
+                                        assetMimetype="[image/gif,image/jpeg,image/png,image/tiff,image/svg+xml]"
+                                        droptarget="image"
+                                        resourceType="myproject1/core/components/content/image"/>
+                                </assetToComponentMapping>
+                            </cq:authoring>
+                        </experience-fragment>
+                        <content-container
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Content Container"
+                            sling:resourceType="wcm/core/components/policy/policy"
+                            components="[group:myproject1 Container,group:myproject1 Content]">
+                            <jcr:content
+                                jcr:primaryType="nt:unstructured"
+                                jcr:mixinTypes="[cq:ReplicationStatus]"
+                                cq:lastReplicated="{Date}2022-08-18T00:00:00.000+02:00"
+                                cq:lastReplicationAction="Activate"/>
+                            <cq:authoring jcr:primaryType="nt:unstructured">
+                                <assetToComponentMapping jcr:primaryType="nt:unstructured">
+                                    <image
+                                        jcr:primaryType="nt:unstructured"
+                                        assetGroup="media"
+                                        assetMimetype="[image/gif,image/jpeg,image/png,image/tiff,image/svg+xml]"
+                                        droptarget="image"
+                                        resourceType="myproject1/core/components/content/image"/>
+                                </assetToComponentMapping>
+                            </cq:authoring>
+                        </content-container>
+                    </container>
+                </container>
+            </components>
+        </core>
+    </myproject1>
+</jcr:root>

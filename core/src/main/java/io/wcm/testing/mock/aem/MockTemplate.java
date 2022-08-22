@@ -32,6 +32,7 @@ import java.util.Calendar;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ResourceUtil;
 import org.apache.sling.api.resource.ResourceWrapper;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.commons.json.JSONException;
@@ -56,7 +57,12 @@ class MockTemplate extends ResourceWrapper implements Template {
   MockTemplate(@NotNull Resource resource) {
     super(resource);
     this.resource = resource;
-    this.properties = resource.getValueMap();
+    if (hasStructureSupport()) {
+      this.properties = ResourceUtil.getValueMap(resource.getChild(JCR_CONTENT));
+    }
+    else {
+      this.properties = ResourceUtil.getValueMap(resource);
+    }
   }
 
   @Override

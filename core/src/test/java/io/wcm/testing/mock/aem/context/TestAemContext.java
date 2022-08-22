@@ -42,9 +42,10 @@ public final class TestAemContext {
    */
   @SuppressFBWarnings("MS_PKGPROTECT")
   public static final ResourceResolverType[] ALL_TYPES = new @NotNull ResourceResolverType[] {
-    ResourceResolverType.JCR_MOCK,
-    ResourceResolverType.RESOURCERESOLVER_MOCK,
-    ResourceResolverType.JCR_OAK
+      ResourceResolverType.JCR_MOCK,
+      ResourceResolverType.RESOURCERESOLVER_MOCK,
+      ResourceResolverType.RESOURCEPROVIDER_MOCK,
+      ResourceResolverType.JCR_OAK
   };
 
   private TestAemContext() {

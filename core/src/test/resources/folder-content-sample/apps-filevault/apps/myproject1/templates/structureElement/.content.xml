@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:primaryType="cq:Template"
+    jcr:title="myproject1 Structure Element"
+    allowedChildren="[^/apps/myproject1/core/templates/.*,^/conf/myproject1/settings/wcm/templates/.*$]"
+    allowedPaths="^/content/myproject1(/.+)?$"
+    ranking="{Long}100">
+    <jcr:content
+        jcr:primaryType="cq:PageContent"
+        sling:resourceType="myproject1/core/components/admin/page/structureElement"/>
+</jcr:root>
