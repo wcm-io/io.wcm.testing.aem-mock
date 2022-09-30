@@ -20,12 +20,12 @@
 package io.wcm.testing.mock.aem;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.testing.mock.sling.ResourceResolverType;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -61,7 +61,8 @@ public class MockTemplateTest {
     assertNull(this.template.getIconPath());
     assertEquals("/apps/sample/templates/homepage/thumbnail.png", this.template.getThumbnailPath());
     assertEquals((Long)110L, this.template.getRanking());
-    assertNotNull(template.hashCode());
+    assertEquals((Integer)110, this.template.getProperties().get("ranking", 0));
+    assertNotEquals(template.hashCode(), 0);
   }
 
   @Test
@@ -70,8 +71,26 @@ public class MockTemplateTest {
     Template template2 = this.context.resourceResolver().getResource("/apps/sample/templates/homepage").adaptTo(Template.class);
     Template template3 = this.context.resourceResolver().getResource("/apps/sample/templates/contentpage").adaptTo(Template.class);
 
-    assertTrue(template1.equals(template2));
-    assertFalse(template1.equals(template3));
+    assertEquals(template1, template2);
+    assertNotEquals(template1, template3);
+  }
+
+  @Test
+  public void testEditableTemplateProperties() {
+    if (context.resourceResolverType() == ResourceResolverType.RESOURCERESOLVER_MOCK) {
+      // skip - FsResourceProvider not supported
+      return;
+    }
+
+    context.load().folderFileVaultXml("src/test/resources/folder-content-sample/conf-filevault", "/conf/myproject1");
+    Resource resource = context.resourceResolver().getResource("/conf/myproject1/settings/wcm/templates/contentpage");
+    this.template = resource.adaptTo(Template.class);
+
+    assertEquals("/conf/myproject1/settings/wcm/templates/contentpage", this.template.getPath());
+    assertEquals("contentpage", this.template.getName());
+    assertEquals("myproject1 Content", this.template.getTitle());
+    assertEquals((Long)10L, this.template.getRanking());
+    assertEquals((Integer)10, this.template.getProperties().get("ranking", 0));
   }
 
 }

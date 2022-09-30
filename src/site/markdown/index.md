@@ -2,7 +2,7 @@
 
 Mock implementation of selected AEM APIs.
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.wcm/io.wcm.testing.aem-mock/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.wcm/io.wcm.testing.aem-mock)
+[![Maven Central](https://img.shields.io/maven-central/v/io.wcm/io.wcm.testing.aem-mock)](https://repo1.maven.org/maven2/io/wcm/io.wcm.testing.aem-mock/)
 
 
 ### Documentation

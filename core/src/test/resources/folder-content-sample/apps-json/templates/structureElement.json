@@ -1,0 +1,13 @@
+{
+  "jcr:primaryType": "cq:Template",
+  "jcr:title": "myproject1 Structure Element",
+  "ranking": 100,
+
+  "allowedPaths": "^/content/myproject1(/.+)?$",
+  "allowedChildren": ["^/apps/myproject1/core/templates/.*$","^/conf/myproject1/settings/wcm/templates/.*$"],
+
+  "jcr:content": {
+    "jcr:primaryType": "cq:PageContent",
+    "sling:resourceType": "myproject1/components/admin/page/structureElement"
+  }
+}
