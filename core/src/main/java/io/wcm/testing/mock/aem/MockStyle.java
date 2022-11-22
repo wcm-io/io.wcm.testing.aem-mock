@@ -26,11 +26,11 @@ import java.util.Set;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import com.day.cq.wcm.api.designer.Cell;
 import com.day.cq.wcm.api.designer.Design;
 import com.day.cq.wcm.api.designer.Style;
-import com.drew.lang.annotations.Nullable;
 
 /**
  * Mock implementation of {@link Style}.
