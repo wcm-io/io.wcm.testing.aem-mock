@@ -232,6 +232,7 @@
     <dependency>
       <groupId>com.adobe.aem</groupId>
       <artifactId>uber-jar</artifactId>
+      <classifier>apis</classifier>
       <scope>provided</scope>
     </dependency>
     
