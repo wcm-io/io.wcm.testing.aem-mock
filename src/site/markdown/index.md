@@ -49,7 +49,7 @@ The mock implementation supports:
 ### Further Resources
 
 * [adaptTo() 2021 Talk: What's new in AEM Mocks][adaptto-talk-2021-whats-new-in-aem-mocks]
-* [Ask the AEM Community Expert March 2019: Unit Testing with AEM Mocks][atace-03-19-unit-testing-with-aem-mocks] | [Video][atace-03-19-unit-testing-with-aem-mocks-video] | [Slides][atace-03-19-unit-testing-with-aem-mocks-slides]
+* [Ask the AEM Community Expert March 2019: Unit Testing with AEM Mocks][atace-03-19-unit-testing-with-aem-mocks-video] | [Slides][atace-03-19-unit-testing-with-aem-mocks-slides]
 * [adaptTo() 2018 Talk: JUnit 5 and Sling/AEM Mocks][adaptto-talk-2018-junit5-sling-aem-mocks]
 * [adaptTo() 2016 Talk: Unit Testing with Sling & AEM Mocks][adaptto-talk-2016-unittesting-sling-aem-mocks]
 * [adaptTo() 2014 Lightning Talk: Mock AEM & Co for Unit Tests][adaptto-talk-2014-mock-aem-unit-tests]
@@ -68,6 +68,5 @@ Sources: https://github.com/wcm-io/io.wcm.testing.aem-mock
 [adaptto-talk-2018-junit5-sling-aem-mocks]: https://adapt.to/2018/en/schedule/junit-5-and-sling-aem-mocks.html
 [adaptto-talk-2016-unittesting-sling-aem-mocks]: https://adapt.to/2016/en/schedule/unit-testing-with-sling-aem-mocks.html
 [adaptto-talk-2014-mock-aem-unit-tests]: https://adapt.to/2014/en/schedule/lightning-talks.html
-[atace-03-19-unit-testing-with-aem-mocks]: https://helpx.adobe.com/experience-manager/kt/eseminars/ask-the-expert/unit-testing-with-aem-mocks.html
 [atace-03-19-unit-testing-with-aem-mocks-video]: https://youtu.be/1xPzcukvzNk
 [atace-03-19-unit-testing-with-aem-mocks-slides]: slides/190319_AtACE_UnitTestingWithAEMMocks.pdf
