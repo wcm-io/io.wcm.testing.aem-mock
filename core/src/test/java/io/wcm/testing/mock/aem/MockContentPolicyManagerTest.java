@@ -24,6 +24,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import java.util.Map;
+
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.scripting.SlingBindings;
 import org.junit.Before;
@@ -37,7 +39,6 @@ import com.day.cq.wcm.api.designer.Style;
 import com.day.cq.wcm.api.policies.ContentPolicy;
 import com.day.cq.wcm.api.policies.ContentPolicyManager;
 import com.day.cq.wcm.commons.WCMUtils;
-import com.google.common.collect.ImmutableMap;
 
 import io.wcm.testing.mock.aem.context.TestAemContext;
 import io.wcm.testing.mock.aem.junit.AemContext;
@@ -146,11 +147,11 @@ public class MockContentPolicyManagerTest {
 
     // create policy with nested resources
     context.contentPolicyMapping(RT_TEST,
-        ImmutableMap.<String, Object>of(
+        Map.of(
             "prop1", "value1",
-            "child1", ImmutableMap.<String,Object>of(
+            "child1", Map.of(
                 "prop2","value2",
-                "child2", ImmutableMap.<String,Object>of(
+                "child2", Map.of(
                     "prop3", "value3")
                 )
             ));

@@ -25,6 +25,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.Map;
 
 import org.apache.sling.api.resource.Resource;
 import org.junit.Before;
@@ -39,7 +40,6 @@ import com.day.cq.tagging.Tag;
 import com.day.cq.wcm.api.NameConstants;
 import com.day.cq.wcm.api.Page;
 import com.day.image.Layer;
-import com.google.common.collect.ImmutableMap;
 
 import io.wcm.testing.mock.aem.context.TestAemContext;
 import io.wcm.testing.mock.aem.junit.AemContext;
@@ -143,13 +143,12 @@ public class ContentBuilderTest {
   }
 
   @Test
-  @SuppressWarnings("unlikely-arg-type")
   public void testResource() {
     Resource resource = context.create().resource(contentRoot + "/test1/resource1");
     assertNotNull(resource);
     assertEquals("resource1", resource.getName());
     assertTrue(resource.getValueMap().isEmpty()
-        || ImmutableMap.<String, Object>of(JcrConstants.JCR_PRIMARYTYPE, JcrConstants.NT_UNSTRUCTURED).equals(resource.getValueMap()));
+        || Map.of(JcrConstants.JCR_PRIMARYTYPE, JcrConstants.NT_UNSTRUCTURED).equals(resource.getValueMap()));
   }
 
   @Test

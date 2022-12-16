@@ -27,6 +27,7 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.jackrabbit.JcrConstants;
@@ -40,8 +41,6 @@ import com.day.cq.wcm.api.components.Component;
 import com.day.cq.wcm.api.components.ComponentContext;
 import com.day.cq.wcm.api.designer.Cell;
 import com.day.cq.wcm.commons.WCMUtils;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 
 import io.wcm.testing.mock.aem.context.TestAemContext;
 import io.wcm.testing.mock.aem.junit.AemContext;
@@ -60,14 +59,12 @@ public class MockComponentContextTest {
 
   @Before
   public void setUp() {
-    context.create().resource(COMPONENT_RESOURCE_TYPE, ImmutableMap.<String, Object>builder()
-        .put(JcrConstants.JCR_PRIMARYTYPE, "cq:Component")
-        .build());
+    context.create().resource(COMPONENT_RESOURCE_TYPE, Map.of(
+        JcrConstants.JCR_PRIMARYTYPE, "cq:Component"));
 
     page = context.create().page(PAGE_PATH);
-    resource = context.create().resource(page.getContentResource().getPath() + "/comp1", ImmutableMap.<String, Object>builder()
-        .put("sling:resourceType", COMPONENT_RESOURCE_TYPE)
-        .build());
+    resource = context.create().resource(page.getContentResource().getPath() + "/comp1",
+        "sling:resourceType", COMPONENT_RESOURCE_TYPE);
 
     context.currentPage(page);
     context.currentResource(resource);
@@ -147,7 +144,7 @@ public class MockComponentContextTest {
   public void testGetCssClassNames() {
     assertNotNull(underTest.getCssClassNames());
 
-    Set<String> classNames = ImmutableSet.of("class");
+    Set<String> classNames = Set.of("class");
     ((MockComponentContext)underTest).setCssClassNames(classNames);
     assertEquals(classNames, underTest.getCssClassNames());
   }

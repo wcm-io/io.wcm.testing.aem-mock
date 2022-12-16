@@ -20,6 +20,7 @@
 package io.wcm.testing.mock.aem.context;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
@@ -28,8 +29,6 @@ import org.apache.sling.api.resource.PersistenceException;
 import org.apache.sling.testing.mock.sling.NodeTypeDefinitionScanner;
 import org.apache.sling.testing.mock.sling.ResourceResolverType;
 import org.jetbrains.annotations.NotNull;
-
-import com.google.common.collect.ImmutableList;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.wcm.testing.mock.aem.junit.AemContext;
@@ -70,7 +69,7 @@ public final class TestAemContext {
       try {
         // register manually because in project's unit tests itself MANIFEST.MF is not available
         NodeTypeDefinitionScanner.get().register(context.resourceResolver().adaptTo(Session.class),
-            ImmutableList.of("SLING-INF/nodetypes/aem-core-replication.cnd",
+            List.of("SLING-INF/nodetypes/aem-core-replication.cnd",
                 "SLING-INF/nodetypes/aem-tagging.cnd",
                 "SLING-INF/nodetypes/aem-commons.cnd",
                 "SLING-INF/nodetypes/aem-dam.cnd",

@@ -37,7 +37,6 @@ import org.junit.Test;
 
 import com.day.cq.wcm.api.components.Component;
 import com.day.cq.wcm.api.components.ComponentManager;
-import com.google.common.collect.ImmutableMap;
 
 import io.wcm.testing.mock.aem.context.TestAemContext;
 import io.wcm.testing.mock.aem.junit.AemContext;
@@ -69,9 +68,8 @@ public class MockComponentManagerTest {
     context.create().resource("/apps/app1/components/c4",
         "sling:resourceSuperType", "app1/components/c1");
 
-    context.create().resource("/content/myresource", ImmutableMap.<String, Object>builder()
-        .put("sling:resourceType", "/apps/app1/components/c1")
-        .build());
+    context.create().resource("/content/myresource",
+        "sling:resourceType", "/apps/app1/components/c1");
 
     underTest = context.resourceResolver().adaptTo(ComponentManager.class);
   }
