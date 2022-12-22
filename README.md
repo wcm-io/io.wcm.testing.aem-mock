@@ -7,7 +7,7 @@
 Mock implementation of selected AEM APIs.
 
 Documentation: https://wcm.io/testing/aem-mock/<br/>
-Issues: https://wcm-io.atlassian.net/browse/WTES<br/>
+Issues: https://github.com/wcm-io/io.wcm.testing.aem-mock/issues<br/>
 Wiki: https://wcm-io.atlassian.net/wiki/<br/>
 Continuous Integration: https://github.com/wcm-io/io.wcm.testing.aem-mock/actions<br/>
 Commercial support: https://wcm.io/commercial-support.html
