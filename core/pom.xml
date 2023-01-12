@@ -110,7 +110,7 @@
     <dependency>
       <groupId>org.apache.sling</groupId>
       <artifactId>org.apache.sling.testing.sling-mock-oak</artifactId>
-      <version>${sling-mock.oak.version}</version>
+      <version>${sling-mock-oak.version}</version>
       <scope>test</scope>
     </dependency>
 
