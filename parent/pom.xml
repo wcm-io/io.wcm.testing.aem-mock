@@ -55,7 +55,7 @@
     <servlet-helpers.version>1.4.2</servlet-helpers.version>
 
     <!-- Sling Mock Oak (testing dependency only) -->
-    <sling-mock-oak.version>3.1.5-1.44.0-SNAPSHOT</sling-mock-oak.version>
+    <sling-mock-oak.version>3.1.8-1.44.0</sling-mock-oak.version>
 
     <!-- Loggin in unit tests (testing dependency only) -->
     <logging-logback.version>1.0.0</logging-logback.version>
