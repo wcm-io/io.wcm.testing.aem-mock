@@ -19,12 +19,7 @@
  */
 package io.wcm.testing.mock.aem;
 
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -33,6 +28,7 @@ import java.util.stream.StreamSupport;
 
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
+import org.apache.sling.api.resource.ValueMap;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ProviderType;
@@ -116,15 +112,6 @@ public final class MockLanguageManager implements LanguageManager {
   }
 
   @Override
-  @SuppressWarnings({ "null", "resource" })
-  public Page getLanguageRoot(final Resource resource) {
-    return Optional.ofNullable(LanguageUtil.getLanguageRoot(resource.getPath()))
-        .map(resource.getResourceResolver()::getResource)
-        .map(res -> res.adaptTo(Page.class))
-        .orElse(null);
-  }
-
-  @Override
   public Collection<Locale> getLanguages(final ResourceResolver resourceResolver, final String path) {
     return this.getCqLanguages(resourceResolver, path).stream()
         .map(Language::getLocale)
@@ -147,6 +134,187 @@ public final class MockLanguageManager implements LanguageManager {
         .map(res -> res.adaptTo(Page.class))
         .filter(Objects::nonNull)
         .collect(Collectors.toList());
+  }
+
+  @Override
+  @SuppressWarnings({ "null"})
+  public Page getLanguageRoot(final Resource resource) {
+    return getLanguageRoot(resource, false);
+  }
+
+  @Override
+  public @Nullable Page getLanguageRoot(Resource res, boolean respectContent) {
+    Resource languageRootResource = getLanguageRootResource(res, respectContent);
+    return (languageRootResource != null) ?
+            languageRootResource.adaptTo(Page.class) :
+            null;
+  }
+
+  @Override
+  public Resource getLanguageRootResource(Resource res) {
+    return getLanguageRootResource(res, false);
+  }
+
+  @Override
+  public Resource getLanguageRootResource(Resource res, boolean respectContent) {
+    String rootPath = getLanguageRootPath(res, respectContent);
+    if (rootPath == null) {
+      return null;
+    }
+    return res.getResourceResolver().getResource(rootPath);
+  }
+
+  @Override
+  public Collection<Resource> getLanguageRootResources(ResourceResolver resolver, String path) {
+    Iterator<Resource> resources = getLanguageRootSiblings(resolver, path, false);
+    if (resources == null) {
+      return Collections.emptySet();
+    }
+    List<Resource> roots = new ArrayList<>();
+    while (resources.hasNext()) {
+      Resource res = resources.next();
+      Locale locale = LanguageUtil.getLocale(Text.getName(res.getPath()));
+      if (locale != null) {
+        roots.add(res);
+      }
+    }
+    return roots;
+  }
+
+  @Override
+  public Collection<Resource> getLanguageRootResources(ResourceResolver resolver, String path, boolean respectContent) {
+    Iterator<Resource> siblings = getLanguageRootSiblings(resolver, path, respectContent);
+    if (siblings == null)
+      return Collections.emptySet();
+    List<Resource> roots = new ArrayList<>();
+    boolean additionalLanguageRootsFound = false;
+    while (siblings.hasNext()) {
+      Resource sibling = siblings.next();
+      String locale = getLanguageRootLocale(sibling, respectContent);
+      if (locale != null) {
+        roots.add(sibling);
+        continue;
+      }
+      additionalLanguageRootsFound |= addLanguageRootsFromChildren(roots, sibling, respectContent);
+    }
+    if (additionalLanguageRootsFound)
+      return roots;
+    Resource currentResource = resolver.getResource(path);
+    Resource langRoot = getLanguageRootResource(currentResource, true);
+    if (null != langRoot) {
+      Resource langRootParent = langRoot.getParent();
+      Resource langRootGrandParent = langRootParent.getParent();
+      ArrayList<Resource> nonLangRootUncles = new ArrayList<>();
+      if (langRootGrandParent != null) {
+        Iterator<Resource> langRootUncles = langRootGrandParent.listChildren();
+        while (langRootUncles.hasNext()) {
+          Resource langRootUncle = langRootUncles.next();
+          if (langRootUncle.getName().equals(langRootParent.getName()))
+            continue;
+          String gcLocale = getLanguageRootLocale(langRootUncle, respectContent);
+          if (gcLocale != null && !isCountryNode(langRootUncle, respectContent)) {
+            roots.add(langRootUncle);
+            additionalLanguageRootsFound = true;
+            continue;
+          }
+          nonLangRootUncles.add(langRootUncle);
+        }
+      }
+      if (!additionalLanguageRootsFound) {
+        return roots;
+      }
+      for (Resource nonLangRootUncle : nonLangRootUncles) {
+        addLanguageRootsFromChildren(roots, nonLangRootUncle, respectContent);
+      }
+    }
+    return roots;
+  }
+
+  private String getLanguageRootPath(Resource res, boolean respectContent) {
+    String path = res.getPath();
+    if (respectContent) {
+      int idx = path.indexOf("/jcr:content");
+      if (idx > 0) {
+        path = path.substring(0, idx);
+      }
+      Resource hr = res.getResourceResolver().getResource(path);
+      while (hr != null && !hr.getPath().equals("/")) {
+        ValueMap props = hr.getValueMap();
+        if (props.get("jcr:content/cq:isLanguageRoot", Boolean.FALSE)) {
+          String iso = props.get("jcr:content/jcr:language", "");
+          Language locale = iso.isEmpty() ? null : LanguageUtil.getLanguage(iso);
+          if (locale != null) {
+            return hr.getPath();
+          }
+        }
+        hr = hr.getParent();
+      }
+    }
+    return LanguageUtil.getLanguageRoot(path);
+  }
+
+  @Nullable
+  private Iterator<Resource> getLanguageRootSiblings(ResourceResolver resolver, String path, boolean respectContent) {
+    if (path == null) {
+      return null;
+    }
+    Resource res = resolver.getResource(path);
+    String root = getLanguageRootPath(res, respectContent);
+    if (root == null) {
+      return null;
+    }
+    String parent = Text.getRelativeParent(root, 1);
+    Resource parentResource = resolver.getResource(parent);
+    if (parentResource == null) {
+      return null;
+    }
+    return resolver.listChildren(parentResource);
+  }
+
+  private boolean isCountryNode(Resource resource, boolean respectContent) {
+    Iterator<Resource> children = resource.listChildren();
+    while (children.hasNext()) {
+      Resource child = children.next();
+      String gcLocale = getLanguageRootLocale(child, respectContent);
+      if (gcLocale != null)
+        return true;
+    }
+    return false;
+  }
+
+  private boolean addLanguageRootsFromChildren(List<Resource> roots, Resource resource, boolean respectContent) {
+    Iterator<Resource> children = resource.listChildren();
+    boolean additionalLanguageRootsFound = false;
+    while (children.hasNext()) {
+      Resource child = children.next();
+      String childLocale = getLanguageRootLocale(child, respectContent);
+      if (childLocale != null) {
+        roots.add(child);
+        additionalLanguageRootsFound = true;
+      }
+    }
+    return additionalLanguageRootsFound;
+  }
+
+  private String getLanguageRootLocale(Resource res, boolean respectContent) {
+    if (null == res) {
+      return null;
+    }
+    if (respectContent && !res.getPath().equals("/")) {
+      ValueMap props = res.getValueMap();
+      if (props.get("jcr:content/cq:isLanguageRoot", Boolean.FALSE)) {
+        String iso = props.get("jcr:content/jcr:language", "");
+        Language language1 = iso.isEmpty() ? null : LanguageUtil.getLanguage(iso);
+        if (language1 != null) {
+          return language1.getLocale().toString();
+        }
+      }
+    }
+    Language language = LanguageUtil.getLanguage(res.getName());
+    if (language != null) {
+      return res.getName();
+    }
+    return null;
   }
 
   @SuppressWarnings("null")
@@ -271,45 +439,6 @@ public final class MockLanguageManager implements LanguageManager {
       Resource child = resourceResolver.getResource(childPath);
       return new InfoImpl(childPath, child, this.getLanguage());
     }
-  }
-
-
-  // --- unsupported operations ---
-  // CHECKSTYLE:OFF
-
-  // AEM 6.5.6
-  @Override
-  @SuppressWarnings("unused")
-  public @Nullable Page getLanguageRoot(Resource res, boolean respectContent) {
-    throw new UnsupportedOperationException();
-  }
-
-  // AEM 6.5.6
-  @Override
-  @SuppressWarnings("unused")
-  public Resource getLanguageRootResource(Resource res) {
-    throw new UnsupportedOperationException();
-  }
-
-  // AEM 6.5.6
-  @Override
-  @SuppressWarnings("unused")
-  public @Nullable Resource getLanguageRootResource(Resource res, boolean respectContent) {
-    throw new UnsupportedOperationException();
-  }
-
-  // AEM 6.5.6
-  @Override
-  @SuppressWarnings("unused")
-  public Collection<Resource> getLanguageRootResources(ResourceResolver resolver, String path) {
-    throw new UnsupportedOperationException();
-  }
-
-  // AEM 6.5.6
-  @Override
-  @SuppressWarnings("unused")
-  public Collection<Resource> getLanguageRootResources(ResourceResolver resolver, String path, boolean respectContent) {
-    throw new UnsupportedOperationException();
   }
 
 }

@@ -31,6 +31,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
+import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.loader.ContentLoader;
 import org.junit.Before;
 import org.junit.Rule;
@@ -48,6 +49,7 @@ public class MockLanguageManagerTest {
   private static final String SITE_ROOT = "/content/sample";
   private static final String ENGLISH_HOMEPAGE = String.join("/", SITE_ROOT, "en");
   private static final String FRENCH_HOMEPAGE = String.join("/", SITE_ROOT, "fr");
+  private static final String GERMAN_HOMEPAGE = String.join("/", SITE_ROOT, "other");
 
   // Run all unit tests for each resource resolver types listed here
   @Rule
@@ -122,6 +124,86 @@ public class MockLanguageManagerTest {
         .getLanguageRoot(Objects.requireNonNull(context.resourceResolver().getResource(FRENCH_HOMEPAGE + "/subpage/jcr:content")));
     assertNotNull(frenchLanguageRoot);
     assertEquals(FRENCH_HOMEPAGE, frenchLanguageRoot.getPath());
+
+    Page germanLanguageRoot = languageManager
+            .getLanguageRoot(Objects.requireNonNull(context.resourceResolver().getResource(GERMAN_HOMEPAGE + "/subpage/jcr:content")));
+    assertNull(germanLanguageRoot);
+  }
+
+  @Test
+  public void getLanguageRoot_respectContent() {
+    LanguageManager languageManager = new MockLanguageManager();
+    Page englishLanguageRoot = languageManager
+            .getLanguageRoot(Objects.requireNonNull(context.resourceResolver().getResource(ENGLISH_HOMEPAGE + "/subpage/jcr:content")), true);
+    assertNotNull(englishLanguageRoot);
+    assertEquals(ENGLISH_HOMEPAGE, englishLanguageRoot.getPath());
+
+    Page frenchLanguageRoot = languageManager
+            .getLanguageRoot(Objects.requireNonNull(context.resourceResolver().getResource(FRENCH_HOMEPAGE + "/subpage/jcr:content")), true);
+    assertNotNull(frenchLanguageRoot);
+    assertEquals(FRENCH_HOMEPAGE, frenchLanguageRoot.getPath());
+
+    Page germanLanguageRoot = languageManager
+            .getLanguageRoot(Objects.requireNonNull(context.resourceResolver().getResource(GERMAN_HOMEPAGE + "/subpage/jcr:content")), true);
+    assertNotNull(germanLanguageRoot);
+    assertEquals(GERMAN_HOMEPAGE, germanLanguageRoot.getPath());
+  }
+
+  @Test
+  public void getLanguageRootResource() {
+    LanguageManager languageManager = new MockLanguageManager();
+    Resource englishLanguageRoot = languageManager
+            .getLanguageRootResource(Objects.requireNonNull(context.resourceResolver().getResource(ENGLISH_HOMEPAGE + "/subpage/jcr:content")));
+    assertNotNull(englishLanguageRoot);
+    assertEquals(ENGLISH_HOMEPAGE, englishLanguageRoot.getPath());
+
+    Resource frenchLanguageRoot = languageManager
+            .getLanguageRootResource(Objects.requireNonNull(context.resourceResolver().getResource(FRENCH_HOMEPAGE + "/subpage/jcr:content")));
+    assertNotNull(frenchLanguageRoot);
+    assertEquals(FRENCH_HOMEPAGE, frenchLanguageRoot.getPath());
+
+    Resource germanLanguageRoot = languageManager
+            .getLanguageRootResource(Objects.requireNonNull(context.resourceResolver().getResource(GERMAN_HOMEPAGE + "/subpage/jcr:content")));
+    assertNull(germanLanguageRoot);
+  }
+
+  @Test
+  public void getLanguageRootResource_respectContent() {
+    LanguageManager languageManager = new MockLanguageManager();
+    Resource englishLanguageRoot = languageManager
+            .getLanguageRootResource(Objects.requireNonNull(context.resourceResolver().getResource(ENGLISH_HOMEPAGE + "/subpage/jcr:content")), true);
+    assertNotNull(englishLanguageRoot);
+    assertEquals(ENGLISH_HOMEPAGE, englishLanguageRoot.getPath());
+
+    Resource frenchLanguageRoot = languageManager
+            .getLanguageRootResource(Objects.requireNonNull(context.resourceResolver().getResource(FRENCH_HOMEPAGE + "/subpage/jcr:content")), true);
+    assertNotNull(frenchLanguageRoot);
+    assertEquals(FRENCH_HOMEPAGE, frenchLanguageRoot.getPath());
+
+    Resource germanLanguageRoot = languageManager
+            .getLanguageRootResource(Objects.requireNonNull(context.resourceResolver().getResource(GERMAN_HOMEPAGE + "/subpage/jcr:content")), true);
+    assertNotNull(germanLanguageRoot);
+    assertEquals(GERMAN_HOMEPAGE, germanLanguageRoot.getPath());
+  }
+
+  @Test
+  public void getLanguageRootResources() {
+    LanguageManager languageManager = new MockLanguageManager();
+    Collection<Resource> resources = languageManager
+            .getLanguageRootResources(context.resourceResolver(), ENGLISH_HOMEPAGE + "/subpage/jcr:content");
+    assertNotNull(resources);
+    assertEquals(2, resources.size());
+    assertArrayEquals(new String[] {ENGLISH_HOMEPAGE, FRENCH_HOMEPAGE}, resources.stream().map(Resource::getPath).toArray());
+  }
+
+  @Test
+  public void getLanguageRootResources_respectContent() {
+    LanguageManager languageManager = new MockLanguageManager();
+    Collection<Resource> resources = languageManager
+            .getLanguageRootResources(context.resourceResolver(), ENGLISH_HOMEPAGE + "/subpage/jcr:content", true);
+    assertNotNull(resources);
+    assertEquals(3, resources.size());
+    assertArrayEquals(new String[] {ENGLISH_HOMEPAGE, FRENCH_HOMEPAGE, GERMAN_HOMEPAGE}, resources.stream().map(Resource::getPath).toArray());
   }
 
   @Test
@@ -279,5 +361,11 @@ public class MockLanguageManagerTest {
 
     Map<Locale, LanguageManager.Info> rootPath = languageManager.getAdjacentInfo(context.resourceResolver(), "/");
     assertNull(rootPath);
+  }
+
+  public void testGetLanguageRootResource() {
+  }
+
+  public void testTestGetLanguageRootResource() {
   }
 }
