@@ -363,9 +363,4 @@ public class MockLanguageManagerTest {
     assertNull(rootPath);
   }
 
-  public void testGetLanguageRootResource() {
-  }
-
-  public void testTestGetLanguageRootResource() {
-  }
 }
