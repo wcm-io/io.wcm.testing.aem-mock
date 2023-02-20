@@ -19,13 +19,23 @@
  */
 package io.wcm.testing.mock.aem;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ValueMap;
@@ -184,8 +194,9 @@ public final class MockLanguageManager implements LanguageManager {
   @Override
   public Collection<Resource> getLanguageRootResources(ResourceResolver resolver, String path, boolean respectContent) {
     Iterator<Resource> siblings = getLanguageRootSiblings(resolver, path, respectContent);
-    if (siblings == null)
+    if (siblings == null) {
       return Collections.emptySet();
+    }
     List<Resource> roots = new ArrayList<>();
     boolean additionalLanguageRootsFound = false;
     while (siblings.hasNext()) {
@@ -197,34 +208,40 @@ public final class MockLanguageManager implements LanguageManager {
       }
       additionalLanguageRootsFound |= addLanguageRootsFromChildren(roots, sibling, respectContent);
     }
-    if (additionalLanguageRootsFound)
+    if (additionalLanguageRootsFound) {
       return roots;
+    }
     Resource currentResource = resolver.getResource(path);
-    Resource langRoot = getLanguageRootResource(currentResource, true);
-    if (null != langRoot) {
-      Resource langRootParent = langRoot.getParent();
-      Resource langRootGrandParent = langRootParent.getParent();
-      ArrayList<Resource> nonLangRootUncles = new ArrayList<>();
-      if (langRootGrandParent != null) {
-        Iterator<Resource> langRootUncles = langRootGrandParent.listChildren();
-        while (langRootUncles.hasNext()) {
-          Resource langRootUncle = langRootUncles.next();
-          if (langRootUncle.getName().equals(langRootParent.getName()))
-            continue;
-          String gcLocale = getLanguageRootLocale(langRootUncle, respectContent);
-          if (gcLocale != null && !isCountryNode(langRootUncle, respectContent)) {
-            roots.add(langRootUncle);
-            additionalLanguageRootsFound = true;
-            continue;
+    if (currentResource != null) {
+      Resource langRoot = getLanguageRootResource(currentResource, true);
+      if (langRoot != null) {
+        Resource langRootParent = langRoot.getParent();
+        if (langRootParent != null) {
+          Resource langRootGrandParent = langRootParent.getParent();
+          ArrayList<Resource> nonLangRootUncles = new ArrayList<>();
+          if (langRootGrandParent != null) {
+            Iterator<Resource> langRootUncles = langRootGrandParent.listChildren();
+            while (langRootUncles.hasNext()) {
+              Resource langRootUncle = langRootUncles.next();
+              if (langRootUncle.getName().equals(langRootParent.getName())) {
+                continue;
+              }
+              String gcLocale = getLanguageRootLocale(langRootUncle, respectContent);
+              if (gcLocale != null && !isCountryNode(langRootUncle, respectContent)) {
+                roots.add(langRootUncle);
+                additionalLanguageRootsFound = true;
+                continue;
+              }
+              nonLangRootUncles.add(langRootUncle);
+            }
           }
-          nonLangRootUncles.add(langRootUncle);
+          if (!additionalLanguageRootsFound) {
+            return roots;
+          }
+          for (Resource nonLangRootUncle : nonLangRootUncles) {
+            addLanguageRootsFromChildren(roots, nonLangRootUncle, respectContent);
+          }
         }
-      }
-      if (!additionalLanguageRootsFound) {
-        return roots;
-      }
-      for (Resource nonLangRootUncle : nonLangRootUncles) {
-        addLanguageRootsFromChildren(roots, nonLangRootUncle, respectContent);
       }
     }
     return roots;
@@ -259,6 +276,9 @@ public final class MockLanguageManager implements LanguageManager {
       return null;
     }
     Resource res = resolver.getResource(path);
+    if (res == null) {
+      return null;
+    }
     String root = getLanguageRootPath(res, respectContent);
     if (root == null) {
       return null;
@@ -276,8 +296,9 @@ public final class MockLanguageManager implements LanguageManager {
     while (children.hasNext()) {
       Resource child = children.next();
       String gcLocale = getLanguageRootLocale(child, respectContent);
-      if (gcLocale != null)
+      if (gcLocale != null) {
         return true;
+      }
     }
     return false;
   }
@@ -300,7 +321,7 @@ public final class MockLanguageManager implements LanguageManager {
     if (null == res) {
       return null;
     }
-    if (respectContent && !res.getPath().equals("/")) {
+    if (respectContent && !StringUtils.equals(res.getPath(), "/")) {
       ValueMap props = res.getValueMap();
       if (props.get("jcr:content/cq:isLanguageRoot", Boolean.FALSE)) {
         String iso = props.get("jcr:content/jcr:language", "");
