@@ -37,6 +37,16 @@
   <name>AEM Mocks</name>
   <description>Mock implementation of selected AEM APIs.</description>
 
+  <ciManagement>
+    <system>GitHub Actions</system>
+    <url>https://github.com/wcm-io/io.wcm.testing.aem-mock/actions</url>
+  </ciManagement>
+
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/wcm-io/io.wcm.testing.aem-mock/issues/</url>
+  </issueManagement>
+
   <properties>
 
     <!-- OSGi Mocks -->

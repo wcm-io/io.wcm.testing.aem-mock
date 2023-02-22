@@ -24,7 +24,7 @@
   <body>
 
     <release version="5.2.0" date="not released">
-      <action type="add" dev="royteeuwen">
+      <action type="add" dev="royteeuwen" issue="4">
         Implement all mock methods that were added since AEM 6.5.6+ for LanguageManager.
       </action>
       <action type="update" dev="sseifert">
