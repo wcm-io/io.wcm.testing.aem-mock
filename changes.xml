@@ -28,10 +28,13 @@
         Implement all mock methods that were added since AEM 6.5.6+ for LanguageManager.
       </action>
       <action type="update" dev="sseifert">
-        Update to latest JCR Mock.
+        Update to latest JCR Mock, OSGi Mock, Sling Mock.
       </action>
       <action type="update" dev="sseifert">
         Switch to Java 11 as minimum version.
+      </action>
+      <action type="update" dev="sseifert" issue="6">
+        AemContextBuilder: Allow mixture of plugins/callbacks.
       </action>
     </release>
 
