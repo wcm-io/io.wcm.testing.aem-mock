@@ -53,7 +53,7 @@
     <osgi-mock.version>3.3.5-SNAPSHOT</osgi-mock.version>
 
     <!-- JCR Mocks -->
-    <jcr-mock.version>1.6.1-SNAPSHOT</jcr-mock.version>
+    <jcr-mock.version>1.6.2</jcr-mock.version>
 
     <!-- Resource Resolver Mock -->
     <resourceresolver-mock.version>1.4.0</resourceresolver-mock.version>
