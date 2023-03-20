@@ -348,12 +348,37 @@ class MockTag extends SlingAdaptable implements Tag, Comparable<Tag> {
 
   @Override
   public String getTitlePath() {
-    throw new UnsupportedOperationException("Unsupported operation");
+    return getTitlePath(null);
   }
 
   @Override
   public String getTitlePath(Locale arg0) {
-    throw new UnsupportedOperationException("Unsupported operation");
+    StringBuffer titlePath = new StringBuffer();
+    Tag ancestor = this;
+
+    while(ancestor != null) {
+      Tag parent = ancestor.getParent();
+      if(ancestor != this) {
+        if(parent == null) {
+          if(DEFAULT_NAMESPACE.equals(ancestor.getName())) {
+            break;
+          }
+          titlePath.insert(0, TITLEPATH_NS_DELIMITER);
+        } else {
+          titlePath.insert(0, TITLEPATH_DELIMITER);
+        }
+      }
+      String title = ancestor.getTitle();
+      if(title != null) {
+        titlePath.insert(0, title);
+      } else {
+        titlePath.insert(0, ancestor.getName());
+      }
+
+      ancestor = parent;
+    }
+
+    return titlePath.toString();
   }
 
   private String extractPathPart(final String property, final BinaryOperator<String> pathPartExtractor, final String defaultValue) {
