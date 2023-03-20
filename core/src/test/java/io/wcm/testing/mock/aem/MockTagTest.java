@@ -218,7 +218,7 @@ public class MockTagTest {
 
     assertEquals("WCM IO Tag Namespace : AEM / AEM API", aemApi.getTitlePath());
     assertEquals("WCM IO Tag Namespace : AEM / AEM API", aemApi.getTitlePath(Locale.ENGLISH));
-    assertEquals("WCM IO Tag Namespace : AEM / AEM API", aemApi.getTitlePath(Locale.US));
+    assertEquals("WCM IO Tag Namespace : AEM / AEM API", aemApi.getTitlePath(Locale.US)); 
   }
 
   @Test
