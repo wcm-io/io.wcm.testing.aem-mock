@@ -209,6 +209,17 @@ public class MockTagTest {
     assertEquals("English AEM API", aemApi.getTitle(Locale.ENGLISH));
     assertEquals("AEM API for US", aemApi.getTitle(Locale.US));
   }
+  
+    @Test
+  public void testTitlePath() {
+    assertEquals("wcmio: AEM", aem.getTitlePath());
+    assertEquals("wcmio: AEM", aem.getTitlePath(Locale.ENGLISH));
+    assertEquals("wcmio: AEM", aem.getTitlePath(Locale.US));
+
+    assertEquals("wcmio: AEM / AEM/API", aemApi.getTitlePath());
+    assertEquals("wcmio: AEM / English AEM API", aemApi.getTitlePath(Locale.ENGLISH));
+    assertEquals("wcmio: AEM / AEM API for US", aemApi.getTitlePath(Locale.US));
+  }
 
   @Test
   public void testLastModified() {
