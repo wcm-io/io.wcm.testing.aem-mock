@@ -27,6 +27,9 @@
       <action type="add" dev="royteeuwen" issue="4">
         Implement all mock methods that were added since AEM 6.5.6+ for LanguageManager.
       </action>
+      <action type="add" dev="catalinadumitruu" issue="8">
+        Implement MockTag.getTitlePath methods.
+      </action>
       <action type="update" dev="sseifert">
         Update to latest JCR Mock, OSGi Mock, Sling Mock, Servlet Helpers.
       </action>
