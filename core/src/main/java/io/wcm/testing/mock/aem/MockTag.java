@@ -333,20 +333,8 @@ class MockTag extends SlingAdaptable implements Tag, Comparable<Tag> {
   private static String escapeTitle(String title) {
     return StringUtils.replace(StringUtils.replace(title, SEPARATOR, " "), NAMESPACE_DELIMITER, " ");
   }
-
-  // --- unsupported operations ---
-
-  @Override
-  public String getGQLSearchExpression(String arg0) {
-    throw new UnsupportedOperationException("Unsupported operation");
-  }
-
-  @Override
-  public Map<Locale, String> getLocalizedTitlePaths() {
-    throw new UnsupportedOperationException("Unsupported operation");
-  }
-
-  @Override
+  
+    @Override
   public String getTitlePath() {
     return getTitlePath(null);
   }
@@ -379,6 +367,18 @@ class MockTag extends SlingAdaptable implements Tag, Comparable<Tag> {
     }
 
     return titlePath.toString();
+  }
+
+  // --- unsupported operations ---
+
+  @Override
+  public String getGQLSearchExpression(String arg0) {
+    throw new UnsupportedOperationException("Unsupported operation");
+  }
+
+  @Override
+  public Map<Locale, String> getLocalizedTitlePaths() {
+    throw new UnsupportedOperationException("Unsupported operation");
   }
 
   private String extractPathPart(final String property, final BinaryOperator<String> pathPartExtractor, final String defaultValue) {
