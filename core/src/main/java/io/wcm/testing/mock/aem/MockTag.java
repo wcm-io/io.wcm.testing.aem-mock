@@ -19,8 +19,11 @@
  */
 package io.wcm.testing.mock.aem;
 
+import static com.day.cq.tagging.TagConstants.DEFAULT_NAMESPACE;
 import static com.day.cq.tagging.TagConstants.NAMESPACE_DELIMITER;
 import static com.day.cq.tagging.TagConstants.SEPARATOR;
+import static com.day.cq.tagging.TagConstants.TITLEPATH_DELIMITER;
+import static com.day.cq.tagging.TagConstants.TITLEPATH_NS_DELIMITER;
 
 import java.util.Calendar;
 import java.util.Collection;
@@ -333,22 +336,22 @@ class MockTag extends SlingAdaptable implements Tag, Comparable<Tag> {
   private static String escapeTitle(String title) {
     return StringUtils.replace(StringUtils.replace(title, SEPARATOR, " "), NAMESPACE_DELIMITER, " ");
   }
-  
-    @Override
+
+  @Override
   public String getTitlePath() {
     return getTitlePath(null);
   }
 
   @Override
-  public String getTitlePath(Locale arg0) {
-    StringBuffer titlePath = new StringBuffer();
+  public String getTitlePath(Locale locale) {
+    StringBuilder titlePath = new StringBuilder();
     Tag ancestor = this;
 
-    while(ancestor != null) {
+    while (ancestor != null) {
       Tag parent = ancestor.getParent();
-      if(ancestor != this) {
-        if(parent == null) {
-          if(DEFAULT_NAMESPACE.equals(ancestor.getName())) {
+      if (ancestor != this) {
+        if (parent == null) {
+          if (DEFAULT_NAMESPACE.equals(ancestor.getName())) {
             break;
           }
           titlePath.insert(0, TITLEPATH_NS_DELIMITER);
@@ -357,7 +360,7 @@ class MockTag extends SlingAdaptable implements Tag, Comparable<Tag> {
         }
       }
       String title = ancestor.getTitle();
-      if(title != null) {
+      if (title != null) {
         titlePath.insert(0, title);
       } else {
         titlePath.insert(0, ancestor.getName());
