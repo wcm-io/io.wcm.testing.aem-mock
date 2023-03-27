@@ -23,11 +23,11 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+import java.util.Map;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import com.google.common.collect.ImmutableMap;
 
 /**
  * Test with {@link AemContext} with context plugins.
@@ -47,7 +47,7 @@ class BeforeAllStaticMemberAemContextPluginTest {
       .afterSetUp(contextAfterSetup)
       .beforeTearDown(contextBeforeTeardown)
       .afterTearDown(contextAfterTeardown)
-      .resourceResolverFactoryActivatorProps(ImmutableMap.<String, Object>of("resource.resolver.searchpath", new String[] {
+      .resourceResolverFactoryActivatorProps(Map.of("resource.resolver.searchpath", new String[] {
           "/apps",
           "/libs",
           "/testpath",

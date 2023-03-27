@@ -72,60 +72,55 @@ public final class AemContextBuilder {
   }
 
   /**
-   * @param <T> context type
    * @param plugin Context plugin which listens to context lifecycle events.
    * @return this
    */
   @SafeVarargs
-  public final <T extends OsgiContextImpl> @NotNull AemContextBuilder plugin(@NotNull ContextPlugin<T> @NotNull... plugin) {
+  public final @NotNull AemContextBuilder plugin(@NotNull ContextPlugin<? extends OsgiContextImpl> @NotNull... plugin) {
     plugins.addPlugin(plugin);
     return this;
   }
 
   /**
-   * @param <T> context type
    * @param beforeSetUpCallback Allows the application to register an own callback function that is called before the
    *          built-in setup rules are executed.
    * @return this
    */
   @SafeVarargs
-  public final <T extends OsgiContextImpl> @NotNull AemContextBuilder beforeSetUp(@NotNull ContextCallback<T> @NotNull... beforeSetUpCallback) {
+  public final @NotNull AemContextBuilder beforeSetUp(@NotNull ContextCallback<? extends OsgiContextImpl> @NotNull... beforeSetUpCallback) {
     plugins.addBeforeSetUpCallback(beforeSetUpCallback);
     return this;
   }
 
   /**
-   * @param <T> context type
    * @param afterSetUpCallback Allows the application to register an own callback function that is called after the
    *          built-in setup rules are executed.
    * @return this
    */
   @SafeVarargs
-  public final <T extends OsgiContextImpl> @NotNull AemContextBuilder afterSetUp(@NotNull ContextCallback<T> @NotNull... afterSetUpCallback) {
+  public final @NotNull AemContextBuilder afterSetUp(@NotNull ContextCallback<? extends OsgiContextImpl> @NotNull... afterSetUpCallback) {
     plugins.addAfterSetUpCallback(afterSetUpCallback);
     return this;
   }
 
   /**
-   * @param <T> context type
    * @param beforeTearDownCallback Allows the application to register an own callback function that is called before the
    *          built-in teardown rules are executed.
    * @return this
    */
   @SafeVarargs
-  public final <T extends OsgiContextImpl> @NotNull AemContextBuilder beforeTearDown(@NotNull ContextCallback<T> @NotNull... beforeTearDownCallback) {
+  public final @NotNull AemContextBuilder beforeTearDown(@NotNull ContextCallback<? extends OsgiContextImpl> @NotNull... beforeTearDownCallback) {
     plugins.addBeforeTearDownCallback(beforeTearDownCallback);
     return this;
   }
 
   /**
-   * @param <T> context type
    * @param afterTearDownCallback Allows the application to register an own callback function that is after before the
    *          built-in teardown rules are executed.
    * @return this
    */
   @SafeVarargs
-  public final <T extends OsgiContextImpl> @NotNull AemContextBuilder afterTearDown(@NotNull ContextCallback<T> @NotNull... afterTearDownCallback) {
+  public final @NotNull AemContextBuilder afterTearDown(@NotNull ContextCallback<? extends OsgiContextImpl> @NotNull... afterTearDownCallback) {
     plugins.addAfterTearDownCallback(afterTearDownCallback);
     return this;
   }

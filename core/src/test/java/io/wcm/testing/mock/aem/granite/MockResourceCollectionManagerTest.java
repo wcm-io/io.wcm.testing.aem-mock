@@ -47,7 +47,6 @@ import com.adobe.granite.workflow.collection.ResourceCollection;
 import com.adobe.granite.workflow.collection.ResourceCollectionManager;
 import com.day.cq.dam.api.Asset;
 import com.day.cq.wcm.api.Page;
-import com.google.common.collect.ImmutableList;
 
 import io.wcm.testing.mock.aem.context.TestAemContext;
 import io.wcm.testing.mock.aem.junit.AemContext;
@@ -147,7 +146,7 @@ public class MockResourceCollectionManagerTest {
     for (Node node : nodes) {
       nodePaths.add(node.getPath());
     }
-    assertEquals(ImmutableList.copyOf(paths), nodePaths);
+    assertEquals(List.of(paths), nodePaths);
   }
 
   private void assertResourceCollections(List<ResourceCollection> resourceCollections,
@@ -158,7 +157,7 @@ public class MockResourceCollectionManagerTest {
         nodePaths.add(node.getPath());
       }
     }
-    assertEquals(ImmutableList.copyOf(paths), nodePaths);
+    assertEquals(List.of(paths), nodePaths);
   }
 
 }

@@ -30,6 +30,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.ModifiableValueMap;
 import org.apache.sling.api.resource.PersistenceException;
@@ -42,8 +43,6 @@ import com.day.cq.commons.Filter;
 import com.day.cq.commons.jcr.JcrConstants;
 import com.day.cq.wcm.api.NameConstants;
 import com.day.cq.wcm.api.Page;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 
 import io.wcm.testing.mock.aem.context.TestAemContext;
 import io.wcm.testing.mock.aem.junit.AemContext;
@@ -118,7 +117,7 @@ public class MockPageTest {
   @Test
   public void testGetAbsoluteParent_LaunchOldStructure() {
     context.create().page("/content/launches/launch1", "/apps/sample/templates/template1",
-        ImmutableMap.<String, Object>of("sling:resourceType", "wcm/launches/components/launch"));
+        "sling:resourceType", "wcm/launches/components/launch");
     context.create().page("/content/launches/launch1/content2");
     context.create().page("/content/launches/launch1/content2/sample");
     context.create().page("/content/launches/launch1/content2/sample/en");
@@ -134,7 +133,7 @@ public class MockPageTest {
   @Test
   public void testGetAbsoluteParent_LaunchNewStructure() {
     context.create().page("/content/launches/2017/01/05/launch1", "/apps/sample/templates/template1",
-        ImmutableMap.<String, Object>of("sling:resourceType", "wcm/launches/components/launch"));
+        "sling:resourceType", "wcm/launches/components/launch");
     context.create().page("/content/launches/2017/01/05/launch1/content2");
     context.create().page("/content/launches/2017/01/05/launch1/content2/sample");
     context.create().page("/content/launches/2017/01/05/launch1/content2/sample/en");
@@ -237,13 +236,13 @@ public class MockPageTest {
 
   @Test
   public void testListChildren() {
-    List<Page> childPages = ImmutableList.copyOf(this.page.listChildren());
+    List<Page> childPages = IteratorUtils.toList(this.page.listChildren());
     assertEquals(1, childPages.size());
   }
 
   @Test
   public void testListChildrenFiltered() {
-    List<Page> childPages = ImmutableList.copyOf(this.page.listChildren(new Filter<Page>() {
+    List<Page> childPages = IteratorUtils.toList(this.page.listChildren(new Filter<Page>() {
       @Override
       public boolean includes(final Page element) {
         return !StringUtils.equals("toolbar", element.getName());
@@ -254,7 +253,7 @@ public class MockPageTest {
 
   @Test
   public void testListChildrenFilteredDeep() {
-    List<Page> childPages = ImmutableList.copyOf(this.page.listChildren(new Filter<Page>() {
+    List<Page> childPages = IteratorUtils.toList(this.page.listChildren(new Filter<Page>() {
       @Override
       public boolean includes(final Page element) {
         return !StringUtils.equals("toolbar", element.getName());

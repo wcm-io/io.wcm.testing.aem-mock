@@ -25,13 +25,13 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+import java.util.Map;
+
 import org.apache.sling.testing.mock.sling.ResourceResolverType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import com.google.common.collect.ImmutableMap;
 
 import io.wcm.testing.mock.aem.modelsautoreg.ClasspathRegisteredModel;
 
@@ -53,7 +53,7 @@ class AemContextPluginTest {
       .afterSetUp(contextAfterSetup)
       .beforeTearDown(contextBeforeTeardown)
       .afterTearDown(contextAfterTeardown)
-      .resourceResolverFactoryActivatorProps(ImmutableMap.<String, Object>of("resource.resolver.searchpath", new String[] {
+      .resourceResolverFactoryActivatorProps(Map.of("resource.resolver.searchpath", new String[] {
           "/apps",
           "/libs",
           "/testpath",

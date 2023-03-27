@@ -29,7 +29,6 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 
-import com.google.common.collect.ImmutableMap;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.jetbrains.annotations.NotNull;
@@ -49,17 +48,16 @@ public class MockTagTest {
   private static final String XPATH_PROPERTY = "@p";
   private static final String XPATH_PROPERTY_IN_JCR_CONTENT = "jcr:content/@p";
   private static final String XPATH_PROPERTY_IN_SUB_SUB_NODE = "jcr:content/test/@p";
-  private static final Map<String, String> TAG_PROPERTY_CONVERSIONS = ImmutableMap.<String, String>builder()
-      .put(XPATH_PROPERTY_IN_JCR_CONTENT, XPATH_PROPERTY_IN_JCR_CONTENT)
-      .put("jcr:content/p", XPATH_PROPERTY_IN_JCR_CONTENT)
-      .put("@jcr:content/p", XPATH_PROPERTY_IN_JCR_CONTENT)
-      .put("p", XPATH_PROPERTY)
-      .put("@p", XPATH_PROPERTY)
-      .put(XPATH_PROPERTY_IN_SUB_SUB_NODE, XPATH_PROPERTY_IN_SUB_SUB_NODE)
-      .put("@jcr:content/test/p", XPATH_PROPERTY_IN_SUB_SUB_NODE)
-      .put("@jcr:content/@test/p", "jcr:content/_x0040_test/@p")
-      .put("123", "@_x0031_23")
-      .build();
+  private static final Map<String, String> TAG_PROPERTY_CONVERSIONS = Map.of(
+      XPATH_PROPERTY_IN_JCR_CONTENT, XPATH_PROPERTY_IN_JCR_CONTENT,
+      "jcr:content/p", XPATH_PROPERTY_IN_JCR_CONTENT,
+      "@jcr:content/p", XPATH_PROPERTY_IN_JCR_CONTENT,
+      "p", XPATH_PROPERTY,
+      "@p", XPATH_PROPERTY,
+      XPATH_PROPERTY_IN_SUB_SUB_NODE, XPATH_PROPERTY_IN_SUB_SUB_NODE,
+      "@jcr:content/test/p", XPATH_PROPERTY_IN_SUB_SUB_NODE,
+      "@jcr:content/@test/p", "jcr:content/_x0040_test/@p",
+      "123", "@_x0031_23");
 
   @Rule
   public AemContext context = TestAemContext.newAemContext();
@@ -210,6 +208,17 @@ public class MockTagTest {
     assertEquals("AEM API", aemApi.getTitle());
     assertEquals("English AEM API", aemApi.getTitle(Locale.ENGLISH));
     assertEquals("AEM API for US", aemApi.getTitle(Locale.US));
+  }
+  
+  @Test
+  public void testTitlePath() {
+    assertEquals("WCM IO Tag Namespace : AEM", aem.getTitlePath());
+    assertEquals("WCM IO Tag Namespace : AEM", aem.getTitlePath(Locale.ENGLISH));
+    assertEquals("WCM IO Tag Namespace : AEM", aem.getTitlePath(Locale.US));
+
+    assertEquals("WCM IO Tag Namespace : AEM / AEM API", aemApi.getTitlePath());
+    assertEquals("WCM IO Tag Namespace : AEM / AEM API", aemApi.getTitlePath(Locale.ENGLISH));
+    assertEquals("WCM IO Tag Namespace : AEM / AEM API", aemApi.getTitlePath(Locale.US)); 
   }
 
   @Test

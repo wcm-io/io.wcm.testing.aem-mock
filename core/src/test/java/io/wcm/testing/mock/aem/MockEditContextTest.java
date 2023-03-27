@@ -36,7 +36,6 @@ import com.day.cq.wcm.api.components.ComponentContext;
 import com.day.cq.wcm.api.components.EditConfig;
 import com.day.cq.wcm.api.components.EditContext;
 import com.day.cq.wcm.commons.WCMUtils;
-import com.google.common.collect.ImmutableMap;
 
 import io.wcm.testing.mock.aem.context.TestAemContext;
 import io.wcm.testing.mock.aem.junit.AemContext;
@@ -58,14 +57,12 @@ public class MockEditContextTest {
   public void setUp() {
     WCMMode.EDIT.toRequest(context.request());
 
-    context.create().resource(COMPONENT_RESOURCE_TYPE, ImmutableMap.<String, Object>builder()
-        .put(JcrConstants.JCR_PRIMARYTYPE, "cq:Component")
-        .build());
+    context.create().resource(COMPONENT_RESOURCE_TYPE,
+        JcrConstants.JCR_PRIMARYTYPE, "cq:Component");
 
     page = context.create().page(PAGE_PATH);
-    resource = context.create().resource(page.getContentResource().getPath() + "/comp1", ImmutableMap.<String, Object>builder()
-        .put("sling:resourceType", COMPONENT_RESOURCE_TYPE)
-        .build());
+    resource = context.create().resource(page.getContentResource().getPath() + "/comp1",
+        "sling:resourceType", COMPONENT_RESOURCE_TYPE);
 
     context.currentPage(page);
     context.currentResource(resource);

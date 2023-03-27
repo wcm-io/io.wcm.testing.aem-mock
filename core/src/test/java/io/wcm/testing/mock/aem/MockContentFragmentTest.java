@@ -23,6 +23,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import org.apache.commons.collections4.IteratorUtils;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -31,7 +32,6 @@ import com.adobe.cq.dam.cfm.ContentFragment;
 import com.adobe.cq.dam.cfm.ContentVariation;
 import com.adobe.cq.dam.cfm.VariationTemplate;
 import com.day.cq.dam.api.DamConstants;
-import com.google.common.collect.ImmutableList;
 
 import io.wcm.testing.mock.aem.context.TestAemContext;
 import io.wcm.testing.mock.aem.junit.AemContext;
@@ -80,8 +80,8 @@ public class MockContentFragmentTest {
     var.setContent("var_value", null);
     assertEquals("var_value", var.getContent());
 
-    assertEquals(1, ImmutableList.copyOf(cf.listAllVariations()).size());
-    assertEquals(1, ImmutableList.copyOf(param1.getVariations()).size());
+    assertEquals(1, IteratorUtils.toList(cf.listAllVariations()).size());
+    assertEquals(1, IteratorUtils.toList(param1.getVariations()).size());
     var = param1.getVariation("v1");
     assertEquals("v1", var.getName());
 
@@ -146,8 +146,8 @@ public class MockContentFragmentTest {
     assertEquals("Var-Text", var.getContent());
     assertEquals("text/plain", var.getContentType());
 
-    assertEquals(1, ImmutableList.copyOf(cf.listAllVariations()).size());
-    assertEquals(1, ImmutableList.copyOf(contentElement.getVariations()).size());
+    assertEquals(1, IteratorUtils.toList(cf.listAllVariations()).size());
+    assertEquals(1, IteratorUtils.toList(contentElement.getVariations()).size());
     var = contentElement.getVariation("v1");
     assertEquals("v1", var.getName());
 

@@ -25,14 +25,13 @@ import static org.mockito.Mockito.mock;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections4.IterableUtils;
 import org.apache.sling.api.resource.Resource;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
 import com.adobe.cq.export.json.SlingModelFilter;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 
 import io.wcm.testing.mock.aem.context.TestAemContext;
 import io.wcm.testing.mock.aem.junit.AemContext;
@@ -52,14 +51,14 @@ public class MockSlingModelFilterTest {
   @Test
   @SuppressWarnings("null")
   public void testFilterChildResources() {
-    List<Resource> input = ImmutableList.of(mock(Resource.class), mock(Resource.class));
-    List<Resource> output = ImmutableList.copyOf(underTest.filterChildResources(input));
+    List<Resource> input = List.of(mock(Resource.class), mock(Resource.class));
+    List<Resource> output = IterableUtils.toList(underTest.filterChildResources(input));
     assertEquals(input, output);
   }
 
   @Test
   public void testFilterProperties() {
-    Map<String, Object> input = ImmutableMap.of("prop1", "value1");
+    Map<String, Object> input = Map.of("prop1", "value1");
     Map<String, Object> output = underTest.filterProperties(input);
     assertEquals(input, output);
   }

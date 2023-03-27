@@ -26,13 +26,13 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 
+import java.util.Map;
+
 import org.apache.sling.testing.mock.sling.ResourceResolverType;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
-import com.google.common.collect.ImmutableMap;
 
 import io.wcm.testing.mock.aem.context.TestAemContext;
 import io.wcm.testing.mock.aem.modelsautoreg.ClasspathRegisteredModel;
@@ -52,10 +52,10 @@ public class AemContextTest {
   .afterSetUp(contextAfterSetup)
   .beforeTearDown(contextBeforeTeardown)
   .afterTearDown(contextAfterTeardown)
-  .resourceResolverFactoryActivatorProps(ImmutableMap.<String, Object>of("resource.resolver.searchpath", new String[] {
-      "/apps",
-      "/libs",
-      "/testpath",
+      .resourceResolverFactoryActivatorProps(Map.of("resource.resolver.searchpath", new String[] {
+          "/apps",
+          "/libs",
+          "/testpath",
   }))
   .build();
 
