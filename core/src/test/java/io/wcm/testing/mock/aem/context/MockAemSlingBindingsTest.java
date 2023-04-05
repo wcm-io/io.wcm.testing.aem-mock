@@ -23,29 +23,22 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-import com.adobe.cq.sightly.WCMBindings;
-import com.day.cq.wcm.api.PageManager;
+import com.day.cq.commons.jcr.JcrConstants;
+import com.day.cq.wcm.api.NameConstants;
+import com.day.cq.wcm.api.Page;
+import com.day.cq.wcm.api.WCMMode;
 import io.wcm.testing.mock.aem.MockOverrideSlingPathRequestWrapper;
-import net.bytebuddy.build.BuildLogger.Adapter;
+import io.wcm.testing.mock.aem.junit.AemContext;
+import io.wcm.testing.mock.aem.models.SlingBindingsModel;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.adapter.AdapterManager;
 import org.apache.sling.api.resource.Resource;
-import org.apache.sling.api.scripting.SlingBindings;
-import org.apache.sling.api.wrappers.SlingHttpServletRequestWrapper;
 import org.apache.sling.models.factory.ModelFactory;
 import org.apache.sling.scripting.api.BindingsValuesProvidersByContext;
 import org.apache.sling.testing.mock.sling.ResourceResolverType;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
-import com.day.cq.commons.jcr.JcrConstants;
-import com.day.cq.wcm.api.NameConstants;
-import com.day.cq.wcm.api.Page;
-import com.day.cq.wcm.api.WCMMode;
-
-import io.wcm.testing.mock.aem.junit.AemContext;
-import io.wcm.testing.mock.aem.models.SlingBindingsModel;
 
 @SuppressWarnings("null")
 public class MockAemSlingBindingsTest {
