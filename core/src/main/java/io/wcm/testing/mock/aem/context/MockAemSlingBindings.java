@@ -201,12 +201,17 @@ final class MockAemSlingBindings {
   }
 
   private static Style getStyle(SlingHttpServletRequest request) {
+    Style style = null;
     ComponentContext wcmComponentContext = getWcmComponentContext(request);
     Design currentDesign = getCurrentDesign(request);
     if (wcmComponentContext != null && currentDesign != null) {
-      return currentDesign.getStyle(wcmComponentContext.getCell());
+      style = currentDesign.getStyle(request.getResource());
+      if (style.isEmpty()) {
+        style = currentDesign.getStyle(wcmComponentContext.getCell());
+      }
     }
-    return null;
+
+    return style;
   }
 
   private static ValueMap wrap(ValueMap props) {
