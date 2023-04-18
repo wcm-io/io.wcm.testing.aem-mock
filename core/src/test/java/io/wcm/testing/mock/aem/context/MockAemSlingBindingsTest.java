@@ -101,6 +101,9 @@ public class MockAemSlingBindingsTest {
     assertNotNull(model.getCurrentDesign());
     assertNotNull(model.getResourceDesign());
     assertNotNull(model.getCurrentStyle());
+    assertNotNull(model.getXssAPI());
+    assertNull(model.getCurrentContentPolicy());
+    assertNull(model.getCurrentContentPolicyProperties());
   }
 
   @Test
@@ -170,6 +173,9 @@ public class MockAemSlingBindingsTest {
     assertNotNull(model.getCurrentDesign());
     assertNotNull(model.getResourceDesign());
     assertNotNull(model.getCurrentStyle());
+    assertNotNull(model.getXssAPI());
+    assertNull(model.getCurrentContentPolicy());
+    assertNull(model.getCurrentContentPolicyProperties());
   }
 
   @Test
@@ -207,6 +213,9 @@ public class MockAemSlingBindingsTest {
     assertNotNull(model.getCurrentDesign());
     assertNotNull(model.getResourceDesign());
     assertNotNull(model.getCurrentStyle());
+    assertNotNull(model.getXssAPI());
+    assertNull(model.getCurrentContentPolicy());
+    assertNull(model.getCurrentContentPolicyProperties());
   }
 
   @Test
@@ -218,6 +227,8 @@ public class MockAemSlingBindingsTest {
 
     SlingBindingsModel model = context.request().adaptTo(SlingBindingsModel.class);
     assertEquals("value1", model.getCurrentStyle().get("policyProp1", String.class));
+    assertEquals("value1", model.getCurrentContentPolicy().getProperties().get("policyProp1", String.class));
+    assertEquals("value1", model.getCurrentContentPolicyProperties().get("policyProp1", String.class));
   }
 
   @Test
@@ -231,6 +242,8 @@ public class MockAemSlingBindingsTest {
 
     SlingBindingsModel model = context.request().adaptTo(SlingBindingsModel.class);
     assertEquals("value1", model.getCurrentStyle().get("policyProp1", String.class));
+    assertNull(model.getCurrentContentPolicy());
+    assertNull(model.getCurrentContentPolicyProperties());
   }
 
 }
