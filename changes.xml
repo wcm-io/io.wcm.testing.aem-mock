@@ -24,8 +24,14 @@
   <body>
 
     <release version="5.2.2" date="not released">
-      <action type="update" dev="sseifert">
-        MockAemBindingsValuesProvider: Make use of LazyBindings.
+      <action type="update" dev="sseifert" issue="12">
+        MockAemBindingsValuesProvider: Support LazyBindings.
+      </action>
+      <action type="update" dev="sseifert" issue="12">
+        MockAemBindingsValuesProvider: Add support for Sling Bindings properties xssAPI, currentContentPolicy, currentContentPolicyProperties.
+      </action>
+      <action type="update" dev="sseifert" issue="12">
+        MockAemBindingsValuesProvider: Use ContentPolicyStyle for resolving currentStyle if content policies are used.
       </action>
     </release>
 
