@@ -23,13 +23,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-import com.day.cq.commons.jcr.JcrConstants;
-import com.day.cq.wcm.api.NameConstants;
-import com.day.cq.wcm.api.Page;
-import com.day.cq.wcm.api.WCMMode;
-import io.wcm.testing.mock.aem.MockOverrideSlingPathRequestWrapper;
-import io.wcm.testing.mock.aem.junit.AemContext;
-import io.wcm.testing.mock.aem.models.SlingBindingsModel;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.adapter.AdapterManager;
 import org.apache.sling.api.resource.Resource;
@@ -39,6 +32,14 @@ import org.apache.sling.testing.mock.sling.ResourceResolverType;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
+import com.day.cq.commons.jcr.JcrConstants;
+import com.day.cq.wcm.api.NameConstants;
+import com.day.cq.wcm.api.Page;
+import com.day.cq.wcm.api.WCMMode;
+
+import io.wcm.testing.mock.aem.junit.AemContext;
+import io.wcm.testing.mock.aem.models.SlingBindingsModel;
 
 @SuppressWarnings("null")
 public class MockAemSlingBindingsTest {
@@ -252,17 +253,17 @@ public class MockAemSlingBindingsTest {
   public void testContentPolicy_CompositeSlingModelDelegationViaRequestWrapper() {
     context.currentResource(currentResource);
     context.create().resource("/apps/" + CHILD_COMPOSITE_COMPONENT_RESOURCE_TYPE,
-                              JcrConstants.JCR_PRIMARYTYPE, NameConstants.NT_COMPONENT);
+        JcrConstants.JCR_PRIMARYTYPE, NameConstants.NT_COMPONENT);
     context.contentPolicyMapping(CHILD_COMPOSITE_COMPONENT_RESOURCE_TYPE,
-                                 "policyProp1", "value1");
+        "policyProp1", "value1");
     AdapterManager adapterManager = context.getService(AdapterManager.class);
     BindingsValuesProvidersByContext bindingsValuesProvidersByContext = context.getService(BindingsValuesProvidersByContext.class);
     Resource testResource = context.create().resource(currentPage.getContentResource().getPath() + "/testResource/child1",
-                                                      "sling:resourceType", CHILD_COMPOSITE_COMPONENT_RESOURCE_TYPE);
+        "sling:resourceType", CHILD_COMPOSITE_COMPONENT_RESOURCE_TYPE);
 
     // wrap current request with resource
-    SlingHttpServletRequest request = new MockOverrideSlingPathRequestWrapper(adapterManager, context.request(), testResource.getPath(),
-                                                                              bindingsValuesProvidersByContext);
+    SlingHttpServletRequest request = new MockOverrideSlingPathRequestWrapper(adapterManager,
+        context.request(), testResource.getPath(), bindingsValuesProvidersByContext);
 
     SlingBindingsModel model = request.adaptTo(SlingBindingsModel.class);
     assertEquals("value1", model.getCurrentStyle().get("policyProp1", String.class));
