@@ -24,6 +24,7 @@ import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceUtil;
 import org.apache.sling.api.resource.ValueMap;
+import org.apache.sling.xss.XSSAPI;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -35,7 +36,10 @@ import com.day.cq.wcm.api.components.EditContext;
 import com.day.cq.wcm.api.designer.Design;
 import com.day.cq.wcm.api.designer.Designer;
 import com.day.cq.wcm.api.designer.Style;
+import com.day.cq.wcm.api.policies.ContentPolicy;
+import com.day.cq.wcm.api.policies.ContentPolicyManager;
 import com.day.cq.wcm.commons.WCMUtils;
+import com.day.cq.wcm.commons.policy.ContentPolicyStyle;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -68,7 +72,13 @@ final class MockAemSlingBindings {
 
     RESOURCE_DESIGN("resourceDesign"),
 
-    CURRENT_STYLE("currentStyle");
+    CURRENT_STYLE("currentStyle"),
+
+    XSSAPI("xssAPI"),
+
+    CURRENT_CONTENT_POLICY("currentContentPolicy"),
+
+    CURRENT_CONTENT_POLICY_PROPS("currentContentPolicyProperties");
 
     private final String key;
 
@@ -130,6 +140,15 @@ final class MockAemSlingBindings {
     }
     if (StringUtils.equals(property, SlingBindingsProperty.CURRENT_STYLE.key())) {
       return getStyle(request);
+    }
+    if (StringUtils.equals(property, SlingBindingsProperty.XSSAPI.key())) {
+      return getXssApi(context);
+    }
+    if (StringUtils.equals(property, SlingBindingsProperty.CURRENT_CONTENT_POLICY.key())) {
+      return getCurrentContentPolicy(request);
+    }
+    if (StringUtils.equals(property, SlingBindingsProperty.CURRENT_CONTENT_POLICY_PROPS.key())) {
+      return getCurrentContentPolicyProperties(request);
     }
 
     return null;
@@ -202,9 +221,40 @@ final class MockAemSlingBindings {
 
   private static Style getStyle(SlingHttpServletRequest request) {
     ComponentContext wcmComponentContext = getWcmComponentContext(request);
-    Design currentDesign = getCurrentDesign(request);
-    if (wcmComponentContext != null && currentDesign != null) {
-      return currentDesign.getStyle(wcmComponentContext.getCell());
+    if (wcmComponentContext != null) {
+      ContentPolicy contentPolicy = getCurrentContentPolicy(request);
+      if (contentPolicy != null) {
+        return new ContentPolicyStyle(contentPolicy, wcmComponentContext.getCell());
+      }
+      else {
+        Design currentDesign = getCurrentDesign(request);
+        if (currentDesign != null) {
+          return currentDesign.getStyle(wcmComponentContext.getCell());
+        }
+      }
+    }
+    return null;
+  }
+
+  private static XSSAPI getXssApi(AemContextImpl context) {
+    return context.getService(XSSAPI.class);
+  }
+
+  private static ContentPolicy getCurrentContentPolicy(SlingHttpServletRequest request) {
+    ComponentContext wcmComponentContext = getWcmComponentContext(request);
+    if (wcmComponentContext != null) {
+      ContentPolicyManager policyManager = request.getResourceResolver().adaptTo(ContentPolicyManager.class);
+      if (policyManager != null) {
+        return policyManager.getPolicy(request.getResource(), request);
+      }
+    }
+    return null;
+  }
+
+  private static ValueMap getCurrentContentPolicyProperties(SlingHttpServletRequest request) {
+    ContentPolicy contentPolicy = getCurrentContentPolicy(request);
+    if (contentPolicy != null) {
+      return wrap(contentPolicy.getProperties());
     }
     return null;
   }

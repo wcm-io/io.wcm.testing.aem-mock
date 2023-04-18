@@ -19,11 +19,14 @@
  */
 package io.wcm.testing.mock.aem.context;
 
+import static io.wcm.testing.mock.aem.context.MockAemSlingBindings.resolveSlingBindingProperty;
+
 import java.util.Map;
 
 import javax.script.Bindings;
 
 import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.api.scripting.LazyBindings;
 import org.apache.sling.api.scripting.SlingBindings;
 import org.apache.sling.scripting.api.BindingsValuesProvider;
 import org.osgi.service.component.annotations.Activate;
@@ -66,9 +69,14 @@ class MockAemBindingsValuesProvider implements BindingsValuesProvider {
   }
 
   private void putProperty(Bindings bindings, String key, SlingHttpServletRequest request) {
-    Object value = MockAemSlingBindings.resolveSlingBindingProperty(context, key, request);
-    if (value != null) {
-      bindings.put(key, value);
+    if (bindings instanceof LazyBindings) {
+      bindings.put(key, (LazyBindings.Supplier)() -> resolveSlingBindingProperty(context, key, request));
+    }
+    else {
+      Object value = resolveSlingBindingProperty(context, key, request);
+      if (value != null) {
+        bindings.put(key, value);
+      }
     }
   }
 
