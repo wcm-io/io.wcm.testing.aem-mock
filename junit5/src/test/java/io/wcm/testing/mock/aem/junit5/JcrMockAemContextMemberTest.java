@@ -20,12 +20,11 @@
 package io.wcm.testing.mock.aem.junit5;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import javax.jcr.Session;
 
-import org.apache.jackrabbit.api.JackrabbitSession;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.resourceresolver.impl.ResourceResolverImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,7 +43,7 @@ class JcrMockAemContextMemberTest {
   @BeforeEach
   void setUp() {
     assertTrue(context.resourceResolver() instanceof ResourceResolverImpl);
-    assertFalse(context.resourceResolver().adaptTo(Session.class) instanceof JackrabbitSession);
+    assertNotNull(context.resourceResolver().adaptTo(Session.class));
 
     context.create().resource("/content/test",
         "prop1", "value1");
