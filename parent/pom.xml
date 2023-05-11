@@ -50,10 +50,10 @@
   <properties>
 
     <!-- OSGi Mocks -->
-    <osgi-mock.version>3.3.6</osgi-mock.version>
+    <osgi-mock.version>3.3.7-SNAPSHOT</osgi-mock.version>
 
     <!-- JCR Mocks -->
-    <jcr-mock.version>1.6.8</jcr-mock.version>
+    <jcr-mock.version>1.6.9-SNAPSHOT</jcr-mock.version>
 
     <!-- Resource Resolver Mock -->
     <resourceresolver-mock.version>1.4.0</resourceresolver-mock.version>
