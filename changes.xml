@@ -34,7 +34,7 @@
         MockAemBindingsValuesProvider: Use ContentPolicyStyle for resolving currentStyle if content policies are used.
       </action>
       <action type="update" dev="sseifert">
-        Update to latest JCR Mock, OSGI Mock, Sling Mock, Servlet Helpers.
+        Update to latest JCR Mock, OSGI Mock, ResourceResolver Mock, Sling Mock, Servlet Helpers.
       </action>
     </release>
 
