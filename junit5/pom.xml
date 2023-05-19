@@ -25,7 +25,7 @@
   <parent>
     <groupId>io.wcm</groupId>
     <artifactId>io.wcm.testing.aem-mock.parent</artifactId>
-    <version>5.2.1-SNAPSHOT</version>
+    <version>5.2.2</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
 
@@ -54,14 +54,14 @@
     <dependency>
       <groupId>io.wcm</groupId>
       <artifactId>io.wcm.testing.aem-mock.core</artifactId>
-      <version>5.2.1-SNAPSHOT</version>
+      <version>5.2.2</version>
       <scope>compile</scope>
     </dependency>
 
     <dependency>
       <groupId>io.wcm</groupId>
       <artifactId>io.wcm.testing.aem-mock.core</artifactId>
-      <version>5.2.1-SNAPSHOT</version>
+      <version>5.2.2</version>
       <classifier>tests</classifier>
       <scope>test</scope>
     </dependency>
