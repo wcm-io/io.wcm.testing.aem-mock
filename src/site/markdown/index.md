@@ -35,15 +35,15 @@ The mock implementation supports:
 * Context Plugins
 
 
-### AEM Version Support Matrix
+### Version Support Matrix
 
-|AEM Mock version |AEM version supported |JUnit version supported
-|-----------------|----------------------|------------------------
-|AEM Mock 5.x     |AEM 6.5.7+, AEMaaCS   |JUnit 4, JUnit 5
-|AEM Mock 4.x     |AEM 6.4+, AEMaaCS     |JUnit 4, JUnit 5
-|AEM Mock 3.x     |AEM 6.3+              |JUnit 4, JUnit 5
-|AEM Mock 2.x     |AEM 6.2+              |JUnit 4, JUnit 5
-|AEM Mock 1.x     |AEM 6.0+              |JUnit 4
+|AEM Mock version |AEM version supported |JUnit version supported|Java version required
+|-----------------|----------------------|-----------------------|-------------------
+|AEM Mock 5.x     |AEM 6.5.7+, AEMaaCS   |JUnit 4, JUnit 5       |Java 8/Java 11 since 5.2
+|AEM Mock 4.x     |AEM 6.4+, AEMaaCS     |JUnit 4, JUnit 5       |Java 8
+|AEM Mock 3.x     |AEM 6.3+              |JUnit 4, JUnit 5       |Java 8
+|AEM Mock 2.x     |AEM 6.2+              |JUnit 4, JUnit 5       |Java 7/Java 8 since 2.2.2
+|AEM Mock 1.x     |AEM 6.0+              |JUnit 4                |Java 7
 
 
 ### Further Resources

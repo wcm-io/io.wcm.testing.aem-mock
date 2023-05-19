@@ -24,8 +24,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.api.adapter.AdapterManager;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.factory.ModelFactory;
+import org.apache.sling.scripting.api.BindingsValuesProvidersByContext;
 import org.apache.sling.testing.mock.sling.ResourceResolverType;
 import org.junit.Before;
 import org.junit.Rule;
@@ -44,6 +46,7 @@ public class MockAemSlingBindingsTest {
 
   private static final String COMPONENT_RESOURCE_SUPER_TYPE = "app1/components/component2";
   private static final String COMPONENT_RESOURCE_TYPE = "app1/components/component1";
+  private static final String CHILD_COMPOSITE_COMPONENT_RESOURCE_TYPE = COMPONENT_RESOURCE_TYPE + "/child1";
 
   @Rule
   public AemContext context = TestAemContext.newAemContext();
@@ -101,6 +104,9 @@ public class MockAemSlingBindingsTest {
     assertNotNull(model.getCurrentDesign());
     assertNotNull(model.getResourceDesign());
     assertNotNull(model.getCurrentStyle());
+    assertNotNull(model.getXssAPI());
+    assertNull(model.getCurrentContentPolicy());
+    assertNull(model.getCurrentContentPolicyProperties());
   }
 
   @Test
@@ -170,6 +176,9 @@ public class MockAemSlingBindingsTest {
     assertNotNull(model.getCurrentDesign());
     assertNotNull(model.getResourceDesign());
     assertNotNull(model.getCurrentStyle());
+    assertNotNull(model.getXssAPI());
+    assertNull(model.getCurrentContentPolicy());
+    assertNull(model.getCurrentContentPolicyProperties());
   }
 
   @Test
@@ -207,6 +216,9 @@ public class MockAemSlingBindingsTest {
     assertNotNull(model.getCurrentDesign());
     assertNotNull(model.getResourceDesign());
     assertNotNull(model.getCurrentStyle());
+    assertNotNull(model.getXssAPI());
+    assertNull(model.getCurrentContentPolicy());
+    assertNull(model.getCurrentContentPolicyProperties());
   }
 
   @Test
@@ -218,6 +230,8 @@ public class MockAemSlingBindingsTest {
 
     SlingBindingsModel model = context.request().adaptTo(SlingBindingsModel.class);
     assertEquals("value1", model.getCurrentStyle().get("policyProp1", String.class));
+    assertEquals("value1", model.getCurrentContentPolicy().getProperties().get("policyProp1", String.class));
+    assertEquals("value1", model.getCurrentContentPolicyProperties().get("policyProp1", String.class));
   }
 
   @Test
@@ -230,6 +244,28 @@ public class MockAemSlingBindingsTest {
     context.currentResource(new ResourceTypeForcingResourceWrapper(currentResource, COMPONENT_RESOURCE_SUPER_TYPE));
 
     SlingBindingsModel model = context.request().adaptTo(SlingBindingsModel.class);
+    assertEquals("value1", model.getCurrentStyle().get("policyProp1", String.class));
+    assertNull(model.getCurrentContentPolicy());
+    assertNull(model.getCurrentContentPolicyProperties());
+  }
+
+  @Test
+  public void testContentPolicy_CompositeSlingModelDelegationViaRequestWrapper() {
+    context.currentResource(currentResource);
+    context.create().resource("/apps/" + CHILD_COMPOSITE_COMPONENT_RESOURCE_TYPE,
+        JcrConstants.JCR_PRIMARYTYPE, NameConstants.NT_COMPONENT);
+    context.contentPolicyMapping(CHILD_COMPOSITE_COMPONENT_RESOURCE_TYPE,
+        "policyProp1", "value1");
+    AdapterManager adapterManager = context.getService(AdapterManager.class);
+    BindingsValuesProvidersByContext bindingsValuesProvidersByContext = context.getService(BindingsValuesProvidersByContext.class);
+    Resource testResource = context.create().resource(currentPage.getContentResource().getPath() + "/testResource/child1",
+        "sling:resourceType", CHILD_COMPOSITE_COMPONENT_RESOURCE_TYPE);
+
+    // wrap current request with resource
+    SlingHttpServletRequest request = new MockOverrideSlingPathRequestWrapper(adapterManager,
+        context.request(), testResource.getPath(), bindingsValuesProvidersByContext);
+
+    SlingBindingsModel model = request.adaptTo(SlingBindingsModel.class);
     assertEquals("value1", model.getCurrentStyle().get("policyProp1", String.class));
   }
 
