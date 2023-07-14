@@ -19,6 +19,7 @@
  */
 package io.wcm.testing.mock.aem.context;
 
+import io.wcm.testing.mock.aem.MockJcrTagManagerFactory;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -87,6 +88,7 @@ public class AemContextImpl extends SlingContextImpl {
     registerInjectActivateService(new MockResourceCollectionManager());
     registerInjectActivateService(new MockSlingModelFilter());
     registerInjectActivateService(new MockExternalizer());
+    registerInjectActivateService(new MockJcrTagManagerFactory());
   }
 
   @Override
