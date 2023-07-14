@@ -27,6 +27,9 @@
       <action type="update" dev="sseifert">
         Update to latest OSGI Mock.
       </action>
+      <action type="fix" dev="sseifert">
+        Exclude transitive dependencies from com.day.commons:day-commons-gfx to avoid leaking in old dependencies in classpath.
+      </action>
     </release>
 
     <release version="5.2.2" date="2023-05-19">
