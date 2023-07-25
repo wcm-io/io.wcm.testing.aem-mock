@@ -24,6 +24,9 @@
   <body>
 
     <release version="5.3.0" date="not released">
+      <action type="add" dev="catalinadumitruu" issue="9">
+        Implement MockTag.getLocalizedTitlePaths method.
+      </action>
       <action type="add" dev="rubnig" issue="16">
         Add mock implementation for JcrTagManagerFactory.
       </action>
