@@ -31,7 +31,7 @@
         Add mock implementation for JcrTagManagerFactory.
       </action>
       <action type="update" dev="sseifert">
-        Update to latest OSGI Mock.
+        Update to latest OSGI Mock, Sling Mock.
       </action>
       <action type="fix" dev="sseifert">
         Exclude transitive dependencies from com.day.commons:day-commons-gfx to avoid leaking in old dependencies in classpath.
