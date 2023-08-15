@@ -56,7 +56,7 @@
     <jcr-mock.version>1.6.10</jcr-mock.version>
 
     <!-- Resource Resolver Mock -->
-    <resourceresolver-mock.version>1.4.2</resourceresolver-mock.version>
+    <resourceresolver-mock.version>1.4.3-SNAPSHOT</resourceresolver-mock.version>
 
     <!-- Sling Mock -->
     <sling-mock.version>3.4.11-SNAPSHOT</sling-mock.version>
