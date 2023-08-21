@@ -295,6 +295,19 @@ public class MockTagTest {
     assertTagExpression(tag, "tag3", "default/tag3");
   }
 
+  @Test
+  public void getLocalizedTitlePaths() {
+    Map<Locale,String> localizedTitlePaths = aemApi.getLocalizedTitlePaths();
+
+    assertNotNull(localizedTitlePaths);
+    assertEquals(6, localizedTitlePaths.size());
+    assertEquals("WCM IO Tag Namespace : AEM / English AEM API", localizedTitlePaths.get(Locale.ENGLISH));
+    assertEquals("WCM IO Tag Namespace : AEM / AEM API for US", localizedTitlePaths.get(Locale.US));
+    assertEquals("WCM IO Tag Namespace : AEM / German AEM API", localizedTitlePaths.get(Locale.GERMAN));
+    assertEquals("WCM IO Tag Namespace : AEM / AEM API for Germany", localizedTitlePaths.get(Locale.GERMANY));
+    assertEquals("WCM IO Tag Namespace : AEM / Portuguese (Brazil) AEM API/:with special chars", localizedTitlePaths.get(LOCALE_PT_BR));
+  }
+
   private void assertTagExpression(@NotNull final Tag tag,
                                    @NotNull final String tagId,
                                    @NotNull final String tagPath) {

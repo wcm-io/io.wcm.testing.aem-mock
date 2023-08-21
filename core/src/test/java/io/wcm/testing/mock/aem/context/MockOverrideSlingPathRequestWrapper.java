@@ -33,7 +33,7 @@ class MockOverrideSlingPathRequestWrapper extends SlingHttpServletRequestWrapper
     super(request);
     this.adapterManager = adapterManager;
     this.myBindings = new SlingBindings();
-    this.adaptersCache = new HashMap();
+    this.adaptersCache = new HashMap<>();
     SlingBindings slingBindings = (SlingBindings)this.getSlingRequest().getAttribute(ATTR_SLING_BINDINGS);
     this.resource = this.getSlingRequest().getResourceResolver().resolve(this.getSlingRequest(), path);
     if (slingBindings != null) {
@@ -84,6 +84,7 @@ class MockOverrideSlingPathRequestWrapper extends SlingHttpServletRequestWrapper
    * Overriding `adaptTo` to avoid using the original request as the adaptable.
    */
   @Override
+  @SuppressWarnings({ "null", "unchecked" })
   public <AdapterType> AdapterType adaptTo(Class<AdapterType> type) {
     AdapterType result = null;
     synchronized (this) {

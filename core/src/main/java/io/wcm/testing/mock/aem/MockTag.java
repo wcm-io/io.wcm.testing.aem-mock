@@ -372,15 +372,35 @@ class MockTag extends SlingAdaptable implements Tag, Comparable<Tag> {
     return titlePath.toString();
   }
 
+  @Override
+  public Map<Locale, String> getLocalizedTitlePaths() {
+    Tag parent = this.getParent();
+    Map<Locale, String> map = parent != null ? parent.getLocalizedTitlePaths() : new HashMap<>();
+
+    for (Map.Entry<Locale, String> entry : map.entrySet()) {
+      if (parent.isNamespace()) {
+        entry.setValue(entry.getValue() + TITLEPATH_NS_DELIMITER + getTitle(entry.getKey()));
+      } else {
+        entry.setValue(entry.getValue() + TITLEPATH_DELIMITER + getTitle(entry.getKey()));
+      }
+    }
+
+    Map<Locale, String> localMap = getLocalizedTitles();
+    for (Map.Entry<Locale, String> entry : localMap.entrySet()) {
+      if (parent == null) {
+        map.put(entry.getKey(), entry.getValue());
+      } else if (!map.containsKey(entry.getKey())) {
+        map.put(entry.getKey(), parent.getTitlePath(entry.getKey()) + TITLEPATH_DELIMITER + entry.getValue());
+      }
+    }
+
+    return map;
+  }
+
   // --- unsupported operations ---
 
   @Override
   public String getGQLSearchExpression(String arg0) {
-    throw new UnsupportedOperationException("Unsupported operation");
-  }
-
-  @Override
-  public Map<Locale, String> getLocalizedTitlePaths() {
     throw new UnsupportedOperationException("Unsupported operation");
   }
 

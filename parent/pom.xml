@@ -31,7 +31,7 @@
 
   <groupId>io.wcm</groupId>
   <artifactId>io.wcm.testing.aem-mock.parent</artifactId>
-  <version>5.2.2</version>
+  <version>5.3.0</version>
   <packaging>pom</packaging>
 
   <name>AEM Mocks</name>
@@ -50,16 +50,16 @@
   <properties>
 
     <!-- OSGi Mocks -->
-    <osgi-mock.version>3.3.8</osgi-mock.version>
+    <osgi-mock.version>3.3.10</osgi-mock.version>
 
     <!-- JCR Mocks -->
     <jcr-mock.version>1.6.10</jcr-mock.version>
 
     <!-- Resource Resolver Mock -->
-    <resourceresolver-mock.version>1.4.2</resourceresolver-mock.version>
+    <resourceresolver-mock.version>1.4.4</resourceresolver-mock.version>
 
     <!-- Sling Mock -->
-    <sling-mock.version>3.4.10</sling-mock.version>
+    <sling-mock.version>3.4.12</sling-mock.version>
 
     <!-- Servlet Helpers -->
     <servlet-helpers.version>1.4.6</servlet-helpers.version>
@@ -71,7 +71,7 @@
     <logging-logback.version>1.0.0</logging-logback.version>
 
     <!-- Enable reproducible builds -->
-    <project.build.outputTimestamp>2023-05-19T11:44:46Z</project.build.outputTimestamp>
+    <project.build.outputTimestamp>2023-08-21T09:27:12Z</project.build.outputTimestamp>
 
   </properties>
 
