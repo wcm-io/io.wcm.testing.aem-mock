@@ -430,13 +430,19 @@ class MockPageManager extends SlingAdaptable implements PageManager {
     throw new UnsupportedOperationException();
   }
 
+  // AEM 6.5.18
+  @SuppressWarnings("unused")
+  public Resource move(Resource resource, String destination, String beforeName, boolean shallow,
+      boolean resolveConflict, String[] adjustRefs, String[] publishRefs, String arg7) throws WCMException {
+    throw new UnsupportedOperationException();
+  }
+
   @Override
   public Resource copy(CopyOptions options) throws WCMException {
     throw new UnsupportedOperationException();
   }
 
-  // AEM Cloud
-  @SuppressWarnings("unused")
+  @Override
   public void delete(Resource arg0, boolean arg1, boolean arg2, boolean arg3) throws WCMException {
     throw new UnsupportedOperationException();
   }
