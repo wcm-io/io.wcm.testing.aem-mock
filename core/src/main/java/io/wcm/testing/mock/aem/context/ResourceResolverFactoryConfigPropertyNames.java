@@ -19,6 +19,7 @@
  */
 package io.wcm.testing.mock.aem.context;
 
+import java.lang.reflect.Method;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -42,7 +43,7 @@ final class ResourceResolverFactoryConfigPropertyNames {
     try {
       Class<?> resourceResolverFactoryConfigClass = Class.forName(ResourceResolverFactoryConfig.class.getName());
       Set<String> methodNames = Stream.of(resourceResolverFactoryConfigClass.getDeclaredMethods())
-          .map(method -> method.getName())
+          .map(Method::getName)
           .collect(Collectors.toSet());
       // use new names as fields do exist
       if (methodNames.contains("resource_resolver_vanitypath_allowlist")
