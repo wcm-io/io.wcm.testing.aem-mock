@@ -25,12 +25,14 @@ import java.util.List;
 import org.apache.sling.api.adapter.SlingAdaptable;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import com.day.cq.commons.inherit.HierarchyNodeInheritanceValueMap;
 import com.day.cq.commons.inherit.InheritanceValueMap;
 import com.day.cq.wcm.api.Page;
 
-public class MockExperienceFragmentBase extends SlingAdaptable {
+class MockExperienceFragmentBase extends SlingAdaptable {
 
   private final Page page;
 
@@ -55,7 +57,8 @@ public class MockExperienceFragmentBase extends SlingAdaptable {
   }
 
   @Override
-  public <AdapterType> AdapterType adaptTo(Class<AdapterType> type) {
+  @SuppressWarnings({ "unchecked", "null" })
+  public @Nullable <AdapterType> AdapterType adaptTo(@NotNull Class<AdapterType> type) {
     if (type == Resource.class) {
       return (AdapterType)page.adaptTo(Resource.class);
     }

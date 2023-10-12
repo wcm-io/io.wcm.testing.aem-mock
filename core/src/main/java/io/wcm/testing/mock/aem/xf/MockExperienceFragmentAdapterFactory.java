@@ -40,7 +40,7 @@ import com.day.cq.wcm.api.Page;
         AdapterFactory.ADAPTER_CLASSES + "=com.adobe.cq.xf.ExperienceFragmentVariation"
     })
 @ProviderType
-public class MockExperienceFragmentAdapterFactory implements AdapterFactory {
+public final class MockExperienceFragmentAdapterFactory implements AdapterFactory {
 
   @SuppressWarnings("unchecked")
   @Override

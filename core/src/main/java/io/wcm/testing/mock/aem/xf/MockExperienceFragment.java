@@ -39,9 +39,9 @@ import com.day.cq.wcm.api.Page;
 /**
  * Mock implementation of {@link ExperienceFragment}.
  */
-public class MockExperienceFragment extends MockExperienceFragmentBase implements ExperienceFragment {
+class MockExperienceFragment extends MockExperienceFragmentBase implements ExperienceFragment {
 
-  public MockExperienceFragment(Page page) {
+  MockExperienceFragment(Page page) {
     super(page);
   }
 

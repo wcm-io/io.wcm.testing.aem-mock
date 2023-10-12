@@ -23,7 +23,10 @@
     xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/plugins/maven-changes-plugin/xsd/changes-1.0.0.xsd">
   <body>
 
-    <release version="5.3.2" date="not released">
+    <release version="5.4.0" date="not released">
+      <action type="add" dev="royteeuwen" issue="23">
+        Add mocks for ExperienceFragment and ExperienceFragmentVariation, adaptable from page objects.
+      </action>
       <action type="update" dev="sseifert">
         Update to latest Sling Mock.
       </action>

@@ -23,6 +23,8 @@ import static com.adobe.cq.xf.ExperienceFragmentsConstants.CUSTOM_XF_VARIANT_TYP
 import static com.adobe.cq.xf.ExperienceFragmentsConstants.PN_XF_VARIANT_TYPE;
 
 import org.apache.sling.api.resource.ValueMap;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import com.adobe.cq.xf.ExperienceFragment;
 import com.adobe.cq.xf.ExperienceFragmentVariation;
@@ -32,11 +34,11 @@ import com.day.cq.wcm.api.Page;
 /**
  * Mock implementation of {@link ExperienceFragmentVariation}.
  */
-public class MockExperienceFragmentVariation extends MockExperienceFragmentBase implements ExperienceFragmentVariation {
+class MockExperienceFragmentVariation extends MockExperienceFragmentBase implements ExperienceFragmentVariation {
 
   private ExperienceFragment parent;
 
-  public MockExperienceFragmentVariation(Page page) {
+  MockExperienceFragmentVariation(Page page) {
     super(page);
   }
 
@@ -56,11 +58,12 @@ public class MockExperienceFragmentVariation extends MockExperienceFragmentBase 
   }
 
   @Override
-  public <AdapterType> AdapterType adaptTo(Class<AdapterType> aClass) {
-    if (aClass == Page.class) {
+  @SuppressWarnings("unchecked")
+  public @Nullable <AdapterType> AdapterType adaptTo(@NotNull Class<AdapterType> type) {
+    if (type == Page.class) {
       return (AdapterType)getPage();
     }
-    return super.adaptTo(aClass);
+    return super.adaptTo(type);
   }
 
   @Override
