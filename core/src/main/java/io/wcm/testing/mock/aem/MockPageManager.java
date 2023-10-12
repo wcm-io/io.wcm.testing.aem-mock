@@ -448,6 +448,7 @@ class MockPageManager extends SlingAdaptable implements PageManager {
   }
 
   // AEMaaCS 2023.9.13665.20230927T063259Z-230800
+  @SuppressWarnings("unused")
   public Resource override(CopyOptions options) throws WCMException {
     throw new UnsupportedOperationException();
   }
