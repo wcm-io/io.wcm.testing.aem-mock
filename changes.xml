@@ -24,7 +24,7 @@
   <body>
 
     <release version="5.4.0" date="not released">
-      <action type="add" dev="royteeuwen" issue="23">
+      <action type="add" dev="royteeuwen" issue="22">
         Add mocks for ExperienceFragment and ExperienceFragmentVariation, adaptable from page objects.
       </action>
       <action type="update" dev="sseifert">
