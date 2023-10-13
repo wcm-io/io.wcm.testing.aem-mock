@@ -47,15 +47,13 @@ public final class MockExperienceFragmentAdapterFactory implements AdapterFactor
   public @Nullable <AdapterType> AdapterType getAdapter(@NotNull Object object, @NotNull Class<AdapterType> type) {
     if (object instanceof Page) {
       Page page = (Page)object;
-      if (page.getContentResource().isResourceType(ExperienceFragmentsConstants.RT_EXPERIENCE_FRAGMENT_MASTER)) {
-        if (type == ExperienceFragment.class) {
+      if (page.getContentResource().isResourceType(ExperienceFragmentsConstants.RT_EXPERIENCE_FRAGMENT_MASTER) && (type == ExperienceFragment.class)) {
           return (AdapterType)new MockExperienceFragment(page);
-        }
+
       }
-      if (page.getContentResource().isResourceType(ExperienceFragmentsConstants.RT_EXPERIENCE_FRAGMENT_PAGE)) {
-        if (type == ExperienceFragmentVariation.class) {
+      if (page.getContentResource().isResourceType(ExperienceFragmentsConstants.RT_EXPERIENCE_FRAGMENT_PAGE) && (type == ExperienceFragmentVariation.class)) {
           return (AdapterType)new MockExperienceFragmentVariation(page);
-        }
+
       }
     }
     return null;
