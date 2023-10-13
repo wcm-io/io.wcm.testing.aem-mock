@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import io.wcm.testing.mock.aem.xf.MockExperienceFragmentAdapterFactory;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolverFactory;
@@ -76,6 +77,7 @@ public class AemContextImpl extends SlingContextImpl {
     registerInjectActivateService(new MockAemAdapterFactory());
     registerInjectActivateService(new MockAemDamAdapterFactory());
     registerInjectActivateService(new MockLayerAdapterFactory());
+    registerInjectActivateService(new MockExperienceFragmentAdapterFactory());
 
     // other services
     registerInjectActivateService(new MockAssetHandler());
