@@ -58,6 +58,11 @@ public class MockExperienceFragmentTest {
     ExperienceFragment experienceFragment = xfPage.adaptTo(ExperienceFragment.class);
     assertNotNull(experienceFragment);
 
+    Resource adaptedResource = experienceFragment.adaptTo(Resource.class);
+    assertEquals(xfResource, adaptedResource);
+    Page adaptedPage = experienceFragment.adaptTo(Page.class);
+    assertEquals(xfPage, adaptedPage);
+
     assertEquals("/content/experience-fragments/sample", experienceFragment.getPath());
     assertEquals("/conf/something", experienceFragment.getCloudserviceConfigurationsPaths().get(0));
     assertEquals(2, experienceFragment.getVariations().size());
@@ -74,6 +79,11 @@ public class MockExperienceFragmentTest {
     assertNull(masterPage.adaptTo(ExperienceFragment.class));
     ExperienceFragmentVariation variation = masterPage.adaptTo(ExperienceFragmentVariation.class);
     assertNotNull(variation);
+
+    Resource adaptedResource = variation.adaptTo(Resource.class);
+    assertEquals(masterResource, adaptedResource);
+    Page adaptedPage = variation.adaptTo(Page.class);
+    assertEquals(masterPage, adaptedPage);
 
     assertEquals("/content/experience-fragments/sample/master", variation.getPath());
     assertEquals("/conf/something", variation.getCloudserviceConfigurationsPaths().get(0));
