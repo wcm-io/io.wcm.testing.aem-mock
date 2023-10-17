@@ -19,12 +19,12 @@
  */
 package io.wcm.testing.mock.aem.context;
 
-import io.wcm.testing.mock.aem.MockJcrTagManagerFactory;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import io.wcm.testing.mock.aem.xf.MockExperienceFragmentAdapterFactory;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolverFactory;
@@ -46,6 +46,7 @@ import io.wcm.testing.mock.aem.MockAemAdapterFactory;
 import io.wcm.testing.mock.aem.MockComponentContext;
 import io.wcm.testing.mock.aem.MockContentPolicyStorage;
 import io.wcm.testing.mock.aem.MockExternalizer;
+import io.wcm.testing.mock.aem.MockJcrTagManagerFactory;
 import io.wcm.testing.mock.aem.MockLanguageManager;
 import io.wcm.testing.mock.aem.MockLayerAdapterFactory;
 import io.wcm.testing.mock.aem.MockPageManagerFactory;
@@ -76,6 +77,7 @@ public class AemContextImpl extends SlingContextImpl {
     registerInjectActivateService(new MockAemAdapterFactory());
     registerInjectActivateService(new MockAemDamAdapterFactory());
     registerInjectActivateService(new MockLayerAdapterFactory());
+    registerInjectActivateService(new MockExperienceFragmentAdapterFactory());
 
     // other services
     registerInjectActivateService(new MockAssetHandler());
@@ -140,12 +142,12 @@ public class AemContextImpl extends SlingContextImpl {
     props.put("resource.resolver.vanitypath.maxEntries", -1);
     props.put("resource.resolver.vanitypath.bloomfilter.maxBytes", 1024000);
     props.put("resource.resolver.optimize.alias.resolution", false);
-    props.put("resource.resolver.vanitypath.whitelist", new String[] {
+    props.put(ResourceResolverFactoryConfigPropertyNames.getVanityPathAllowListPropertyName(), new String[] {
         "/apps/",
         "/libs/",
         "/content/"
     });
-    props.put("resource.resolver.vanitypath.blacklist", new String[] {
+    props.put(ResourceResolverFactoryConfigPropertyNames.getVanityPathDenyListPropertyName(), new String[] {
         "/content/usergenerated"
     });
     props.put("resource.resolver.vanity.precedence", false);
