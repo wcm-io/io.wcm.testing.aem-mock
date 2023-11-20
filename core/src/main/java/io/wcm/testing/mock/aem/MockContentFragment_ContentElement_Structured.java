@@ -160,16 +160,16 @@ class MockContentFragment_ContentElement_Structured extends MockContentFragment_
     props.remove(structuredDataKey);
   }
 
+  @Override
+  public FragmentData getValue() {
+    Object value = structuredDataProps.get(structuredDataKey);
+    return new MockFragmentData(value, value.getClass().isArray());
+  }
 
   // --- unsupported operations ---
 
   @Override
   public ContentVariation getResolvedVariation(String variationName) {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public FragmentData getValue() {
     throw new UnsupportedOperationException();
   }
 
