@@ -58,7 +58,6 @@ public class MockFragmentData implements FragmentData {
         this.contentType = contentType;
     }
 
-    @Override
     public @Nullable Calendar getLastModified() {
         return null;
     }

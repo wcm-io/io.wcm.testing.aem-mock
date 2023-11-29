@@ -13,7 +13,6 @@ public class MockDataType implements DataType {
         this.isArray = isArray;
     }
 
-    @Override
     public @Nullable String getSemanticType() {
         return StringUtils.EMPTY;
     }
@@ -30,7 +29,6 @@ public class MockDataType implements DataType {
         throw new UnsupportedOperationException();
     }
 
-    @Override
     public @NotNull String getValueType() {
         throw new UnsupportedOperationException();
     }
