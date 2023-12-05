@@ -163,7 +163,7 @@ class MockContentFragment_ContentElement_Structured extends MockContentFragment_
   @Override
   public FragmentData getValue() {
     Object value = structuredDataProps.get(structuredDataKey);
-    return new MockFragmentData(value, value.getClass().isArray());
+    return new MockContentFragment_MockFragmentData(value, value.getClass().isArray());
   }
 
   // --- unsupported operations ---

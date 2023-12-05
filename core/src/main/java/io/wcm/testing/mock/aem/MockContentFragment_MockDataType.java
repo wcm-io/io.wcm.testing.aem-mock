@@ -6,11 +6,11 @@ import org.jetbrains.annotations.Nullable;
 
 import com.adobe.cq.dam.cfm.DataType;
 
-public class MockDataType implements DataType {
+class MockContentFragment_MockDataType implements DataType {
 
-  boolean isArray;
+  private final boolean isArray;
 
-  public MockDataType(boolean isArray) {
+  MockContentFragment_MockDataType(boolean isArray) {
     this.isArray = isArray;
   }
 

@@ -9,15 +9,15 @@ import com.adobe.cq.dam.cfm.ContentFragmentException;
 import com.adobe.cq.dam.cfm.DataType;
 import com.adobe.cq.dam.cfm.FragmentData;
 
-public class MockFragmentData implements FragmentData {
+class MockContentFragment_MockFragmentData implements FragmentData {
 
   private Object value;
   private String contentType;
-  private final MockDataType mockDataType;
+  private final MockContentFragment_MockDataType mockDataType;
 
-  public MockFragmentData(Object value, boolean isArray) {
+  MockContentFragment_MockFragmentData(Object value, boolean isArray) {
     this.value = value;
-    this.mockDataType = new MockDataType(isArray);
+    this.mockDataType = new MockContentFragment_MockDataType(isArray);
   }
 
   @Override
