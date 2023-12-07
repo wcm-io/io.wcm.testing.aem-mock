@@ -24,7 +24,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import io.wcm.testing.mock.aem.xf.MockExperienceFragmentAdapterFactory;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolverFactory;
@@ -57,6 +56,7 @@ import io.wcm.testing.mock.aem.dam.MockAssetHandler;
 import io.wcm.testing.mock.aem.dam.MockAssetStore;
 import io.wcm.testing.mock.aem.dam.MockPublishUtils;
 import io.wcm.testing.mock.aem.granite.MockResourceCollectionManager;
+import io.wcm.testing.mock.aem.xf.MockExperienceFragmentAdapterFactory;
 
 /**
  * Defines AEM context objects with lazy initialization.
@@ -141,7 +141,6 @@ public class AemContextImpl extends SlingContextImpl {
     props.put("resource.resolver.enable.vanitypath", false);
     props.put("resource.resolver.vanitypath.maxEntries", -1);
     props.put("resource.resolver.vanitypath.bloomfilter.maxBytes", 1024000);
-    props.put("resource.resolver.optimize.alias.resolution", false);
     props.put(ResourceResolverFactoryConfigPropertyNames.getVanityPathAllowListPropertyName(), new String[] {
         "/apps/",
         "/libs/",
