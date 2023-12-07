@@ -28,7 +28,8 @@
         Update to latest Sling Mock.
       </action>
       <action type="update" dev="sseifert" issue="29">
-        Resource Resolver Factory: Switch back to resource.resolver.optimize.alias.resolution=true (which is default) to avoid warning.
+        Resource Resolver Factory: Set resource.resolver.optimize.alias.resolution=true and resource.resolver.enable.vanitypath=true to use the optimized sling:alias resolution.
+        As a result, sling:alias resolution is only supported with JCR_OAK resource resolver type.
       </action>
     </release>
 
