@@ -21,8 +21,11 @@ package io.wcm.testing.mock.aem.context;
 
 import static com.day.cq.commons.jcr.JcrConstants.JCR_PRIMARYTYPE;
 import static com.day.cq.commons.jcr.JcrConstants.NT_UNSTRUCTURED;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.awaitility.Awaitility.await;
 import static org.junit.Assert.assertEquals;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.PersistenceException;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.ResourceResolverType;
@@ -52,7 +55,10 @@ public class SlingAlias_JcrOakTest {
     context.resourceResolver().commit();
 
     assertEquals(contentRoot + "/myresource", resource.getPath());
-    assertEquals(contentRoot + "/myalias", context.resourceResolver().map(resource.getPath()));
+
+    // alias processing happens asynchronously, so it may take a bit until the alias resolution works
+    await().atMost(2, SECONDS).until(() -> StringUtils.equals(contentRoot + "/myalias",
+        context.resourceResolver().map(resource.getPath())));
   }
 
 }
