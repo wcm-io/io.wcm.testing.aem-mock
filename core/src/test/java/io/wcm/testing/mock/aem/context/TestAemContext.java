@@ -32,6 +32,7 @@ import org.jetbrains.annotations.NotNull;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.wcm.testing.mock.aem.junit.AemContext;
+import io.wcm.testing.mock.aem.junit.AemContextBuilder;
 import io.wcm.testing.mock.aem.junit.AemContextCallback;
 
 public final class TestAemContext {
@@ -57,6 +58,15 @@ public final class TestAemContext {
 
   public static @NotNull AemContext newAemContext(ResourceResolverType... resourceResolverTypes) {
     return new AemContext(new SetUpCallback(), resourceResolverTypes);
+  }
+
+  public static @NotNull AemContextBuilder newAemContextBuilder() {
+    return newAemContextBuilder(ALL_TYPES);
+  }
+
+  public static @NotNull AemContextBuilder newAemContextBuilder(ResourceResolverType... resourceResolverTypes) {
+    return new AemContextBuilder(resourceResolverTypes)
+        .afterSetUp(new SetUpCallback());
   }
 
   /**
