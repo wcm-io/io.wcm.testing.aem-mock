@@ -27,8 +27,8 @@
       <action type="update" dev="sseifert">
         Update to latest Sling Mock.
       </action>
-      <action type="update" dev="sseifert">
-        Resource Resolver Factory: Switch back to resource.resolver.optimize.alias.resolution=true to avoid warning.
+      <action type="update" dev="sseifert" issue="29">
+        Resource Resolver Factory: Switch back to resource.resolver.optimize.alias.resolution=true (which is default) to avoid warning.
       </action>
     </release>
 
