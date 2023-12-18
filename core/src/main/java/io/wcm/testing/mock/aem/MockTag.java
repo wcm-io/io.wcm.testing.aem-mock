@@ -35,7 +35,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.function.BinaryOperator;
 
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jackrabbit.util.ISO9075;
 import org.apache.sling.api.adapter.SlingAdaptable;
