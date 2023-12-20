@@ -349,7 +349,7 @@ class MockTag extends SlingAdaptable implements Tag, Comparable<Tag> {
 
     while (ancestor != null) {
       Tag parent = ancestor.getParent();
-      if (ancestor != this) {
+      if (!ancestor.equals(this)) {
         if (parent == null) {
           if (DEFAULT_NAMESPACE.equals(ancestor.getName())) {
             break;
