@@ -25,6 +25,9 @@
 
     <release version="5.5.0" date="not released">
       <action type="update" dev="sseifert">
+        Update to latest JCR Mock, OSGI Mock, ResourceResolver Mock, Sling Mock.
+      </action>
+      <action type="update" dev="sseifert">
         Switch to AEM 6.5.17 as minimum version.
       </action>
     </release>
