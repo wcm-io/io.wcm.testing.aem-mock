@@ -32,6 +32,7 @@ import org.jetbrains.annotations.Nullable;
 import org.osgi.service.component.annotations.Component;
 
 import com.adobe.cq.wcm.spi.AssetDelivery;
+import com.day.cq.dam.api.Asset;
 
 /**
  * Mock implementation of {@link AssetDelivery}.
@@ -70,7 +71,7 @@ public final class MockAssetDelivery implements AssetDelivery {
         .map(entry -> URLEncoder.encode(entry.getKey(), StandardCharsets.UTF_8) + "=" + URLEncoder.encode(entry.getValue().toString(), StandardCharsets.UTF_8))
         .collect(Collectors.joining("&"));
 
-    String assetId = DigestUtils.md5Hex(path);
+    String assetId = getAssetId(path);
 
     StringBuilder sb = new StringBuilder();
     sb.append(ASSET_DELIVERY_URL_PREFIX)
@@ -89,6 +90,24 @@ public final class MockAssetDelivery implements AssetDelivery {
       throw new IllegalArgumentException("Missing parameter: " + paramName);
     }
     return value.toString();
+  }
+
+  /**
+   * Generate Asset ID for given asset.
+   * @param asset Asset
+   * @return MD5 hash of asset path
+   */
+  public static String getAssetId(@NotNull Asset asset) {
+    return getAssetId(asset.getPath());
+  }
+
+  /**
+   * Generate Asset ID for given path.
+   * @param path Asset path
+   * @return MD5 hash of asset path
+   */
+  public static String getAssetId(@NotNull String path) {
+    return DigestUtils.md5Hex(path);
   }
 
 }
