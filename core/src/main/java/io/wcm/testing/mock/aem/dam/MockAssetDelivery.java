@@ -46,15 +46,8 @@ public final class MockAssetDelivery implements AssetDelivery {
   static final String PARAM_SEO_NAME = "seoname";
   static final String PARAM_FORMAT = "format";
 
-  private static final Set<String> ALLOWED_URL_PARAMS = Set.of(
-      "width",
-      "quality",
-      "c",
-      "r",
-      "flip",
-      "sz",
-      "preferwebp"
-  );
+  private static final Set<String> DISALLOWED_URL_PARAMS = Set.of(
+      PARAM_PATH, PARAM_SEO_NAME, PARAM_FORMAT);
 
   @Override
   public @Nullable String getDeliveryURL(@NotNull Resource resource, @Nullable Map<String, Object> parameterMap) {
@@ -66,7 +59,7 @@ public final class MockAssetDelivery implements AssetDelivery {
     String format = getMandatoryStringParam(parameterMap, PARAM_FORMAT);
 
     String urlParams = parameterMap.entrySet().stream()
-        .filter(entry -> ALLOWED_URL_PARAMS.contains(entry.getKey()) && entry.getValue() != null)
+        .filter(entry -> !DISALLOWED_URL_PARAMS.contains(entry.getKey()) && entry.getValue() != null)
         .sorted(Map.Entry.comparingByKey())
         .map(entry -> URLEncoder.encode(entry.getKey(), StandardCharsets.UTF_8) + "=" + URLEncoder.encode(entry.getValue().toString(), StandardCharsets.UTF_8))
         .collect(Collectors.joining("&"));
@@ -76,8 +69,8 @@ public final class MockAssetDelivery implements AssetDelivery {
     StringBuilder sb = new StringBuilder();
     sb.append(ASSET_DELIVERY_URL_PREFIX)
         .append("/").append(assetId)
-        .append("/").append(seoname)
-        .append(".").append(format);
+        .append("/").append(URLEncoder.encode(seoname, StandardCharsets.UTF_8))
+        .append(".").append(URLEncoder.encode(format, StandardCharsets.UTF_8));
     if (!urlParams.isEmpty()) {
       sb.append("?").append(urlParams);
     }
