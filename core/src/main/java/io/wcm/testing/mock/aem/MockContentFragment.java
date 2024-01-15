@@ -50,7 +50,7 @@ import com.day.cq.tagging.Tag;
 /**
  * Mock implementation of {@link ContentFragment}.
  */
-class MockContentFragment extends MockContentFragment_Versionable implements ContentFragment {
+final class MockContentFragment extends MockContentFragment_Versionable implements ContentFragment {
 
   private final Resource assetResource;
   private final Asset asset;
@@ -262,35 +262,41 @@ class MockContentFragment extends MockContentFragment_Versionable implements Con
   }
 
   // latest AEM Cloud API
+  @Override
   public @Nullable Calendar getLastModifiedDate() {
     throw new UnsupportedOperationException();
   }
 
   // latest AEM Cloud API
+  @Override
   @SuppressWarnings("unused")
   public @NotNull Calendar getLastModifiedDeep() throws ContentFragmentException {
     throw new UnsupportedOperationException();
   }
 
   // latest AEM Cloud API
+  @Override
   @SuppressWarnings("unused")
   public void setTags(@NotNull Tag[] tags) throws ContentFragmentException {
     throw new UnsupportedOperationException();
   }
 
   // latest AEM Cloud API
+  @Override
   @SuppressWarnings("unused")
   public @NotNull Tag[] getTags() throws ContentFragmentException {
     throw new UnsupportedOperationException();
   }
 
   // latest AEM Cloud API
+  @Override
   @SuppressWarnings("unused")
   public void setVariationTags(@NotNull Tag[] tags, @NotNull String variationName) throws ContentFragmentException {
     throw new UnsupportedOperationException();
   }
 
   // latest AEM Cloud API
+  @Override
   @SuppressWarnings("unused")
   public @NotNull Tag[] getVariationTags(@NotNull String variationName) throws ContentFragmentException {
     throw new UnsupportedOperationException();

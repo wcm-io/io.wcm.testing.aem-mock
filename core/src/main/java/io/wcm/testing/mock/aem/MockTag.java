@@ -58,7 +58,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * Mock implementation of {@link Tag}.
  */
 @SuppressWarnings("null")
-class MockTag extends SlingAdaptable implements Tag, Comparable<Tag> {
+final class MockTag extends SlingAdaptable implements Tag, Comparable<Tag> {
 
   /** resource being represented as a Tag */
   private final Resource resource;
