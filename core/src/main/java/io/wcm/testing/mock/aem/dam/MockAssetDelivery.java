@@ -35,7 +35,13 @@ import com.adobe.cq.wcm.spi.AssetDelivery;
 
 /**
  * Mock implementation of {@link AssetDelivery}.
+ * <p>
  * As Asset ID a md5 hash of the path is used.
+ * </p>
+ * <p>
+ * This OSGi service is not registered by default in AEM Mocks, as it is not available in all contexts
+ * (e.g. not in AEM 6.5 and AEMaaCS SDK).
+ * </p>
  */
 @Component(service = AssetDelivery.class)
 public final class MockAssetDelivery implements AssetDelivery {

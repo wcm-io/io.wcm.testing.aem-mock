@@ -25,7 +25,7 @@
 
     <release version="5.5.0" date="not released">
       <action type="add" dev="sseifert" issue="30">
-        Add mock for AssetDelivery OSGi service.
+        Add mock for AssetDelivery OSGi service (not registered by default).
       </action>
       <action type="update" dev="sseifert">
         Update to latest JCR Mock, OSGI Mock, ResourceResolver Mock, Sling Mock.
