@@ -24,7 +24,7 @@
   <body>
 
     <release version="5.5.0" date="not released">
-      <action type="add" dev="sseifert">
+      <action type="add" dev="sseifert" issue="30">
         Add mock for AssetDelivery OSGi service.
       </action>
       <action type="update" dev="sseifert">

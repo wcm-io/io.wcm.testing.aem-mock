@@ -57,8 +57,8 @@ public class MockAssetDeliveryTest {
 
   @Test
   public void testGetDeliveryURL() {
-    assertWithParams("/asset/delivery/889908393/test.jpg", Map.of());
-    assertWithParams("/asset/delivery/889908393/test.jpg?quality=80&width=100", Map.of(
+    assertWithParams("/asset/delivery/2cb13619ffaa0b3012476fbd96ec1a29/test.jpg", Map.of());
+    assertWithParams("/asset/delivery/2cb13619ffaa0b3012476fbd96ec1a29/test.jpg?quality=80&width=100", Map.of(
         "width", 100,
         "quality", 80,
         "invalid", 1));

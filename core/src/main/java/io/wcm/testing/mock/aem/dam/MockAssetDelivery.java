@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.sling.api.resource.Resource;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -34,6 +35,7 @@ import com.adobe.cq.wcm.spi.AssetDelivery;
 
 /**
  * Mock implementation of {@link AssetDelivery}.
+ * As Asset ID a md5 hash of the path is used.
  */
 @Component(service = AssetDelivery.class)
 public final class MockAssetDelivery implements AssetDelivery {
@@ -69,9 +71,11 @@ public final class MockAssetDelivery implements AssetDelivery {
         .map(entry -> URLEncoder.encode(entry.getKey(), StandardCharsets.UTF_8) + "=" + URLEncoder.encode(entry.getValue().toString(), StandardCharsets.UTF_8))
         .collect(Collectors.joining("&"));
 
+    String assetId = DigestUtils.md5Hex(path);
+
     StringBuilder sb = new StringBuilder();
     sb.append(ASSET_DELIVERY_URL_PREFIX)
-        .append("/").append(path.hashCode())
+        .append("/").append(assetId)
         .append("/").append(seoname)
         .append(".").append(format);
     if (!urlParams.isEmpty()) {
