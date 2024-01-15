@@ -24,6 +24,9 @@
   <body>
 
     <release version="5.5.0" date="not released">
+      <action type="add" dev="sseifert">
+        Add mock for AssetDelivery OSGi service.
+      </action>
       <action type="update" dev="sseifert">
         Update to latest JCR Mock, OSGI Mock, ResourceResolver Mock, Sling Mock.
       </action>
