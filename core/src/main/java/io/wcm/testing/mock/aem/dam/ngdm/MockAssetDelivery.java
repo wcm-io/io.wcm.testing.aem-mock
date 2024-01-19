@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package io.wcm.testing.mock.aem.dam;
+package io.wcm.testing.mock.aem.dam.ngdm;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;

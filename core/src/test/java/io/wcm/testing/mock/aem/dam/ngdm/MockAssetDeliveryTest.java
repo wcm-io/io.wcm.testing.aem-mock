@@ -17,11 +17,11 @@
  * limitations under the License.
  * #L%
  */
-package io.wcm.testing.mock.aem.dam;
+package io.wcm.testing.mock.aem.dam.ngdm;
 
-import static io.wcm.testing.mock.aem.dam.MockAssetDelivery.PARAM_FORMAT;
-import static io.wcm.testing.mock.aem.dam.MockAssetDelivery.PARAM_PATH;
-import static io.wcm.testing.mock.aem.dam.MockAssetDelivery.PARAM_SEO_NAME;
+import static io.wcm.testing.mock.aem.dam.ngdm.MockAssetDelivery.PARAM_FORMAT;
+import static io.wcm.testing.mock.aem.dam.ngdm.MockAssetDelivery.PARAM_PATH;
+import static io.wcm.testing.mock.aem.dam.ngdm.MockAssetDelivery.PARAM_SEO_NAME;
 import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
