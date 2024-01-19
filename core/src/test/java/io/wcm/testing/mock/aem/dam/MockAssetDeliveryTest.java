@@ -58,8 +58,8 @@ public class MockAssetDeliveryTest {
   @Test
   public void testGetDeliveryURL() {
     String assetId = MockAssetDelivery.getAssetId(asset);
-    assertWithParams("/asset/delivery/" + assetId + "/test.jpg", Map.of());
-    assertWithParams("/asset/delivery/" + assetId + "/test.jpg?preferwebp=true&quality=80&width=100",
+    assertWithParams("/adobe/dynamicmedia/deliver/" + assetId + "/test.jpg", Map.of());
+    assertWithParams("/adobe/dynamicmedia/deliver/" + assetId + "/test.jpg?preferwebp=true&quality=80&width=100",
         Map.of("width", 100,
             "quality", 80,
             "preferwebp", true));

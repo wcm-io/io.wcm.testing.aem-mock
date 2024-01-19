@@ -35,7 +35,7 @@ import com.adobe.cq.wcm.spi.AssetDelivery;
 import com.day.cq.dam.api.Asset;
 
 /**
- * Mock implementation of {@link AssetDelivery}.
+ * Mock implementation of {@link AssetDelivery} for Web-Optimized Image Delivery.
  * <p>
  * As Asset ID a md5 hash of the path is used.
  * </p>
@@ -47,7 +47,7 @@ import com.day.cq.dam.api.Asset;
 @Component(service = AssetDelivery.class)
 public final class MockAssetDelivery implements AssetDelivery {
 
-  private static final String ASSET_DELIVERY_URL_PREFIX = "/asset/delivery";
+  private static final String ASSET_DELIVERY_URL_PREFIX = "/adobe/dynamicmedia/deliver";
 
   static final String PARAM_PATH = "path";
   static final String PARAM_SEO_NAME = "seoname";
