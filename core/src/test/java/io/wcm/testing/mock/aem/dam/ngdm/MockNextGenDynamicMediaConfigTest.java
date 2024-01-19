@@ -19,8 +19,17 @@
  */
 package io.wcm.testing.mock.aem.dam.ngdm;
 
+import static io.wcm.testing.mock.aem.dam.ngdm.MockNextGenDynamicMediaConfig.DEFAULT_ASSET_METADATA_PATH;
+import static io.wcm.testing.mock.aem.dam.ngdm.MockNextGenDynamicMediaConfig.DEFAULT_ASSET_ORIGINAL_BINARY_DELIVERY_PATH;
+import static io.wcm.testing.mock.aem.dam.ngdm.MockNextGenDynamicMediaConfig.DEFAULT_ASSET_SELECTORS_JS_URL;
+import static io.wcm.testing.mock.aem.dam.ngdm.MockNextGenDynamicMediaConfig.DEFAULT_ENV;
+import static io.wcm.testing.mock.aem.dam.ngdm.MockNextGenDynamicMediaConfig.DEFAULT_IMAGE_DELIVERY_BASE_PATH;
+import static io.wcm.testing.mock.aem.dam.ngdm.MockNextGenDynamicMediaConfig.DEFAULT_IMS_ENV;
+import static io.wcm.testing.mock.aem.dam.ngdm.MockNextGenDynamicMediaConfig.DEFAULT_VIDEO_DELIVERY_PATH;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -44,7 +53,46 @@ public class MockNextGenDynamicMediaConfigTest {
   @Test
   public void testDefaultProperties() {
     assertFalse(underTest.enabled());
-    assertEquals(MockNextGenDynamicMediaConfig.DEFAULT_IMAGE_DELIVERY_BASE_PATH, underTest.getImageDeliveryBasePath());
+    assertNull(underTest.getRepositoryId());
+    assertNull(underTest.getApiKey());
+    assertEquals(DEFAULT_ENV, underTest.getEnv());
+    assertNull(underTest.getImsOrg());
+    assertEquals(DEFAULT_IMS_ENV, underTest.getImsEnv());
+    assertNull(underTest.getImsClient());
+    assertEquals(DEFAULT_ASSET_SELECTORS_JS_URL, underTest.getAssetSelectorsJsUrl());
+    assertEquals(DEFAULT_IMAGE_DELIVERY_BASE_PATH, underTest.getImageDeliveryBasePath());
+    assertEquals(DEFAULT_VIDEO_DELIVERY_PATH, underTest.getVideoDeliveryPath());
+    assertEquals(DEFAULT_ASSET_ORIGINAL_BINARY_DELIVERY_PATH, underTest.getAssetOriginalBinaryDeliveryPath());
+    assertEquals(DEFAULT_ASSET_METADATA_PATH, underTest.getAssetMetadataPath());
+  }
+
+  @Test
+  public void testProperties() {
+    underTest.setEnabled(true);
+    underTest.setRepositoryId("repository1");
+    underTest.setApiKey("key1");
+    underTest.setEnv("STAGE");
+    underTest.setImsOrg("org1");
+    underTest.setImsEnv("stg1");
+    underTest.setImsClient("client1");
+    underTest.setAssetSelectorsJsUrl("https://selectors1");
+    underTest.setImageDeliveryBasePath("/image1");
+    underTest.setVideoDeliveryPath("/video1");
+    underTest.setAssetOriginalBinaryDeliveryPath("/original1");
+    underTest.setAssetMetadataPath("/metadata1");
+
+    assertTrue(underTest.enabled());
+    assertEquals("repository1", underTest.getRepositoryId());
+    assertEquals("key1", underTest.getApiKey());
+    assertEquals("STAGE", underTest.getEnv());
+    assertEquals("org1", underTest.getImsOrg());
+    assertEquals("stg1", underTest.getImsEnv());
+    assertEquals("client1", underTest.getImsClient());
+    assertEquals("https://selectors1", underTest.getAssetSelectorsJsUrl());
+    assertEquals("/image1", underTest.getImageDeliveryBasePath());
+    assertEquals("/video1", underTest.getVideoDeliveryPath());
+    assertEquals("/original1", underTest.getAssetOriginalBinaryDeliveryPath());
+    assertEquals("/metadata1", underTest.getAssetMetadataPath());
   }
 
 }

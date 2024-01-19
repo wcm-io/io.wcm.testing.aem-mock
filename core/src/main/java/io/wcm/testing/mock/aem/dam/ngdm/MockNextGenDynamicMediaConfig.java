@@ -34,19 +34,29 @@ public final class MockNextGenDynamicMediaConfig implements NextGenDynamicMediaC
 
   @SuppressWarnings("java:S1075") // not a file system path
   static final String DEFAULT_IMAGE_DELIVERY_BASE_PATH = "/adobe/dynamicmedia/deliver/{asset-id}/{seo-name}.{format}";
+  @SuppressWarnings("java:S1075") // not a file system path
+  static final String DEFAULT_VIDEO_DELIVERY_PATH = "/adobe/assets/{asset-id}/play?accept-experimental";
+  @SuppressWarnings("java:S1075") // not a file system path
+  static final String DEFAULT_ASSET_ORIGINAL_BINARY_DELIVERY_PATH = "/adobe/assets/deliver/{asset-id}/{seo-name}";
+  @SuppressWarnings("java:S1075") // not a file system path
+  static final String DEFAULT_ASSET_METADATA_PATH = "/adobe/assets/{asset-id}/metadata";
+
+  static final String DEFAULT_ENV = "PROD";
+  static final String DEFAULT_IMS_ENV = "prd";
+  static final String DEFAULT_ASSET_SELECTORS_JS_URL = "https://experience.adobe.com/solutions/CQ-assets-selectors/static-assets/resources/assets-selectors.js";
 
   private boolean enabled;
   private String repositoryId;
   private String apiKey;
-  private String env;
+  private String env = DEFAULT_ENV;
   private String imsOrg;
-  private String imsEnv;
+  private String imsEnv = DEFAULT_IMS_ENV;
   private String imsClient;
-  private String assetSelectorsJsUrl;
+  private String assetSelectorsJsUrl = DEFAULT_ASSET_SELECTORS_JS_URL;
   private String imageDeliveryBasePath = DEFAULT_IMAGE_DELIVERY_BASE_PATH;
-  private String videoDeliveryPath;
-  private String assetOriginalBinaryDeliveryPath;
-  private String assetMetadataPath;
+  private String videoDeliveryPath = DEFAULT_VIDEO_DELIVERY_PATH;
+  private String assetOriginalBinaryDeliveryPath = DEFAULT_ASSET_ORIGINAL_BINARY_DELIVERY_PATH;
+  private String assetMetadataPath = DEFAULT_ASSET_METADATA_PATH;
 
   @Override
   public boolean enabled() {
