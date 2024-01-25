@@ -563,13 +563,13 @@ public final class ContentBuilder extends org.apache.sling.testing.mock.sling.bu
     resource(path + "/" + JcrConstants.JCR_CONTENT + "/" + DamConstants.METADATA_FOLDER, metadataProps);
 
     // store text as original rendition
-    if (text != null) {
+    if (text != null && mimeType != null) {
       try (InputStream is = new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8))) {
         ContentLoader contentLoader = new ContentLoader(resourceResolver);
         contentLoader.binaryFile(is, renditionsPath + "/" + DamConstants.ORIGINAL_FILE, mimeType);
       }
       catch (IOException ex) {
-        throw new RuntimeException("Unable to create content fragment at " + path, ex);
+        throw new IllegalArgumentException("Unable to create content fragment at " + path, ex);
       }
 
       // create model/elements/main node

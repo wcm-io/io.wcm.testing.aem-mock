@@ -19,6 +19,8 @@
  */
 package io.wcm.testing.mock.aem;
 
+import static org.apache.sling.api.resource.ResourceResolver.PROPERTY_RESOURCE_TYPE;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -40,8 +42,6 @@ import com.day.cq.wcm.api.NameConstants;
 import com.day.cq.wcm.api.components.Component;
 import com.day.cq.wcm.api.components.ComponentEditConfig;
 import com.day.cq.wcm.api.components.VirtualComponent;
-
-import static org.apache.sling.api.resource.ResourceResolver.PROPERTY_RESOURCE_TYPE;
 
 /**
  * Mock implementation of {@link Component}.
@@ -261,12 +261,12 @@ class MockComponent extends SlingAdaptable implements Component {
     }
 
     @Override
-    public <T> T get(String name, Class<T> type) {
+    public <T> T get(@NotNull String name, Class<T> type) {
       return super.get(removeKeyPrefix(name), type);
     }
 
     @Override
-    public <T> T get(String name, T defaultValue) {
+    public <T> T get(@NotNull String name, T defaultValue) {
       return super.get(removeKeyPrefix(name), defaultValue);
     }
 

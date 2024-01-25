@@ -79,6 +79,7 @@ public final class MockComponentContext implements ComponentContext {
 
   @Override
   @SuppressFBWarnings("RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE")
+  @SuppressWarnings("java:S2583") // null check
   public Component getComponent() {
     Resource currentResource = getResource();
     if (currentResource == null) {
@@ -86,7 +87,7 @@ public final class MockComponentContext implements ComponentContext {
     }
     ComponentManager componentManager = currentResource.getResourceResolver().adaptTo(ComponentManager.class);
     if (componentManager == null) {
-      throw new RuntimeException("No component manager.");
+      throw new IllegalStateException("No component manager.");
     }
     return componentManager.getComponentOfResource(currentResource);
   }

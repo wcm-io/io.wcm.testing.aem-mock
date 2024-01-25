@@ -45,7 +45,8 @@ class MockAemBindingsValuesProvider implements BindingsValuesProvider {
 
   static final String PROPERTY_CONTEXT = "context";
 
-  private volatile AemContextImpl context;
+  @SuppressWarnings("java:S1845") // naming
+  private AemContextImpl context;
 
   @Activate
   private void activate(Map<String, Object> config) {

@@ -61,7 +61,7 @@ import com.day.text.Text;
 public final class MockLanguageManager implements LanguageManager {
 
   @Override
-  @Deprecated
+  @Deprecated(forRemoval = true)
   public Map<Locale, Info> getAdjacentInfo(final ResourceResolver resourceResolver, final String path) {
     return Optional.ofNullable(getAdjacentLanguageInfo(resourceResolver, path))
         .map(Map::entrySet)
@@ -71,6 +71,7 @@ public final class MockLanguageManager implements LanguageManager {
   }
 
   @Override
+  @SuppressWarnings("null")
   public Map<Language, Info> getAdjacentLanguageInfo(final ResourceResolver resourceResolver, final String path) {
     return Optional.ofNullable(LanguageUtil.getLanguageRoot(path))
         .map(root -> path.substring(root.length()))

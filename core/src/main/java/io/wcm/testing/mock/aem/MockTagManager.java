@@ -21,7 +21,6 @@ package io.wcm.testing.mock.aem;
 
 import static com.day.cq.tagging.TagConstants.TAG_ROOT_PATH;
 
-import java.security.AccessControlException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -149,13 +148,13 @@ public final class MockTagManager implements TagManager {
 
   @Override
   public Tag createTag(String tagID, String title, String description)
-      throws AccessControlException, InvalidTagFormatException {
+      throws InvalidTagFormatException {
     return createTag(tagID, title, description, true);
   }
 
   @Override
   public Tag createTag(String tagID, String title, String description, boolean autoSave)
-      throws AccessControlException, InvalidTagFormatException {
+      throws InvalidTagFormatException {
     String tagPath = getPathFromID(tagID);
     if (!StringUtils.startsWith(tagPath, TAG_ROOT_PATH)) {
       throw new InvalidTagFormatException("Tag path '" + tagPath + "' does not start with: " + TAG_ROOT_PATH);
@@ -196,17 +195,17 @@ public final class MockTagManager implements TagManager {
   }
 
   @Override
-  public Tag createTagByTitle(String titlePath) throws AccessControlException, InvalidTagFormatException {
+  public Tag createTagByTitle(String titlePath) throws InvalidTagFormatException {
     return createTagByTitle(titlePath, true);
   }
 
   @Override
-  public void deleteTag(Tag tag) throws AccessControlException {
+  public void deleteTag(Tag tag) {
     deleteTag(tag, true);
   }
 
   @Override
-  public void deleteTag(Tag tag, boolean autoSave) throws AccessControlException {
+  public void deleteTag(Tag tag, boolean autoSave) {
     Resource tagResource = tag.adaptTo(Resource.class);
     if (tagResource == null) {
       return;
@@ -427,7 +426,7 @@ public final class MockTagManager implements TagManager {
   public void setTags(Resource resource, Tag[] tags, boolean autoSave) {
     ModifiableValueMap props = resource.adaptTo(ModifiableValueMap.class);
     if (props == null) {
-      throw new RuntimeException("Unable to get modifiable value map: " + resource.getPath());
+      throw new IllegalStateException("Unable to get modifiable value map: " + resource.getPath());
     }
     if (tags == null) {
       props.remove(TagConstants.PN_TAGS);
@@ -444,7 +443,8 @@ public final class MockTagManager implements TagManager {
     if (autoSave) {
       try {
         resourceResolver.commit();
-      } catch (PersistenceException e) {
+      }
+      catch (PersistenceException e) {
         log.error("failed to commit updates for setting tags", e);
       }
     }
@@ -470,12 +470,12 @@ public final class MockTagManager implements TagManager {
   }
 
   @Override
-  public Tag createTagByTitle(String titlePath, boolean autoSave) throws AccessControlException, InvalidTagFormatException {
+  public Tag createTagByTitle(String titlePath, boolean autoSave) throws InvalidTagFormatException {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public Tag createTagByTitle(String titlePath, Locale locale) throws AccessControlException, InvalidTagFormatException {
+  public Tag createTagByTitle(String titlePath, Locale locale) throws InvalidTagFormatException {
     throw new UnsupportedOperationException();
   }
 
@@ -490,12 +490,12 @@ public final class MockTagManager implements TagManager {
   }
 
   @Override
-  public void mergeTag(Tag tag, Tag destination) throws AccessControlException, TagException {
+  public void mergeTag(Tag tag, Tag destination) throws TagException {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public Tag moveTag(Tag tag, String destination) throws AccessControlException, InvalidTagFormatException, TagException {
+  public Tag moveTag(Tag tag, String destination) throws InvalidTagFormatException, TagException {
     throw new UnsupportedOperationException();
   }
 
