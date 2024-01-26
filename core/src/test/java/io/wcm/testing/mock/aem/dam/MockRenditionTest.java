@@ -20,9 +20,8 @@
 package io.wcm.testing.mock.aem.dam;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import org.apache.sling.api.resource.Resource;
 import org.junit.Before;
@@ -58,7 +57,7 @@ public class MockRenditionTest {
     assertEquals("/content/dam/sample/portraits/scott_reynolds.jpg/jcr:content/renditions/original", rendition.getPath());
     assertEquals("image/jpeg", rendition.getMimeType());
     assertEquals("admin", rendition.getProperties().get(JcrConstants.JCR_LAST_MODIFIED_BY, String.class));
-    assertNotNull(rendition.hashCode());
+    assertNotEquals(0, rendition.hashCode());
   }
 
   @Test
@@ -85,8 +84,8 @@ public class MockRenditionTest {
     Rendition rendition3 = this.context.resourceResolver()
         .getResource("/content/dam/sample/portraits/scott_reynolds.jpg/jcr:content/renditions/cq5dam.thumbnail.48.48.png").adaptTo(Rendition.class);
 
-    assertTrue(rendition1.equals(rendition2));
-    assertFalse(rendition1.equals(rendition3));
+    assertEquals(rendition1, rendition2);
+    assertNotEquals(rendition1, rendition3);
   }
 
 }

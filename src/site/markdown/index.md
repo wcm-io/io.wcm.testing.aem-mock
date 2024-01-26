@@ -37,13 +37,14 @@ The mock implementation supports:
 
 ### Version Support Matrix
 
-|AEM Mock version |AEM version supported |JUnit version supported|Java version required
-|-----------------|----------------------|-----------------------|-------------------
-|AEM Mock 5.x     |AEM 6.5.7+, AEMaaCS   |JUnit 4, JUnit 5       |Java 8/Java 11 since 5.2
-|AEM Mock 4.x     |AEM 6.4+, AEMaaCS     |JUnit 4, JUnit 5       |Java 8
-|AEM Mock 3.x     |AEM 6.3+              |JUnit 4, JUnit 5       |Java 8
-|AEM Mock 2.x     |AEM 6.2+              |JUnit 4, JUnit 5       |Java 7/Java 8 since 2.2.2
-|AEM Mock 1.x     |AEM 6.0+              |JUnit 4                |Java 7
+|AEM Mock version         |AEM version supported |JUnit version supported |Java version required
+|-------------------------|----------------------|------------------------|----------------------
+|AEM Mock 5.5.x or higher |AEM 6.5.17+, AEMaaCS  |JUnit 4, JUnit 5        |Java 11
+|AEM Mock 5.0.x - 5.4.x   |AEM 6.5.7+, AEMaaCS   |JUnit 4, JUnit 5        |Java 8/Java 11 since 5.2
+|AEM Mock 4.x             |AEM 6.4+, AEMaaCS     |JUnit 4, JUnit 5        |Java 8
+|AEM Mock 3.x             |AEM 6.3+              |JUnit 4, JUnit 5        |Java 8
+|AEM Mock 2.x             |AEM 6.2+              |JUnit 4, JUnit 5        |Java 7/Java 8 since 2.2.2
+|AEM Mock 1.x             |AEM 6.0+              |JUnit 4                 |Java 7
 
 
 ### Further Resources

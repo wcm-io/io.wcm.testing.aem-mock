@@ -112,32 +112,32 @@ public final class AemContextExtension implements ParameterResolver, TestInstanc
       if (aemContextField != null) {
         setAemContextInStore(extensionContext, aemContextField, null);
       }
-      applyAemContext(extensionContext, aemContext -> {
+      applyAemContext(extensionContext, aemContext ->
         // call context plugins setup after @BeforeAll methods were called
         /* please note: in JUnit5 there is no callback to be called after all @BeforeAll methods are called
          * so we call it before @BeforeAll execution to make sure the plugin code is called at all */
-        aemContext.getContextPlugins().executeAfterSetUpCallback(aemContext);
-      });
+        aemContext.getContextPlugins().executeAfterSetUpCallback(aemContext)
+      );
     }
   }
 
   @Override
   public void beforeEach(ExtensionContext extensionContext) {
     if (!isBeforeAllContext(extensionContext)) {
-      applyAemContext(extensionContext, aemContext -> {
+      applyAemContext(extensionContext, aemContext ->
         // call context plugins setup after @BeforeEach methods were called
-        aemContext.getContextPlugins().executeAfterSetUpCallback(aemContext);
-      });
+        aemContext.getContextPlugins().executeAfterSetUpCallback(aemContext)
+      );
     }
   }
 
   @Override
   public void afterTestExecution(ExtensionContext extensionContext) {
     if (!isBeforeAllContext(extensionContext)) {
-      applyAemContext(extensionContext, aemContext -> {
+      applyAemContext(extensionContext, aemContext ->
         // call context plugins setup before @AfterEach methods are called
-        aemContext.getContextPlugins().executeBeforeTearDownCallback(aemContext);
-      });
+        aemContext.getContextPlugins().executeBeforeTearDownCallback(aemContext)
+      );
     }
   }
 

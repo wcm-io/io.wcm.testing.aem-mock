@@ -21,6 +21,7 @@ package io.wcm.testing.mock.aem;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -75,7 +76,7 @@ public class MockPageTest {
     assertEquals(3, this.page.getDepth());
     assertEquals(false, this.page.isHideInNav());
     assertNull(this.page.getVanityUrl());
-    assertNotNull(this.page.hashCode());
+    assertNotEquals(0, this.page.hashCode());
   }
 
   @Test
@@ -293,8 +294,8 @@ public class MockPageTest {
     Page page2 = context.pageManager().getPage("/content/sample/en");
     Page page3 = context.pageManager().getPage("/content/sample/en/toolbar/profiles");
 
-    assertTrue(page1.equals(page2));
-    assertFalse(page1.equals(page3));
+    assertEquals(page1, page2);
+    assertNotEquals(page1, page3);
   }
 
 }

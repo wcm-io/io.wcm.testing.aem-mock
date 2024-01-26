@@ -21,6 +21,7 @@ package io.wcm.testing.mock.aem.dam;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -79,7 +80,7 @@ public class MockAssetTest {
     assertEquals(1368001317000L, asset.getLastModified());
     assertEquals("admin", asset.getModifier());
     assertEquals("image/jpeg", asset.getMimeType());
-    assertNotNull(asset.hashCode());
+    assertNotEquals(0, asset.hashCode());
   }
 
   @Test
@@ -113,7 +114,7 @@ public class MockAssetTest {
     Asset asset1 = this.context.resourceResolver().getResource("/content/dam/sample/portraits/scott_reynolds.jpg").adaptTo(Asset.class);
     Asset asset2 = this.context.resourceResolver().getResource("/content/dam/sample/portraits/scott_reynolds.jpg").adaptTo(Asset.class);
 
-    assertTrue(asset1.equals(asset2));
+    assertEquals(asset1, asset2);
   }
 
   private void doTestAddRemoveRendition(final String renditionName) {

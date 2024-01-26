@@ -35,7 +35,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.function.BinaryOperator;
 
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jackrabbit.util.ISO9075;
 import org.apache.sling.api.adapter.SlingAdaptable;
@@ -58,7 +58,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * Mock implementation of {@link Tag}.
  */
 @SuppressWarnings("null")
-class MockTag extends SlingAdaptable implements Tag, Comparable<Tag> {
+final class MockTag extends SlingAdaptable implements Tag, Comparable<Tag> {
 
   /** resource being represented as a Tag */
   private final Resource resource;
@@ -349,7 +349,7 @@ class MockTag extends SlingAdaptable implements Tag, Comparable<Tag> {
 
     while (ancestor != null) {
       Tag parent = ancestor.getParent();
-      if (ancestor != this) {
+      if (!ancestor.equals(this)) {
         if (parent == null) {
           if (DEFAULT_NAMESPACE.equals(ancestor.getName())) {
             break;
