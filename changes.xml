@@ -23,6 +23,12 @@
     xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/plugins/maven-changes-plugin/xsd/changes-1.0.0.xsd">
   <body>
 
+    <release version="5.5.2" date="not released">
+      <action type="update" dev="sseifert" issue="33">
+        Remove outdated dependencey to org.apache.sling.commons.json.
+      </action>
+    </release>
+
     <release version="5.5.0" date="2024-01-26">
       <action type="add" dev="sseifert" issue="30">
         Add mock for AssetDelivery OSGi service for Web-Optimized Image Delivery (not registered by default).
