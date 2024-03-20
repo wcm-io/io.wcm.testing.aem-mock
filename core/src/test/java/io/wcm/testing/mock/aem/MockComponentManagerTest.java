@@ -25,6 +25,7 @@ import static com.day.cq.wcm.api.NameConstants.NN_HTML_TAG;
 import static com.day.cq.wcm.api.NameConstants.PN_COMPONENT_GROUP;
 import static com.day.cq.wcm.api.NameConstants.PN_NO_DECORATION;
 import static com.day.cq.wcm.api.NameConstants.PN_TAG_NAME;
+import static com.day.cq.wcm.api.NameConstants.PN_IS_CONTAINER;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -55,7 +56,8 @@ public class MockComponentManagerTest {
         JCR_TITLE, "myTitle",
         JCR_DESCRIPTION, "myDescription",
         PN_COMPONENT_GROUP, "myGroup",
-        PN_NO_DECORATION, true);
+        PN_NO_DECORATION, true,
+        PN_IS_CONTAINER, true);
     context.create().resource("/apps/app1/components/c1/" + NN_HTML_TAG,
         PN_TAG_NAME, "myTag",
         "prop2", "myValue2");
@@ -92,6 +94,7 @@ public class MockComponentManagerTest {
     assertEquals("myTag", component.getHtmlTagAttributes().get(PN_TAG_NAME));
     assertEquals("myValue2", component.getHtmlTagAttributes().get("prop2"));
     assertNull(component.getSuperComponent());
+    assertTrue(component.isContainer());
 
     Resource localResource = component.getLocalResource(NN_HTML_TAG);
     assertEquals("myValue2", localResource.getValueMap().get("prop2", String.class));
@@ -104,6 +107,7 @@ public class MockComponentManagerTest {
     Component superComponent = component.getSuperComponent();
     assertNotNull(superComponent);
     assertEquals("/apps/app1/components/c1", superComponent.getPath());
+    assertTrue(component.isContainer());
   }
 
   @Test

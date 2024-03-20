@@ -158,6 +158,10 @@ class MockComponent extends SlingAdaptable implements Component {
     return resource.getChild(name);
   }
 
+  @Override
+  public boolean isContainer() {
+    return this.props.get("cq:isContainer", getSuperComponent() != null && getSuperComponent().isContainer());
+  }
 
   // --- unsupported operations ---
 
@@ -176,10 +180,6 @@ class MockComponent extends SlingAdaptable implements Component {
     throw new UnsupportedOperationException();
   }
 
-  @Override
-  public boolean isContainer() {
-    throw new UnsupportedOperationException();
-  }
 
   @Override
   public boolean isAnalyzable() {
