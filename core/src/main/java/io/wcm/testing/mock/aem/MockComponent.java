@@ -19,6 +19,7 @@
  */
 package io.wcm.testing.mock.aem;
 
+import static com.day.cq.wcm.api.NameConstants.PN_IS_CONTAINER;
 import static org.apache.sling.api.resource.ResourceResolver.PROPERTY_RESOURCE_TYPE;
 
 import java.util.Arrays;
@@ -160,7 +161,7 @@ class MockComponent extends SlingAdaptable implements Component {
 
   @Override
   public boolean isContainer() {
-    return this.props.get("cq:isContainer", getSuperComponent() != null && getSuperComponent().isContainer());
+    return this.props.get(PN_IS_CONTAINER, getSuperComponent() != null && getSuperComponent().isContainer());
   }
 
   // --- unsupported operations ---
