@@ -89,7 +89,7 @@ class MockResourceCollection implements ResourceCollection {
     return false;
   }
 
-  private static class FilterPathCollector implements ProgressTrackerListener {
+  private static final class FilterPathCollector implements ProgressTrackerListener {
     private final List<String> paths = new ArrayList<>();
     @Override
     public void onMessage(ProgressTrackerListener.Mode mode, String action, String path) {
@@ -113,6 +113,7 @@ class MockResourceCollection implements ResourceCollection {
   }
 
   // AEM 6.5.5
+  @Override
   @SuppressWarnings("unused")
   public boolean hasNode(String arg0) {
     throw new UnsupportedOperationException();
