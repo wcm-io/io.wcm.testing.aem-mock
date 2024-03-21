@@ -19,6 +19,7 @@
  */
 package io.wcm.testing.mock.aem;
 
+import static com.day.cq.wcm.api.NameConstants.PN_IS_CONTAINER;
 import static org.apache.sling.api.resource.ResourceResolver.PROPERTY_RESOURCE_TYPE;
 
 import java.util.Arrays;
@@ -158,6 +159,10 @@ class MockComponent extends SlingAdaptable implements Component {
     return resource.getChild(name);
   }
 
+  @Override
+  public boolean isContainer() {
+    return this.props.get(PN_IS_CONTAINER, getSuperComponent() != null && getSuperComponent().isContainer());
+  }
 
   // --- unsupported operations ---
 
@@ -176,10 +181,6 @@ class MockComponent extends SlingAdaptable implements Component {
     throw new UnsupportedOperationException();
   }
 
-  @Override
-  public boolean isContainer() {
-    throw new UnsupportedOperationException();
-  }
 
   @Override
   public boolean isAnalyzable() {

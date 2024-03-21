@@ -24,6 +24,9 @@
   <body>
 
     <release version="5.5.2" date="not released">
+      <action type="update" dev="koenkicken" issue="36">
+        MockComponent: Implement isContainer method.
+      </action>
       <action type="update" dev="sseifert" issue="33">
         Remove outdated dependency to org.apache.sling.commons.json.
       </action>
