@@ -21,16 +21,20 @@ package io.wcm.testing.mock.aem;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-
-import org.apache.commons.collections4.IteratorUtils;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertFalse;
 
 import com.adobe.cq.dam.cfm.ContentElement;
 import com.adobe.cq.dam.cfm.ContentFragment;
 import com.adobe.cq.dam.cfm.ContentVariation;
+import com.adobe.cq.dam.cfm.DataType;
+import com.adobe.cq.dam.cfm.FragmentData;
 import com.adobe.cq.dam.cfm.VariationTemplate;
+import org.apache.commons.collections4.IteratorUtils;
+import org.junit.Rule;
+import org.junit.Test;
+
 import com.day.cq.dam.api.DamConstants;
 
 import io.wcm.testing.mock.aem.context.TestAemContext;
@@ -65,6 +69,27 @@ public class MockContentFragmentTest {
     assertEquals("123", cf.getElement("param2").getContent());
     assertEquals("true", cf.getElement("param3").getContent());
     assertEquals("v1\nv2", cf.getElement("param4").getContent());
+
+    // get fragmentData and dataType
+    FragmentData fragmentData = cf.getElement("param1").getValue();
+    assertNotNull(fragmentData);
+    assertEquals("value1", fragmentData.getValue());
+    assertTrue(fragmentData.isTypeSupported(String.class));
+    assertEquals("value1", fragmentData.getValue(String.class));
+    assertFalse(fragmentData.isTypeSupported(Boolean.class));
+    assertNull(fragmentData.getValue(Boolean.class));
+
+    DataType dataType = fragmentData.getDataType();
+    assertNotNull(dataType);
+
+    assertFalse(dataType.isMultiValue());
+    assertTrue(cf.getElement("param4").getValue().getDataType().isMultiValue());
+    
+    //update fragmentData value and contentType
+    fragmentData.setValue("newvalue");
+    fragmentData.setContentType("contentType");
+    assertEquals("newvalue", fragmentData.getValue());
+    assertEquals("contentType", fragmentData.getContentType());
 
     // update data
     ContentElement param1 = cf.getElement("param1");
