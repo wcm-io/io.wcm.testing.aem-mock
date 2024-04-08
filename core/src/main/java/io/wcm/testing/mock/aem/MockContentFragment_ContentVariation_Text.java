@@ -20,6 +20,7 @@
 package io.wcm.testing.mock.aem;
 
 import java.util.Calendar;
+import java.util.Iterator;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -28,12 +29,14 @@ import com.adobe.cq.dam.cfm.ContentVariation;
 import com.adobe.cq.dam.cfm.FragmentData;
 import com.adobe.cq.dam.cfm.SyncStatus;
 import com.adobe.cq.dam.cfm.VariationDef;
+import com.adobe.cq.dam.cfm.VersionDef;
+import com.adobe.cq.dam.cfm.VersionedContent;
 import com.day.cq.dam.api.Asset;
 
 /**
  * Mock implementation of {@link ContentVariation}.
  */
-class MockContentFragment_ContentVariation_Text extends MockContentFragment_Versionable implements ContentVariation {
+class MockContentFragment_ContentVariation_Text implements ContentVariation {
 
   private final VariationDef variationDef;
   private final Asset asset;
@@ -107,7 +110,29 @@ class MockContentFragment_ContentVariation_Text extends MockContentFragment_Vers
   }
 
   // latest AEM Cloud API
+  @Override
   public @NotNull Calendar getCreated() {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public VersionDef createVersion(String label, String comment) throws ContentFragmentException {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public VersionedContent getVersionedContent(VersionDef version) throws ContentFragmentException {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public Iterator<VersionDef> listVersions() throws ContentFragmentException {
+    throw new UnsupportedOperationException();
+  }
+
+  // latest AEM Cloud API
+  @SuppressWarnings("unused")
+  public ContentVariation getVersion(VersionDef versionDef) throws ContentFragmentException {
     throw new UnsupportedOperationException();
   }
 
