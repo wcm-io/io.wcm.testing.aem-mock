@@ -30,6 +30,9 @@
       <action type="update" dev="sseifert" issue="33">
         Remove outdated dependency to org.apache.sling.commons.json.
       </action>
+      <action type="update" dev="sseifert">
+        Update to Sling Mock.
+      </action>
     </release>
 
     <release version="5.5.0" date="2024-01-26">
