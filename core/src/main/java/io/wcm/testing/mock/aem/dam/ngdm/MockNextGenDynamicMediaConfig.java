@@ -63,6 +63,9 @@ public final class MockNextGenDynamicMediaConfig implements NextGenDynamicMediaC
     return enabled;
   }
 
+  /**
+   * @param enabled Enabled flag
+   */
   public void setEnabled(boolean enabled) {
     this.enabled = enabled;
   }
@@ -72,6 +75,9 @@ public final class MockNextGenDynamicMediaConfig implements NextGenDynamicMediaC
     return repositoryId;
   }
 
+  /**
+   * @param repositoryId Repository ID
+   */
   public void setRepositoryId(String repositoryId) {
     this.repositoryId = repositoryId;
   }
@@ -81,6 +87,9 @@ public final class MockNextGenDynamicMediaConfig implements NextGenDynamicMediaC
     return apiKey;
   }
 
+  /**
+   * @param apiKey API key
+   */
   public void setApiKey(String apiKey) {
     this.apiKey = apiKey;
   }
@@ -90,6 +99,9 @@ public final class MockNextGenDynamicMediaConfig implements NextGenDynamicMediaC
     return env;
   }
 
+  /**
+   * @param env Environment
+   */
   public void setEnv(String env) {
     this.env = env;
   }
@@ -99,6 +111,9 @@ public final class MockNextGenDynamicMediaConfig implements NextGenDynamicMediaC
     return imsOrg;
   }
 
+  /**
+   * @param imsOrg IMS organization
+   */
   public void setImsOrg(String imsOrg) {
     this.imsOrg = imsOrg;
   }
@@ -108,6 +123,9 @@ public final class MockNextGenDynamicMediaConfig implements NextGenDynamicMediaC
     return imsEnv;
   }
 
+  /**
+   * @param imsEnv IMS environment
+   */
   public void setImsEnv(String imsEnv) {
     this.imsEnv = imsEnv;
   }
@@ -117,6 +135,9 @@ public final class MockNextGenDynamicMediaConfig implements NextGenDynamicMediaC
     return imsClient;
   }
 
+  /**
+   * @param imsClient IMS client
+   */
   public void setImsClient(String imsClient) {
     this.imsClient = imsClient;
   }
@@ -126,6 +147,9 @@ public final class MockNextGenDynamicMediaConfig implements NextGenDynamicMediaC
     return assetSelectorsJsUrl;
   }
 
+  /**
+   * @param assetSelectorsJsUrl Asset selectors JS URL
+   */
   public void setAssetSelectorsJsUrl(String assetSelectorsJsUrl) {
     this.assetSelectorsJsUrl = assetSelectorsJsUrl;
   }
@@ -135,6 +159,9 @@ public final class MockNextGenDynamicMediaConfig implements NextGenDynamicMediaC
     return imageDeliveryBasePath;
   }
 
+  /**
+   * @param imageDeliveryBasePath Image delivery base path
+   */
   public void setImageDeliveryBasePath(String imageDeliveryBasePath) {
     this.imageDeliveryBasePath = imageDeliveryBasePath;
   }
@@ -144,6 +171,9 @@ public final class MockNextGenDynamicMediaConfig implements NextGenDynamicMediaC
     return videoDeliveryPath;
   }
 
+  /**
+   * @param videoDeliveryPath Video delivery path
+   */
   public void setVideoDeliveryPath(String videoDeliveryPath) {
     this.videoDeliveryPath = videoDeliveryPath;
   }
@@ -153,6 +183,9 @@ public final class MockNextGenDynamicMediaConfig implements NextGenDynamicMediaC
     return assetOriginalBinaryDeliveryPath;
   }
 
+  /**
+   * @param assetOriginalBinaryDeliveryPath Asset original binary delivery path
+   */
   public void setAssetOriginalBinaryDeliveryPath(String assetOriginalBinaryDeliveryPath) {
     this.assetOriginalBinaryDeliveryPath = assetOriginalBinaryDeliveryPath;
   }
@@ -162,6 +195,9 @@ public final class MockNextGenDynamicMediaConfig implements NextGenDynamicMediaC
     return assetMetadataPath;
   }
 
+  /**
+   * @param assetMetadataPath Asset metadata path
+   */
   public void setAssetMetadataPath(String assetMetadataPath) {
     this.assetMetadataPath = assetMetadataPath;
   }
