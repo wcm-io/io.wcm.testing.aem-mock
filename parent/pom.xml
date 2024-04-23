@@ -31,7 +31,7 @@
 
   <groupId>io.wcm</groupId>
   <artifactId>io.wcm.testing.aem-mock.parent</artifactId>
-  <version>5.5.1-SNAPSHOT</version>
+  <version>5.5.2</version>
   <packaging>pom</packaging>
 
   <name>AEM Mocks</name>
@@ -71,7 +71,7 @@
     <logging-logback.version>1.0.0</logging-logback.version>
 
     <!-- Enable reproducible builds -->
-    <project.build.outputTimestamp>2024-01-26T16:13:31Z</project.build.outputTimestamp>
+    <project.build.outputTimestamp>2024-04-23T13:21:44Z</project.build.outputTimestamp>
 
   </properties>
 
