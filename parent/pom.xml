@@ -31,7 +31,7 @@
 
   <groupId>io.wcm</groupId>
   <artifactId>io.wcm.testing.aem-mock.parent</artifactId>
-  <version>5.5.0</version>
+  <version>5.5.2</version>
   <packaging>pom</packaging>
 
   <name>AEM Mocks</name>
@@ -59,19 +59,19 @@
     <resourceresolver-mock.version>1.4.6</resourceresolver-mock.version>
 
     <!-- Sling Mock -->
-    <sling-mock.version>3.4.18</sling-mock.version>
+    <sling-mock.version>3.5.0</sling-mock.version>
 
     <!-- Servlet Helpers -->
     <servlet-helpers.version>1.4.6</servlet-helpers.version>
 
     <!-- Sling Mock Oak (testing dependency only) -->
-    <sling-mock-oak.version>3.1.10-1.44.0</sling-mock-oak.version>
+    <sling-mock-oak.version>4.0.0-1.62.0</sling-mock-oak.version>
 
     <!-- Loggin in unit tests (testing dependency only) -->
     <logging-logback.version>1.0.0</logging-logback.version>
 
     <!-- Enable reproducible builds -->
-    <project.build.outputTimestamp>2024-01-26T16:09:41Z</project.build.outputTimestamp>
+    <project.build.outputTimestamp>2024-04-23T13:21:44Z</project.build.outputTimestamp>
 
   </properties>
 

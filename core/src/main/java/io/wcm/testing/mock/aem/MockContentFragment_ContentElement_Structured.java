@@ -40,12 +40,14 @@ import com.adobe.cq.dam.cfm.ContentVariation;
 import com.adobe.cq.dam.cfm.FragmentData;
 import com.adobe.cq.dam.cfm.VariationDef;
 import com.adobe.cq.dam.cfm.VariationTemplate;
+import com.adobe.cq.dam.cfm.VersionDef;
+import com.adobe.cq.dam.cfm.VersionedContent;
 import com.day.cq.commons.jcr.JcrConstants;
 
 /**
  * Mock implementation of {@link ContentElement} for structured content.
  */
-class MockContentFragment_ContentElement_Structured extends MockContentFragment_Versionable implements ContentElement {
+class MockContentFragment_ContentElement_Structured implements ContentElement {
 
   private final MockContentFragment contentFragment;
   private final String structuredDataKey;
@@ -175,6 +177,27 @@ class MockContentFragment_ContentElement_Structured extends MockContentFragment_
 
   @Override
   public void setValue(FragmentData fragmentData) throws ContentFragmentException {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public VersionDef createVersion(String label, String comment) throws ContentFragmentException {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public VersionedContent getVersionedContent(VersionDef version) throws ContentFragmentException {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public Iterator<VersionDef> listVersions() throws ContentFragmentException {
+    throw new UnsupportedOperationException();
+  }
+
+  // latest AEM Cloud API
+  @SuppressWarnings("unused")
+  public ContentElement getVersion(VersionDef versionDef) throws ContentFragmentException {
     throw new UnsupportedOperationException();
   }
 

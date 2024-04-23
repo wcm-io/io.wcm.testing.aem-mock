@@ -142,6 +142,9 @@ public final class MockComponentContext implements ComponentContext {
     return cell;
   }
 
+  /**
+   * @param cell Cell
+   */
   public void setCell(Cell cell) {
     this.cell = cell;
   }
@@ -151,6 +154,9 @@ public final class MockComponentContext implements ComponentContext {
     return cssClassNames;
   }
 
+  /**
+   * @param cssClassNames CSS class names
+   */
   public void setCssClassNames(Set<String> cssClassNames) {
     this.cssClassNames = cssClassNames;
   }

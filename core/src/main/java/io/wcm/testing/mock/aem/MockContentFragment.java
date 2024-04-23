@@ -42,6 +42,8 @@ import com.adobe.cq.dam.cfm.ElementTemplate;
 import com.adobe.cq.dam.cfm.FragmentTemplate;
 import com.adobe.cq.dam.cfm.VariationDef;
 import com.adobe.cq.dam.cfm.VariationTemplate;
+import com.adobe.cq.dam.cfm.VersionDef;
+import com.adobe.cq.dam.cfm.VersionedContent;
 import com.day.cq.commons.jcr.JcrConstants;
 import com.day.cq.dam.api.Asset;
 import com.day.cq.dam.api.DamConstants;
@@ -50,7 +52,7 @@ import com.day.cq.tagging.Tag;
 /**
  * Mock implementation of {@link ContentFragment}.
  */
-final class MockContentFragment extends MockContentFragment_Versionable implements ContentFragment {
+final class MockContentFragment implements ContentFragment {
 
   private final Resource assetResource;
   private final Asset asset;
@@ -261,44 +263,54 @@ final class MockContentFragment extends MockContentFragment_Versionable implemen
     throw new UnsupportedOperationException();
   }
 
-  // latest AEM Cloud API
   @Override
   public @Nullable Calendar getLastModifiedDate() {
     throw new UnsupportedOperationException();
   }
 
-  // latest AEM Cloud API
   @Override
-  @SuppressWarnings("unused")
   public @NotNull Calendar getLastModifiedDeep() throws ContentFragmentException {
     throw new UnsupportedOperationException();
   }
 
-  // latest AEM Cloud API
   @Override
-  @SuppressWarnings("unused")
   public void setTags(@NotNull Tag[] tags) throws ContentFragmentException {
     throw new UnsupportedOperationException();
   }
 
-  // latest AEM Cloud API
   @Override
-  @SuppressWarnings("unused")
   public @NotNull Tag[] getTags() throws ContentFragmentException {
     throw new UnsupportedOperationException();
   }
 
-  // latest AEM Cloud API
   @Override
-  @SuppressWarnings("unused")
   public void setVariationTags(@NotNull Tag[] tags, @NotNull String variationName) throws ContentFragmentException {
     throw new UnsupportedOperationException();
   }
 
-  // latest AEM Cloud API
   @Override
-  @SuppressWarnings("unused")
   public @NotNull Tag[] getVariationTags(@NotNull String variationName) throws ContentFragmentException {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public VersionDef createVersion(String label, String comment) throws ContentFragmentException {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public VersionedContent getVersionedContent(VersionDef version) throws ContentFragmentException {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public Iterator<VersionDef> listVersions() throws ContentFragmentException {
+    throw new UnsupportedOperationException();
+  }
+
+  // latest AEM Cloud API
+  @SuppressWarnings("unused")
+  public ContentFragment getVersion(VersionDef versionDef) throws ContentFragmentException {
     throw new UnsupportedOperationException();
   }
 

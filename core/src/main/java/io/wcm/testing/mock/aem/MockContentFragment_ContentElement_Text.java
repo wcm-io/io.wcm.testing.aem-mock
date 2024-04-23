@@ -41,6 +41,8 @@ import com.adobe.cq.dam.cfm.ContentVariation;
 import com.adobe.cq.dam.cfm.FragmentData;
 import com.adobe.cq.dam.cfm.VariationDef;
 import com.adobe.cq.dam.cfm.VariationTemplate;
+import com.adobe.cq.dam.cfm.VersionDef;
+import com.adobe.cq.dam.cfm.VersionedContent;
 import com.day.cq.commons.jcr.JcrConstants;
 import com.day.cq.dam.api.Asset;
 import com.day.cq.dam.api.DamConstants;
@@ -49,7 +51,7 @@ import com.day.cq.dam.api.Rendition;
 /**
  * Mock implementation of {@link ContentElement} for text-based content.
  */
-class MockContentFragment_ContentElement_Text extends MockContentFragment_Versionable implements ContentElement {
+class MockContentFragment_ContentElement_Text implements ContentElement {
 
   private final MockContentFragment contentFragment;
   private final Resource textElementResource;
@@ -181,6 +183,27 @@ class MockContentFragment_ContentElement_Text extends MockContentFragment_Versio
 
   @Override
   public void setValue(FragmentData arg0) throws ContentFragmentException {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public VersionDef createVersion(String label, String comment) throws ContentFragmentException {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public VersionedContent getVersionedContent(VersionDef version) throws ContentFragmentException {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public Iterator<VersionDef> listVersions() throws ContentFragmentException {
+    throw new UnsupportedOperationException();
+  }
+
+  // latest AEM Cloud API
+  @SuppressWarnings("unused")
+  public ContentElement getVersion(VersionDef versionDef) throws ContentFragmentException {
     throw new UnsupportedOperationException();
   }
 
