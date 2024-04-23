@@ -90,6 +90,12 @@ public class MockPageManagerTest {
   }
 
   @Test
+  public void testCreatePageWithNullTemplate() throws WCMException {
+    testCreatePageInternal(false, null);
+    assertTrue(this.resourceResolver.hasChanges());
+  }
+
+  @Test
   public void testCreatePageWithAutoSave() throws WCMException {
     testCreatePageInternal(true, "/apps/sample/templates/homepage");
     assertFalse(this.resourceResolver.hasChanges());

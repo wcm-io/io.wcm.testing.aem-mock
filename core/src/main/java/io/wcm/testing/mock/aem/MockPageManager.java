@@ -119,20 +119,14 @@ class MockPageManager extends SlingAdaptable implements PageManager {
       props = new HashMap<>();
       props.put(JCR_PRIMARYTYPE, "cq:PageContent");
       props.put(JCR_TITLE, title);
-      props.put(PN_TEMPLATE, template);
+      if (template != null) {
+        props.put(PN_TEMPLATE, template);
+      }
       Resource contentResource = this.resourceResolver.create(pageResource, JCR_CONTENT, props);
 
       // create initial content from template
-      Resource templateResource = resourceResolver.getResource(template);
-      if (templateResource != null) {
-        Template templateInstance = templateResource.adaptTo(Template.class);
-        if (templateInstance != null) {
-          String initialContentPath = templateInstance.getInitialContentPath();
-          Resource initialContentResource = resourceResolver.getResource(initialContentPath);
-          if (initialContentResource != null) {
-            copyContent(initialContentResource, contentResource, true);
-          }
-        }
+      if (template != null) {
+        createInitialContentFromTemplate(contentResource, template);
       }
 
       if (autoSave) {
@@ -144,6 +138,20 @@ class MockPageManager extends SlingAdaptable implements PageManager {
     }
 
     return pageResource.adaptTo(Page.class);
+  }
+
+  private void createInitialContentFromTemplate(@NotNull Resource contentResource, @NotNull String template) throws PersistenceException {
+    Resource templateResource = resourceResolver.getResource(template);
+    if (templateResource != null) {
+      Template templateInstance = templateResource.adaptTo(Template.class);
+      if (templateInstance != null) {
+        String initialContentPath = templateInstance.getInitialContentPath();
+        Resource initialContentResource = resourceResolver.getResource(initialContentPath);
+        if (initialContentResource != null) {
+          copyContent(initialContentResource, contentResource, true);
+        }
+      }
+    }
   }
 
   @SuppressFBWarnings("STYLE")

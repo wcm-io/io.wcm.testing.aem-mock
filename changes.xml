@@ -27,6 +27,9 @@
       <action type="update" dev="koenkicken" issue="36">
         MockComponent: Implement isContainer method.
       </action>
+      <action type="update" dev="alexandru-stancioiu" issue="38">
+        MockPageManager: Allow to create page without template.
+      </action>
       <action type="update" dev="sseifert" issue="33">
         Remove outdated dependency to org.apache.sling.commons.json.
       </action>
