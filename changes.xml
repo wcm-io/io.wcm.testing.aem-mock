@@ -34,7 +34,7 @@
         Remove outdated dependency to org.apache.sling.commons.json.
       </action>
       <action type="update" dev="sseifert">
-        Update to Sling Mock.
+        Update to latest Sling Mock.
       </action>
     </release>
 
