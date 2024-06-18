@@ -291,8 +291,6 @@ public class MyTest {
 
 AEM Mocks supports "Context Plugins" that hook into the lifecycle of each test run and can prepare test setup before or after the other setUp actions, and execute test tear down code before or after the other tearDown action.
 
-To define a plugin implement the `org.apache.sling.testing.mock.osgi.context.ContextPlugin<AemContextImpl>` interface. For convenience it is recommended to extend the abstract class `org.apache.sling.testing.mock.osgi.context.AbstractContextPlugin<AemContextImpl>`. In most cases you would just override the `afterSetUp` method. In this method you can register additional OSGi services or do other preparation work. It is recommended to define a constant pointing to a singleton of a plugin instance for using it.
-
 To use a plugin in your unit test class, use the `AemContextBuilder` class instead of directly instantiating the `AemContext`class. This allows you in a fluent style to configure more options, with the `plugin(...)` method you can add one or more plugins.
 
 Example:
@@ -301,9 +299,16 @@ Example:
 AemContext context = new AemContextBuilder().plugin(MY_PLUGIN).build();
 ```
 
+There are a couple of predefined plugins, that automatically register all required OSGi services required to run a certain library features in unit tests:
+* ["Mock Helper" plugins for wcm.io Libraries](https://wcm.io/testing/)
+* [AEM WCM Core Components Plugin for AEM Mocks](https://github.com/adobe/aem-core-wcm-components/tree/main/testing/aem-mock-plugin)
+
+To define your own plugin implement the `org.apache.sling.testing.mock.osgi.context.ContextPlugin<AemContextImpl>` interface. For convenience it is recommended to extend the abstract class `org.apache.sling.testing.mock.osgi.context.AbstractContextPlugin<AemContextImpl>`. In most cases you would just override the `afterSetUp` method. In this method you can register additional OSGi services or do other preparation work. It is recommended to define a constant pointing to a singleton of a plugin instance for using it.
+
 More examples:
 
-* [wcm.io Sling Extensions Mock Helper][wcm-io-mock-sling]
+* [Example for registering plugins in your project](https://github.com/wcm-io/aem-guides-wknd-wcmio/blob/main/core/src/test/java/com/adobe/aem/guides/wknd/core/testcontext/AppAemContext.java)
+* [wcm.io Sling Extensions Mock Helper - Plugin example][wcm-io-mock-sling]
 * [wcm.io Sling Extensions Mock Helper Test][wcm-io-mock-sling-test]
 
 
