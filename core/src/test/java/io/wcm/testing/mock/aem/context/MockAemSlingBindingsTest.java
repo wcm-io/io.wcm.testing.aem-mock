@@ -55,7 +55,7 @@ public class MockAemSlingBindingsTest {
   private Resource currentResource;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     context.addModelsForClasses(SlingBindingsModel.class);
 
     currentPage = context.create().page("/content/testPage");
@@ -182,7 +182,7 @@ public class MockAemSlingBindingsTest {
   }
 
   @Test
-  public void testBindingsModelFactory() throws Exception {
+  public void testBindingsModelFactory() {
     context.currentResource(currentResource);
 
     ModelFactory modelFactory = context.getService(ModelFactory.class);

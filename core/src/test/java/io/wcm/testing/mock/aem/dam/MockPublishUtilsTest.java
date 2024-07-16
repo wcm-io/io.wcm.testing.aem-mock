@@ -41,7 +41,7 @@ public class MockPublishUtilsTest {
   private PublishUtils underTest;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     underTest = context.getService(PublishUtils.class);
     assertNotNull(underTest);
   }

@@ -33,7 +33,7 @@ public class UniqueRootTest {
   public AemContext context = TestAemContext.newAemContext();
 
   @Test
-  public void testDam() throws Exception {
+  public void testDam() {
     String path = context.uniqueRoot().dam();
     assertNotNull(context.resourceResolver().getResource(path));
     assertTrue(path.matches("^/content/dam/[^/]+"));

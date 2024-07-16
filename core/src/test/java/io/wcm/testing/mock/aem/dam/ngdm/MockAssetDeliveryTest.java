@@ -49,7 +49,7 @@ public class MockAssetDeliveryTest {
   private Resource assetResource;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     this.underTest = context.registerInjectActivateService(MockAssetDelivery.class);
     asset = context.create().asset("/content/dam/test.jpg", 10, 10, "image/jpeg");
     assetResource = asset.adaptTo(Resource.class);

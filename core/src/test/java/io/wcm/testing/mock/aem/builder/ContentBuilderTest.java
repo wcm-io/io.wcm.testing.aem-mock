@@ -210,7 +210,7 @@ public class ContentBuilderTest {
   }
 
   @Test
-  public void testAssetFromWidthHeight_Jpeg() throws Exception {
+  public void testAssetFromWidthHeight_Jpeg() {
     Asset asset = context.create().asset(damRoot + "/sample1.jpg", 100, 50, "image/jpeg");
     assertNotNull(asset);
 
@@ -234,7 +234,7 @@ public class ContentBuilderTest {
   }
 
   @Test
-  public void testAssetFromWidthHeight_Jpeg_BigImage_WebEnabled_Ratio1() throws Exception {
+  public void testAssetFromWidthHeight_Jpeg_BigImage_WebEnabled_Ratio1() {
     Asset asset = context.create().asset(damRoot + "/sample1.jpg", 2000, 1000, "image/jpeg");
     assertNotNull(asset);
 
@@ -248,7 +248,7 @@ public class ContentBuilderTest {
   }
 
   @Test
-  public void testAssetFromWidthHeight_Jpeg_BigImage_WebEnabled_Ratio2() throws Exception {
+  public void testAssetFromWidthHeight_Jpeg_BigImage_WebEnabled_Ratio2() {
     Asset asset = context.create().asset(damRoot + "/sample1.jpg", 1000, 2000, "image/jpeg");
     assertNotNull(asset);
 
@@ -262,7 +262,7 @@ public class ContentBuilderTest {
   }
 
   @Test
-  public void testAssetFromWidthHeight_Gif() throws Exception {
+  public void testAssetFromWidthHeight_Gif() {
     Asset asset = context.create().asset(damRoot + "/sample1.gif", 100, 50, "image/gif");
     assertNotNull(asset);
 
@@ -279,7 +279,7 @@ public class ContentBuilderTest {
   }
 
   @Test
-  public void testAssetFromWidthHeight_Tiff() throws Exception {
+  public void testAssetFromWidthHeight_Tiff() {
     Asset asset = context.create().asset(damRoot + "/sample1.tif", 100, 50, "image/tiff");
     assertNotNull(asset);
 
@@ -296,7 +296,7 @@ public class ContentBuilderTest {
   }
 
   @Test
-  public void testAssetFromWidthHeight_SVG() throws Exception {
+  public void testAssetFromWidthHeight_SVG() {
     Asset asset = context.create().asset(damRoot + "/sample1.svg", 100, 50, "image/svg+xml");
     assertNotNull(asset);
 
@@ -313,7 +313,7 @@ public class ContentBuilderTest {
   }
 
   @Test
-  public void testAssetWithMetadata() throws Exception {
+  public void testAssetWithMetadata() {
     Asset asset = context.create().asset(damRoot + "/sample1.jpg", 100, 50, "image/jpeg",
         "prop1", "value1", "prop2", 1);
     assertNotNull(asset);

@@ -52,7 +52,7 @@ public class MockAssetStoreTest {
   }
 
   @Test
-  public void testGetAssetHandler_JPEG() throws Exception {
+  public void testGetAssetHandler_JPEG() {
     assertNotNull(underTest.getAssetHandler(JPEG_MIME_TYPE));
   }
 
