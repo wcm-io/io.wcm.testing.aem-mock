@@ -179,25 +179,7 @@ public final class MockExternalizer implements Externalizer {
     if (resourceResolver == null) {
       return path;
     }
-
-    // separate URL parameters/fragment from path
-    String suffixlessPath = path;
-    String suffix = "";
-    int urlParamPos = path.indexOf('?');
-    if (urlParamPos >= 0) {
-      suffixlessPath = path.substring(0, urlParamPos);
-      suffix = path.substring(urlParamPos);
-    }
-    else {
-      int fragmentPos = path.indexOf('#');
-      if (fragmentPos >= 0) {
-        suffixlessPath = path.substring(0, fragmentPos);
-        suffix = path.substring(fragmentPos);
-      }
-    }
-
-    // rewrite path and re-append suffix
-    return resourceResolver.map(suffixlessPath) + suffix;
+    return resourceResolver.map(path);
   }
 
 }
