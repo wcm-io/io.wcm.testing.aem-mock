@@ -125,7 +125,7 @@ public final class MockExternalizer implements Externalizer {
     return getMappedPath(request.getResourceResolver(), path);
   }
 
-  private String buildExternalLink(@Nullable ResourceResolver resourceResolver, String domain, String scheme, String path) {
+  private String buildExternalLink(@Nullable ResourceResolver resourceResolver, @NotNull String domain, @Nullable String scheme, @NotNull String path) {
     URI domainURI = domainMappings.get(Objects.requireNonNull(domain));
     if (domainURI == null) {
       throw new IllegalArgumentException("No mapping defined for: " + domain);
@@ -149,7 +149,7 @@ public final class MockExternalizer implements Externalizer {
     return url.toString();
   }
 
-  private String buildAbsoluteLink(@NotNull SlingHttpServletRequest request, String scheme, String path) {
+  private String buildAbsoluteLink(@NotNull SlingHttpServletRequest request, @NotNull String scheme, @NotNull String path) {
 
     // return path unchanged if it is already absolute (or if no request available)
     if (StringUtils.contains(path, SCHEME_SEPARATOR)) {
