@@ -122,7 +122,7 @@ public final class MockExternalizer implements Externalizer {
 
   @Override
   public String relativeLink(SlingHttpServletRequest request, String path) {
-    return path;
+    return getMappedPath(request.getResourceResolver(), path);
   }
 
   private String buildExternalLink(@Nullable ResourceResolver resourceResolver, String domain, String scheme, String path) {
