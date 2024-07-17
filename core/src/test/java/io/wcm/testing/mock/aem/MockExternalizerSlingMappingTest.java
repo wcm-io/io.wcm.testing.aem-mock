@@ -39,6 +39,9 @@ import com.day.cq.commons.Externalizer;
 import io.wcm.testing.mock.aem.context.TestAemContext;
 import io.wcm.testing.mock.aem.junit.AemContext;
 
+/**
+ * Same tests as {@link MockExternalizerTest} but with Sling Mapping from /content/ to /.
+ */
 public class MockExternalizerSlingMappingTest {
 
   /**
