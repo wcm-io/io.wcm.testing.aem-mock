@@ -27,9 +27,6 @@
       <action type="update" dev="sseifert" issue="45">
         MockExternalizer: Apply Sling Mapping for externalized URLs.
       </action>
-      <action type="update" dev="sseifert">
-        Update to latest OSGi Mock, Sling Mock.
-      </action>
     </release>
 
     <release version="5.5.2" date="2024-04-23">

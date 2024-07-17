@@ -50,7 +50,7 @@
   <properties>
 
     <!-- OSGi Mocks -->
-    <osgi-mock.version>3.5.0-SNAPSHOT</osgi-mock.version>
+    <osgi-mock.version>3.4.2</osgi-mock.version>
 
     <!-- JCR Mocks -->
     <jcr-mock.version>1.6.14</jcr-mock.version>
@@ -59,7 +59,7 @@
     <resourceresolver-mock.version>1.4.6</resourceresolver-mock.version>
 
     <!-- Sling Mock -->
-    <sling-mock.version>3.5.1-SNAPSHOT</sling-mock.version>
+    <sling-mock.version>3.5.0</sling-mock.version>
 
     <!-- Servlet Helpers -->
     <servlet-helpers.version>1.4.6</servlet-helpers.version>
