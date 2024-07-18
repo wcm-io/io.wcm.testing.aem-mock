@@ -29,7 +29,7 @@
       </action>
     </release>
 
-    <release version="5.5.4" date="not released">
+    <release version="5.5.4" date="2024-07-18">
       <action type="update" dev="sseifert" issue="45">
         MockExternalizer: Apply Sling Mapping for externalized URLs.
       </action>
