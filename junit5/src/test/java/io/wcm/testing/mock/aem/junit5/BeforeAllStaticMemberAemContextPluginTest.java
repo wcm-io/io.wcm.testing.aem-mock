@@ -61,7 +61,7 @@ class BeforeAllStaticMemberAemContextPluginTest {
   }
 
   @Test
-  void testRequest() throws Exception {
+  void testRequest() {
     assertNotNull(context.request());
   }
 

@@ -43,7 +43,7 @@ public class SlingAlias_JcrOakTest {
   private String contentRoot;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     contentRoot = context.uniqueRoot().content() + "/sample";
   }
 

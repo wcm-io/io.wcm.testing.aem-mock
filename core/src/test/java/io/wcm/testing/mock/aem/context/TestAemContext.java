@@ -25,7 +25,6 @@ import java.util.List;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 
-import org.apache.sling.api.resource.PersistenceException;
 import org.apache.sling.testing.mock.sling.NodeTypeDefinitionScanner;
 import org.apache.sling.testing.mock.sling.ResourceResolverType;
 import org.jetbrains.annotations.NotNull;
@@ -75,7 +74,7 @@ public final class TestAemContext {
   private static final class SetUpCallback implements AemContextCallback {
 
     @Override
-    public void execute(@NotNull AemContext context) throws PersistenceException, IOException {
+    public void execute(@NotNull AemContext context) throws IOException {
       try {
         // register manually because in project's unit tests itself MANIFEST.MF is not available
         NodeTypeDefinitionScanner.get().register(context.resourceResolver().adaptTo(Session.class),

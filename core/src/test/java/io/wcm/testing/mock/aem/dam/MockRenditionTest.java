@@ -43,7 +43,7 @@ public class MockRenditionTest {
   private Rendition rendition;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     context.load().json("/json-import-samples/dam.json", "/content/dam/sample");
 
     Resource resource = this.context.resourceResolver()

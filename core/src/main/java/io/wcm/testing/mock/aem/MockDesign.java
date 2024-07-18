@@ -73,7 +73,7 @@ class MockDesign implements Design {
   @Override
   public Style getStyle(Resource resource) {
     ContentPolicyManager contentPolicyManager = resource.getResourceResolver().adaptTo(ContentPolicyManager.class);
-    if (contentPolicyManager != null && (contentPolicyManager instanceof MockContentPolicyManager)) {
+    if (contentPolicyManager instanceof MockContentPolicyManager) {
       // unwrap resource to make sure the correct resource type is used when using resource-type forcing wrappers
       Resource unwrappedResource = ResourceUtil.unwrap(resource);
       ContentPolicy policy = ((MockContentPolicyManager)contentPolicyManager).getPolicy(unwrappedResource);

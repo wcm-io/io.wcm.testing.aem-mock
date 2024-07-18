@@ -69,7 +69,7 @@ public class MockPageManagerTest {
   private ResourceResolver resourceResolver;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     this.resourceResolver = this.context.resourceResolver();
 
     context.load().json("/json-import-samples/content.json", "/content/sample/en");

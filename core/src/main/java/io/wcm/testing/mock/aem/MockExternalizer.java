@@ -28,6 +28,8 @@ import java.util.Objects;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.ResourceResolver;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.osgi.service.component.annotations.Component;
 
 import com.day.cq.commons.Externalizer;
@@ -80,7 +82,7 @@ public final class MockExternalizer implements Externalizer {
 
   @Override
   public String externalLink(ResourceResolver resourceResolver, String domain, String scheme, String path) {
-    return buildExternalLink(domain, scheme, path);
+    return buildExternalLink(resourceResolver, domain, scheme, path);
   }
 
   @Override
@@ -120,10 +122,10 @@ public final class MockExternalizer implements Externalizer {
 
   @Override
   public String relativeLink(SlingHttpServletRequest request, String path) {
-    return path;
+    return getMappedPath(request.getResourceResolver(), path);
   }
 
-  private String buildExternalLink(String domain, String scheme, String path) {
+  private String buildExternalLink(@Nullable ResourceResolver resourceResolver, @NotNull String domain, @Nullable String scheme, @NotNull String path) {
     URI domainURI = domainMappings.get(Objects.requireNonNull(domain));
     if (domainURI == null) {
       throw new IllegalArgumentException("No mapping defined for: " + domain);
@@ -142,12 +144,12 @@ public final class MockExternalizer implements Externalizer {
     }
 
     // path
-    url.append(path);
+    url.append(getMappedPath(resourceResolver, path));
 
     return url.toString();
   }
 
-  private String buildAbsoluteLink(SlingHttpServletRequest request, String scheme, String path) {
+  private String buildAbsoluteLink(@NotNull SlingHttpServletRequest request, @NotNull String scheme, @NotNull String path) {
 
     // return path unchanged if it is already absolute (or if no request available)
     if (StringUtils.contains(path, SCHEME_SEPARATOR)) {
@@ -158,7 +160,7 @@ public final class MockExternalizer implements Externalizer {
     url.append(scheme).append(SCHEME_SEPARATOR)
         .append(getHost(scheme, request.getServerName(), request.getServerPort()))
         .append(request.getContextPath())
-        .append(path);
+        .append(getMappedPath(request.getResourceResolver(), path));
     return url.toString();
   }
 
@@ -171,6 +173,13 @@ public final class MockExternalizer implements Externalizer {
     else {
       return host + ":" + port;
     }
+  }
+
+  private static String getMappedPath(@Nullable ResourceResolver resourceResolver, @NotNull String path) {
+    if (resourceResolver == null) {
+      return path;
+    }
+    return resourceResolver.map(path);
   }
 
 }

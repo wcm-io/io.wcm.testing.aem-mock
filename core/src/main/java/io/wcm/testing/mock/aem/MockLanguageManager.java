@@ -256,7 +256,7 @@ public final class MockLanguageManager implements LanguageManager {
         path = path.substring(0, idx);
       }
       Resource hr = res.getResourceResolver().getResource(path);
-      while (hr != null && !hr.getPath().equals("/")) {
+      while (hr != null && !StringUtils.equals(hr.getPath(), "/")) {
         ValueMap props = hr.getValueMap();
         if (props.get("jcr:content/cq:isLanguageRoot", Boolean.FALSE)) {
           String iso = props.get("jcr:content/jcr:language", "");

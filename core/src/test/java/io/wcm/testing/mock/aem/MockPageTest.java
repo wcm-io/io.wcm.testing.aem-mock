@@ -58,7 +58,7 @@ public class MockPageTest {
   private Page page;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     context.load().json("/json-import-samples/content.json", "/content/sample/en");
 
     Resource resource = this.context.resourceResolver().getResource("/content/sample/en");
@@ -289,7 +289,7 @@ public class MockPageTest {
   }
 
   @Test
-  public void testEquals() throws Exception {
+  public void testEquals() {
     Page page1 = context.pageManager().getPage("/content/sample/en");
     Page page2 = context.pageManager().getPage("/content/sample/en");
     Page page3 = context.pageManager().getPage("/content/sample/en/toolbar/profiles");

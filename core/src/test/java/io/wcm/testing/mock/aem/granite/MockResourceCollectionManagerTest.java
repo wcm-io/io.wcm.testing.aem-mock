@@ -68,7 +68,7 @@ public class MockResourceCollectionManagerTest {
   private Asset sampleAsset;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     underTest = context.getService(ResourceCollectionManager.class);
 
     samplePage1 = context.create().page("/content/mysite/page1");

@@ -44,7 +44,7 @@ public class MockTemplateTest {
   private Template template;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     context.load().json("/json-import-samples/application.json", "/apps/sample");
 
     Resource resource = this.context.resourceResolver().getResource("/apps/sample/templates/homepage");
@@ -66,7 +66,7 @@ public class MockTemplateTest {
   }
 
   @Test
-  public void testEquals() throws Exception {
+  public void testEquals() {
     Template template1 = this.context.resourceResolver().getResource("/apps/sample/templates/homepage").adaptTo(Template.class);
     Template template2 = this.context.resourceResolver().getResource("/apps/sample/templates/homepage").adaptTo(Template.class);
     Template template3 = this.context.resourceResolver().getResource("/apps/sample/templates/contentpage").adaptTo(Template.class);

@@ -40,7 +40,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.jcr.Binary;
-import javax.jcr.PathNotFoundException;
 import javax.jcr.RepositoryException;
 
 import org.apache.commons.io.IOUtils;
@@ -189,18 +188,16 @@ class MockAssetManager implements AssetManager {
   }
 
   @Override
-  public String assignAssetID(Asset asset) throws PathNotFoundException, RepositoryException {
+  public String assignAssetID(Asset asset) throws RepositoryException {
     throw new UnsupportedOperationException();
   }
 
-  // AEM 6.5
-  @SuppressWarnings("unused")
+  @Override
   public Asset createOrUpdateAsset(String arg0, Binary arg1, String arg2, boolean arg3) {
     throw new UnsupportedOperationException();
   }
 
-  // AEM 6.5.5
-  @SuppressWarnings("unused")
+  @Override
   public Revision createRevision(Asset arg0, String arg1, String arg2, User arg3) {
     throw new UnsupportedOperationException();
   }

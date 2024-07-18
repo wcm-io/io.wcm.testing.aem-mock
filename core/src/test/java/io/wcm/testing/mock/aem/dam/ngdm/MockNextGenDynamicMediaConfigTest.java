@@ -46,7 +46,7 @@ public class MockNextGenDynamicMediaConfigTest {
   private MockNextGenDynamicMediaConfig underTest;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     underTest = context.registerInjectActivateService(MockNextGenDynamicMediaConfig.class);
   }
 

@@ -48,6 +48,7 @@ final class ContextResourceResolverFactory {
     // static methods only
   }
 
+  @SuppressWarnings({ "PMD.ExceptionAsFlowControl", "java:S2139", "java:S112" }) // ignore exception handling
   public static @NotNull ResourceResolverFactory get(@NotNull final ResourceResolverType resourceResolverType,
       @NotNull final BundleContext bundleContext) {
     try {

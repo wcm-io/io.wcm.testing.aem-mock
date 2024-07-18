@@ -46,7 +46,7 @@ public class AemContextImplTest {
   private String appsRoot;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     contentRoot = context.uniqueRoot().content() + "/sample";
     appsRoot = context.uniqueRoot().apps() + "/sample";
 
@@ -56,7 +56,7 @@ public class AemContextImplTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     this.context.tearDown();
   }
 

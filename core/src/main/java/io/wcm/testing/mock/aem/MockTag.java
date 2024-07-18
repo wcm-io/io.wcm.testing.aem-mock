@@ -47,7 +47,6 @@ import com.day.cq.commons.Filter;
 import com.day.cq.commons.LanguageUtil;
 import com.day.cq.commons.jcr.JcrConstants;
 import com.day.cq.tagging.Tag;
-import com.day.cq.tagging.TagConstants;
 import com.day.cq.tagging.TagManager;
 import com.day.cq.wcm.api.NameConstants;
 
@@ -326,7 +325,7 @@ final class MockTag extends SlingAdaptable implements Tag, Comparable<Tag> {
     final String propertyName = extractPathPart(property, StringUtils::substringAfterLast, property);
     final String propertyPath = extractPathPart(property, StringUtils::substringBeforeLast, StringUtils.EMPTY);
     final String xpathProperty = (StringUtils.isEmpty(propertyPath) ? "" : ISO9075.encodePath(propertyPath) + '/') + '@' + ISO9075.encode(propertyName);
-    final String xpathNamespace = TagConstants.DEFAULT_NAMESPACE.equals(ns) ? relPath : ns + ":" + relPath;
+    final String xpathNamespace = DEFAULT_NAMESPACE.equals(ns) ? relPath : ns + ":" + relPath;
     return "(" + xpathProperty + "='" + xpathNamespace + "' "
         + "or " + xpathProperty + "='" + tagRoot + "/" + ns + "/" + relPath + "' "
         + "or jcr:like(" + xpathProperty + ", '" + xpathNamespace + "/%') or "

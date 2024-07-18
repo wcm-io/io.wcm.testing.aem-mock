@@ -64,7 +64,7 @@ public class MockAssetTest {
   private DamEventHandler damEventHandler;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     context.load().json("/json-import-samples/dam.json", "/content/dam/sample");
 
     Resource resource = this.context.resourceResolver().getResource("/content/dam/sample/portraits/scott_reynolds.jpg");
@@ -110,7 +110,7 @@ public class MockAssetTest {
   }
 
   @Test
-  public void testEquals() throws Exception {
+  public void testEquals() {
     Asset asset1 = this.context.resourceResolver().getResource("/content/dam/sample/portraits/scott_reynolds.jpg").adaptTo(Asset.class);
     Asset asset2 = this.context.resourceResolver().getResource("/content/dam/sample/portraits/scott_reynolds.jpg").adaptTo(Asset.class);
 
@@ -146,18 +146,18 @@ public class MockAssetTest {
   }
 
   @Test
-  public void testAddRemoveRendition() throws Exception {
+  public void testAddRemoveRendition() {
     doTestAddRemoveRendition("test.bin");
   }
 
   @Test
-  public void testRenditionListMutable() throws Exception {
+  public void testRenditionListMutable() {
     // make sure rendition list is modifiable by calling getBestfitRendition which does a sort on it
     UIHelper.getBestfitRendition(asset, 100);
   }
 
   @Test
-  public void testBatchMode() throws Exception {
+  public void testBatchMode() {
     if (context.resourceResolverType() == ResourceResolverType.JCR_MOCK) {
       // resource resolver revert not support for JCR_MOCK - skip test
       return;
