@@ -19,6 +19,7 @@
  */
 package io.wcm.testing.mock.aem.dam;
 
+import com.day.cq.dam.api.Rendition;
 import org.apache.sling.api.adapter.AdapterFactory;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
@@ -33,7 +34,6 @@ import org.osgi.service.event.EventAdmin;
 
 import com.day.cq.dam.api.Asset;
 import com.day.cq.dam.api.AssetManager;
-import com.day.cq.dam.api.Rendition;
 import com.day.cq.dam.commons.util.DamUtil;
 
 /**
@@ -45,7 +45,10 @@ import com.day.cq.dam.commons.util.DamUtil;
         AdapterFactory.ADAPTABLE_CLASSES + "=org.apache.sling.api.resource.ResourceResolver",
         AdapterFactory.ADAPTER_CLASSES + "=com.day.cq.dam.api.Asset",
         AdapterFactory.ADAPTER_CLASSES + "=com.day.cq.dam.api.AssetManager",
-        AdapterFactory.ADAPTER_CLASSES + "=com.day.cq.dam.api.Rendition"
+        AdapterFactory.ADAPTER_CLASSES + "=com.day.cq.dam.api.Rendition",
+        AdapterFactory.ADAPTER_CLASSES + "=com.adobe.granite.asset.api.Asset",
+        AdapterFactory.ADAPTER_CLASSES + "=com.adobe.granite.asset.api.AssetManager",
+        AdapterFactory.ADAPTER_CLASSES + "=com.adobe.granite.asset.api.Rendition"
     })
 @ProviderType
 public final class MockAemDamAdapterFactory implements AdapterFactory {
@@ -73,11 +76,15 @@ public final class MockAemDamAdapterFactory implements AdapterFactory {
 
   @SuppressWarnings("unchecked")
   private @Nullable <AdapterType> AdapterType getAdapter(@NotNull final Resource resource, @NotNull final Class<AdapterType> type) {
-    if (type == Asset.class && DamUtil.isAsset(resource)) {
-      return (AdapterType)new MockAsset(resource, eventAdmin, bundleContext);
+    if (DamUtil.isAsset(resource)) {
+      if (type == com.adobe.granite.asset.api.Asset.class) {
+        return (AdapterType) new MockGraniteAssetWrapper(new MockAsset(resource, eventAdmin, bundleContext));
+      } else if (type == Asset.class) {
+        return (AdapterType) new MockAsset(resource, eventAdmin, bundleContext);
+      }
     }
-    if (type == Rendition.class && DamUtil.isRendition(resource)) {
-      return (AdapterType)new MockRendition(resource);
+    if ((type == Rendition.class || type == com.adobe.granite.asset.api.Rendition.class) && DamUtil.isRendition(resource)) {
+      return (AdapterType) new MockRendition(resource);
     }
     return null;
   }
@@ -85,7 +92,9 @@ public final class MockAemDamAdapterFactory implements AdapterFactory {
   @SuppressWarnings("unchecked")
   private @Nullable <AdapterType> AdapterType getAdapter(@NotNull final ResourceResolver resolver, @NotNull final Class<AdapterType> type) {
     if (type == AssetManager.class) {
-      return (AdapterType)new MockAssetManager(resolver, eventAdmin, bundleContext);
+      return (AdapterType) new MockAssetManager(resolver, eventAdmin, bundleContext);
+    } else if(type == com.adobe.granite.asset.api.AssetManager.class) {
+      return (AdapterType) new MockGraniteAssetManagerWrapper(resolver);
     }
     return null;
   }

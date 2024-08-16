@@ -181,6 +181,17 @@ public class AemContextImpl extends SlingContextImpl {
   }
 
   /**
+   * @return Adobe Granite Asset manager
+   */
+  public @NotNull com.adobe.granite.asset.api.AssetManager graniteAssetManager() {
+    com.adobe.granite.asset.api.AssetManager assetManager = resourceResolver().adaptTo(com.adobe.granite.asset.api.AssetManager.class);
+    if (assetManager == null) {
+      throw new RuntimeException("No granite asset manager");
+    }
+    return assetManager;
+  }
+
+  /**
    * @return Content builder for building test content
    */
   @Override
