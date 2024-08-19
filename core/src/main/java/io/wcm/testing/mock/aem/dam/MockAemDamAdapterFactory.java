@@ -74,29 +74,27 @@ public final class MockAemDamAdapterFactory implements AdapterFactory {
     return null;
   }
 
-  @SuppressWarnings("unchecked")
   private @Nullable <AdapterType> AdapterType getAdapter(@NotNull final Resource resource, @NotNull final Class<AdapterType> type) {
     if (DamUtil.isAsset(resource)) {
       if (type == com.adobe.granite.asset.api.Asset.class) {
-        return (AdapterType)new MockGraniteAssetWrapper(new MockAsset(resource, eventAdmin, bundleContext));
+        return type.cast(new MockGraniteAssetWrapper(new MockAsset(resource, eventAdmin, bundleContext)));
       }
       else if (type == Asset.class) {
-        return (AdapterType)new MockAsset(resource, eventAdmin, bundleContext);
+        return type.cast(new MockAsset(resource, eventAdmin, bundleContext));
       }
     }
     if ((type == Rendition.class || type == com.adobe.granite.asset.api.Rendition.class) && DamUtil.isRendition(resource)) {
-      return (AdapterType)new MockRendition(resource);
+      return type.cast(new MockRendition(resource));
     }
     return null;
   }
 
-  @SuppressWarnings("unchecked")
   private @Nullable <AdapterType> AdapterType getAdapter(@NotNull final ResourceResolver resolver, @NotNull final Class<AdapterType> type) {
     if (type == AssetManager.class) {
-      return (AdapterType)new MockAssetManager(resolver, eventAdmin, bundleContext);
+      return type.cast(new MockAssetManager(resolver, eventAdmin, bundleContext));
     }
     else if (type == com.adobe.granite.asset.api.AssetManager.class) {
-      return (AdapterType)new MockGraniteAssetManagerWrapper(resolver);
+      return type.cast(new MockGraniteAssetManagerWrapper(resolver));
     }
     return null;
   }
