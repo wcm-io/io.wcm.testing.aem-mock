@@ -60,6 +60,7 @@ public class MockGraniteAssetWrapperTest {
   private MockAssetManagerTest.DamEventHandler damEventHandler;
 
   @Before
+  @SuppressWarnings("null")
   public void setUp() {
     context.load().json("/json-import-samples/dam.json", "/content/dam/sample");
 
@@ -101,11 +102,13 @@ public class MockGraniteAssetWrapperTest {
   }
 
   @Test
+  @SuppressWarnings("java:S2699") // assert not exception is thrown
   public void testRemoveNonExistingRendition() {
     asset.removeRendition("non-existing");
   }
 
   @Test
+  @SuppressWarnings("null")
   public void testEquals() {
     Asset asset1 = this.context.resourceResolver().getResource("/content/dam/sample/portraits/scott_reynolds.jpg").adaptTo(Asset.class);
     Asset asset2 = this.context.resourceResolver().getResource("/content/dam/sample/portraits/scott_reynolds.jpg").adaptTo(Asset.class);

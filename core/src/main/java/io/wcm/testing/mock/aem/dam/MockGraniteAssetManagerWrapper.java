@@ -60,11 +60,6 @@ public class MockGraniteAssetManagerWrapper implements AssetManager {
   }
 
   @Override
-  public Asset getAssetByIdentifier(String s) {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
   public boolean assetExists(String s) {
     Resource assetResource = resourceResolver.getResource(s);
     return assetResource != null && Objects.equals(DamConstants.NT_DAM_ASSET, assetResource.getValueMap().get(JcrConstants.JCR_PRIMARYTYPE, String.class));
@@ -81,6 +76,14 @@ public class MockGraniteAssetManagerWrapper implements AssetManager {
     catch (PersistenceException pe) {
       throw new RuntimeException(pe);
     }
+  }
+
+
+  // --- unsupported operations ---
+
+  @Override
+  public Asset getAssetByIdentifier(String s) {
+    throw new UnsupportedOperationException();
   }
 
   @Override

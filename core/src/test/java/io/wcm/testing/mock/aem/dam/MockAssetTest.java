@@ -69,7 +69,6 @@ public class MockAssetTest {
 
     Resource resource = this.context.resourceResolver().getResource("/content/dam/sample/portraits/scott_reynolds.jpg");
     this.asset = resource.adaptTo(Asset.class);
-    Object o = resource.adaptTo(com.adobe.granite.asset.api.Asset.class);
 
     damEventHandler = (DamEventHandler)context.registerService(EventHandler.class, new DamEventHandler());
   }

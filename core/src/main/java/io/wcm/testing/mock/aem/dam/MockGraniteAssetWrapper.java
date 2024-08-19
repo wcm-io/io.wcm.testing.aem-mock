@@ -59,16 +59,16 @@ public class MockGraniteAssetWrapper extends ResourceWrapper implements Asset {
   }
 
   @Override
-  public com.adobe.granite.asset.api.Rendition getRendition(String s) {
-    return (com.adobe.granite.asset.api.Rendition)asset.getRendition(s);
+  public Rendition getRendition(String s) {
+    return (Rendition)asset.getRendition(s);
   }
 
   @Override
   public Iterator<? extends Rendition> listRenditions() {
     List<Rendition> graniteRenditions = new LinkedList<>();
-    Iterator<? extends com.day.cq.dam.api.Rendition> renditions = asset.listRenditions();
+    Iterator<com.day.cq.dam.api.Rendition> renditions = asset.listRenditions();
     while (renditions.hasNext()) {
-      graniteRenditions.add((com.adobe.granite.asset.api.Rendition)renditions.next());
+      graniteRenditions.add((Rendition)renditions.next());
     }
     return graniteRenditions.iterator();
   }
@@ -79,19 +79,19 @@ public class MockGraniteAssetWrapper extends ResourceWrapper implements Asset {
   }
 
   @Override
-  public com.adobe.granite.asset.api.Rendition setRendition(String s, InputStream inputStream, Map<String, Object> map) {
+  public Rendition setRendition(String s, InputStream inputStream, Map<String, Object> map) {
     if (map.size() == 1) {
       Object val = map.values().iterator().next();
       if (val != null) {
-        return (com.adobe.granite.asset.api.Rendition)asset.addRendition(s, inputStream, val.toString());
+        return (Rendition)asset.addRendition(s, inputStream, val.toString());
       }
     }
-    return (com.adobe.granite.asset.api.Rendition)asset.addRendition(s, inputStream, map);
+    return (Rendition)asset.addRendition(s, inputStream, map);
   }
 
   @Override
-  public com.adobe.granite.asset.api.Rendition setRendition(String s, Binary binary, Map<String, Object> map) {
-    return (com.adobe.granite.asset.api.Rendition)asset.addRendition(s, binary, map);
+  public Rendition setRendition(String s, Binary binary, Map<String, Object> map) {
+    return (Rendition)asset.addRendition(s, binary, map);
   }
 
   @Override
@@ -100,7 +100,23 @@ public class MockGraniteAssetWrapper extends ResourceWrapper implements Asset {
   }
 
   @Override
-  public Iterator<? extends com.adobe.granite.asset.api.Asset> listRelated(String s) {
+  public int hashCode() {
+    return getPath().hashCode();
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (!(obj instanceof MockGraniteAssetWrapper)) {
+      return false;
+    }
+    return StringUtils.equals(getPath(), ((MockGraniteAssetWrapper)obj).getPath());
+  }
+
+
+  // --- unsupported operations ---
+
+  @Override
+  public Iterator<? extends Asset> listRelated(String s) {
     throw new UnsupportedOperationException();
   }
 
@@ -142,19 +158,6 @@ public class MockGraniteAssetWrapper extends ResourceWrapper implements Asset {
   @Override
   public void removeRelation(String s) {
     throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public int hashCode() {
-    return getPath().hashCode();
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    if (!(obj instanceof MockGraniteAssetWrapper)) {
-      return false;
-    }
-    return StringUtils.equals(getPath(), ((MockGraniteAssetWrapper)obj).getPath());
   }
 
 }
