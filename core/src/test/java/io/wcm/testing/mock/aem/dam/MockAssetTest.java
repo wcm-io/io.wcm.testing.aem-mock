@@ -197,6 +197,7 @@ public class MockAssetTest {
     com.adobe.granite.asset.api.Asset graniteAsset = asset.adaptTo(com.adobe.granite.asset.api.Asset.class);
     assertNotNull(graniteAsset);
     assertEquals(asset, graniteAsset.adaptTo(Asset.class));
+    assertEquals(graniteAsset.adaptTo(Resource.class), asset.adaptTo(Resource.class));
   }
 
 }

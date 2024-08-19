@@ -155,6 +155,7 @@ public class MockGraniteAssetWrapperTest {
     com.day.cq.dam.api.Asset cqAsset = asset.adaptTo(com.day.cq.dam.api.Asset.class);
     assertNotNull(cqAsset);
     assertEquals(asset, cqAsset.adaptTo(Asset.class));
+    assertEquals(cqAsset.adaptTo(Resource.class), asset.adaptTo(Resource.class));
   }
 
 }
