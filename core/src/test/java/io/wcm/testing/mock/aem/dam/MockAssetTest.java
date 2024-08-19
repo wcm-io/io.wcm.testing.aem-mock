@@ -19,13 +19,6 @@
  */
 package io.wcm.testing.mock.aem.dam;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
@@ -49,6 +42,8 @@ import com.day.cq.wcm.foundation.WCMRenditionPicker;
 import io.wcm.testing.mock.aem.context.TestAemContext;
 import io.wcm.testing.mock.aem.dam.MockAssetManagerTest.DamEventHandler;
 import io.wcm.testing.mock.aem.junit.AemContext;
+
+import static org.junit.Assert.*;
 
 @SuppressWarnings("null")
 public class MockAssetTest {
@@ -190,7 +185,11 @@ public class MockAssetTest {
 
   @Test
   public void testRemoveNonExistingRendition() {
-    asset.removeRendition("non-existing");
+    try {
+      asset.removeRendition("non-existing");
+    } catch (Exception e) {
+      fail("removeRendition should not fail on non-existing renditions!");
+    }
   }
 
   @Test

@@ -19,12 +19,6 @@
  */
 package io.wcm.testing.mock.aem.dam;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
@@ -46,6 +40,8 @@ import com.day.cq.dam.api.DamEvent;
 
 import io.wcm.testing.mock.aem.context.TestAemContext;
 import io.wcm.testing.mock.aem.junit.AemContext;
+
+import static org.junit.Assert.*;
 
 public class MockGraniteAssetWrapperTest {
 
@@ -102,9 +98,12 @@ public class MockGraniteAssetWrapperTest {
   }
 
   @Test
-  @SuppressWarnings("java:S2699") // assert not exception is thrown
   public void testRemoveNonExistingRendition() {
-    asset.removeRendition("non-existing");
+    try {
+      asset.removeRendition("non-existing");
+    } catch (Exception e) {
+      fail("removeRendition should not fail on non-existing renditions!");
+    }
   }
 
   @Test
