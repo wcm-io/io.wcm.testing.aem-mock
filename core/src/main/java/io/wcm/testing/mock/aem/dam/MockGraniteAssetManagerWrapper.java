@@ -47,10 +47,7 @@ public class MockGraniteAssetManagerWrapper implements AssetManager {
   @Override
   public Asset createAsset(String s) {
     com.day.cq.dam.api.Asset asset = cqAssetManager.createAsset(s, null, null, false);
-    if (asset instanceof MockAsset) {
-      return new MockGraniteAssetWrapper((MockAsset)asset);
-    }
-    throw new UnsupportedOperationException("Not in a mock context");
+    return new MockGraniteAssetWrapper(asset);
   }
 
   @Override

@@ -28,6 +28,7 @@ import java.util.Map;
 import javax.jcr.Binary;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceWrapper;
 
 import com.adobe.granite.asset.api.Asset;
@@ -41,10 +42,10 @@ import com.adobe.granite.asset.api.Rendition;
 @SuppressWarnings("null")
 public class MockGraniteAssetWrapper extends ResourceWrapper implements Asset {
 
-  private final MockAsset asset;
+  private final com.day.cq.dam.api.Asset asset;
 
-  MockGraniteAssetWrapper(MockAsset asset) {
-    super(asset.getResource());
+  MockGraniteAssetWrapper(com.day.cq.dam.api.Asset asset) {
+    super(asset.adaptTo(Resource.class));
     this.asset = asset;
   }
 
