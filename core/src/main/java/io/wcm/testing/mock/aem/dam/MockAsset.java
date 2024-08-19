@@ -76,15 +76,14 @@ class MockAsset extends ResourceWrapper implements Asset {
     this.bundleContext = bundleContext;
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public <AdapterType> AdapterType adaptTo(Class<AdapterType> type) {
     if (type == Resource.class) {
-      return (AdapterType)resource;
+      return type.cast(resource);
     }
     //to be able to adapt to granite asset
     if (type == com.adobe.granite.asset.api.Asset.class) {
-      return (AdapterType)new MockGraniteAssetWrapper(this);
+      return type.cast(new MockGraniteAssetWrapper(this));
     }
     return super.adaptTo(type);
   }

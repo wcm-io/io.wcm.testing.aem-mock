@@ -49,12 +49,11 @@ public class MockGraniteAssetWrapper extends ResourceWrapper implements Asset {
     this.asset = asset;
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public <AdapterType> AdapterType adaptTo(Class<AdapterType> type) {
     //to be able to adapt to CQ asset
     if (type == com.day.cq.dam.api.Asset.class) {
-      return (AdapterType)asset;
+      return type.cast(asset);
     }
     return asset.adaptTo(type);
   }
