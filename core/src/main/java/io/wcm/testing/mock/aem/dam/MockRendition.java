@@ -62,7 +62,7 @@ class MockRendition extends ResourceWrapper implements Rendition, com.adobe.gran
     }
     //to be able to adapt to granite rendition and back
     if (type == Rendition.class || type == com.adobe.granite.asset.api.Rendition.class) {
-      return (AdapterType) this;
+      return (AdapterType)this;
     }
     return super.adaptTo(type);
   }

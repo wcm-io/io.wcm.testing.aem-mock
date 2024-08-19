@@ -19,20 +19,37 @@
  */
 package io.wcm.testing.mock.aem.dam;
 
-import com.day.cq.commons.jcr.JcrConstants;
-import com.day.cq.dam.api.*;
+import java.io.InputStream;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.jcr.Binary;
+
 import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jackrabbit.api.security.user.User;
-import org.apache.sling.api.resource.*;
+import org.apache.sling.api.resource.PersistenceException;
+import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ResourceResolver;
+import org.apache.sling.api.resource.ResourceUtil;
+import org.apache.sling.api.resource.ResourceWrapper;
+import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.testing.mock.sling.loader.ContentLoader;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.event.EventAdmin;
 
-import javax.jcr.Binary;
-import java.io.InputStream;
-import java.util.*;
+import com.day.cq.commons.jcr.JcrConstants;
+import com.day.cq.dam.api.Asset;
+import com.day.cq.dam.api.DamConstants;
+import com.day.cq.dam.api.DamEvent;
+import com.day.cq.dam.api.Rendition;
+import com.day.cq.dam.api.RenditionPicker;
+import com.day.cq.dam.api.Revision;
 
 /**
  * Mock implementation of {@link Asset}.
@@ -63,11 +80,11 @@ class MockAsset extends ResourceWrapper implements Asset {
   @Override
   public <AdapterType> AdapterType adaptTo(Class<AdapterType> type) {
     if (type == Resource.class) {
-      return (AdapterType) resource;
+      return (AdapterType)resource;
     }
     //to be able to adapt to granite asset
     if (type == com.adobe.granite.asset.api.Asset.class) {
-      return (AdapterType) new MockGraniteAssetWrapper(this);
+      return (AdapterType)new MockGraniteAssetWrapper(this);
     }
     return super.adaptTo(type);
   }
