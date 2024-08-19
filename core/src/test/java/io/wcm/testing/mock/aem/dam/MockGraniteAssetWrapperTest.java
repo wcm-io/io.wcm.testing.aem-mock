@@ -112,8 +112,10 @@ public class MockGraniteAssetWrapperTest {
   public void testEquals() {
     Asset asset1 = this.context.resourceResolver().getResource("/content/dam/sample/portraits/scott_reynolds.jpg").adaptTo(Asset.class);
     Asset asset2 = this.context.resourceResolver().getResource("/content/dam/sample/portraits/scott_reynolds.jpg").adaptTo(Asset.class);
+    Object otherObject = new Object();
 
     assertEquals(asset1, asset2);
+    assertNotEquals(asset1, otherObject);
   }
 
   private void doTestAddRemoveRendition(final String renditionName) {

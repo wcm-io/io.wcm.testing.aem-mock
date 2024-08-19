@@ -24,7 +24,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.spy;
 
+import org.apache.sling.api.resource.PersistenceException;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.junit.Before;
@@ -75,6 +79,32 @@ public class MockGraniteAssetManagerWrapperTest {
     assertNull(resourceResolver.getResource(TEST_ASSET_PATH));
     assertNull(assetManager.getAsset(TEST_ASSET_PATH));
     assertFalse(assetManager.assetExists(TEST_ASSET_PATH));
+  }
+
+  @Test
+  public void testAssetExistsForOtherResources() throws PersistenceException {
+    //no resource
+    assertNull(resourceResolver.getResource(TEST_ASSET_PATH));
+    assertFalse(assetManager.assetExists(TEST_ASSET_PATH));
+    //other resource
+    Resource resource = context.create().resource(TEST_ASSET_PATH);
+    assertNotNull(resourceResolver.getResource(TEST_ASSET_PATH));
+    assertFalse(assetManager.assetExists(TEST_ASSET_PATH));
+    //actual asset
+    resourceResolver.delete(resource);
+    assertNull(resourceResolver.getResource(TEST_ASSET_PATH));
+    assetManager.createAsset(TEST_ASSET_PATH);
+    assertNotNull(resourceResolver.getResource(TEST_ASSET_PATH));
+    assertTrue(assetManager.assetExists(TEST_ASSET_PATH));
+  }
+
+  @Test(expected = RuntimeException.class)
+  public void testRemoveAssetException() throws PersistenceException {
+    ResourceResolver resourceResolverSpy = spy(resourceResolver);
+    doThrow(new PersistenceException("From test")).when(resourceResolverSpy).delete(any(Resource.class));
+    AssetManager aMgr = new MockGraniteAssetManagerWrapper(resourceResolverSpy);
+    aMgr.createAsset(TEST_ASSET_PATH);
+    aMgr.removeAsset(TEST_ASSET_PATH);
   }
 
 }
