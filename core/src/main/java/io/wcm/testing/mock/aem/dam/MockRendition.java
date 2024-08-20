@@ -123,7 +123,7 @@ class MockRendition extends ResourceWrapper implements Rendition, com.adobe.gran
 
   // --- unsupported operations ---
 
-  // AEM 6.5
+  @Override
   public Binary getBinary() {
     throw new UnsupportedOperationException();
   }

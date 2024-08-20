@@ -319,27 +319,24 @@ class MockAsset extends ResourceWrapper implements Asset {
     throw new UnsupportedOperationException();
   }
 
-  // AEM 6.5
-  @SuppressWarnings("unused")
-  public Rendition addRendition(String arg0, Binary arg1, String arg2) {
+  @Override
+  public Rendition addRendition(String name, Binary binary, String mimeType) {
     throw new UnsupportedOperationException();
   }
 
-  // AEM 6.5
-  @SuppressWarnings("unused")
-  public Rendition addRendition(String arg0, Binary arg1, Map<String, Object> arg2) {
+  @Override
+  public Rendition addRendition(String name, Binary binary, Map<String, Object> arg2) {
     throw new UnsupportedOperationException();
   }
 
-  // AEM 6.5.5
-  @SuppressWarnings("unused")
-  public Revision createRevision(String arg0, String arg1, User arg2) {
+  @Override
+  public Revision createRevision(String name, String binary, User arg2) {
     throw new UnsupportedOperationException();
   }
 
   // AEM Cloud
   @SuppressWarnings("unused")
-  public Rendition setRendition(String arg0, Binary arg1, String arg2) {
+  public Rendition setRendition(String name, Binary binary, String mimeType) {
     throw new UnsupportedOperationException();
   }
 
