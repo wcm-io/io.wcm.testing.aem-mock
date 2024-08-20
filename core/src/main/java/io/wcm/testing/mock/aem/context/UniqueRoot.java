@@ -30,6 +30,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * unique root paths for each run, and cleans them up when done.
  */
 @ProviderType
+@SuppressWarnings("java:S2176") // same name as superclass
 public final class UniqueRoot extends org.apache.sling.testing.mock.sling.context.UniqueRoot {
 
   private Resource damRoot;

@@ -172,6 +172,7 @@ public class MockAssetTest {
   }
 
   @Test
+  @SuppressWarnings("java:S2699") // ensure no error is thrown
   public void testRenditionListMutable() {
     // make sure rendition list is modifiable by calling getBestfitRendition which does a sort on it
     UIHelper.getBestfitRendition(asset, 100);

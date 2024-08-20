@@ -69,7 +69,11 @@ import io.wcm.testing.mock.aem.context.AemContextImpl;
  * Helper class for building test content in the resource hierarchy with as less boilerplate code as possible.
  */
 @ProviderType
-@SuppressWarnings("null")
+@SuppressWarnings({
+    "null",
+    "java:S112", // allow throwing RuntimException
+    "java:S2176" // same name as superclass
+})
 public final class ContentBuilder extends org.apache.sling.testing.mock.sling.builder.ContentBuilder {
 
   static final String DUMMY_TEMPLATE = "/apps/sample/templates/template1";

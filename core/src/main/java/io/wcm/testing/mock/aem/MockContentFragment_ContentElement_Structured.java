@@ -47,6 +47,7 @@ import com.day.cq.commons.jcr.JcrConstants;
 /**
  * Mock implementation of {@link ContentElement} for structured content.
  */
+@SuppressWarnings("java:S112") // allow throwing RuntimException
 class MockContentFragment_ContentElement_Structured implements ContentElement {
 
   private final MockContentFragment contentFragment;

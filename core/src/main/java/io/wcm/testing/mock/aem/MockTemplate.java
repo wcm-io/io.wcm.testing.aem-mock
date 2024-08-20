@@ -66,11 +66,13 @@ class MockTemplate extends ResourceWrapper implements Template {
   }
 
   @Override
+  @SuppressWarnings("java:S1185") // overwrite due to different null constraints
   public String getPath() {
     return super.getPath();
   }
 
   @Override
+  @SuppressWarnings("java:S1185") // overwrite due to different null constraints
   public String getName() {
     return super.getName();
   }

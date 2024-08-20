@@ -40,7 +40,10 @@ import com.day.cq.dam.commons.util.DamUtil;
 /**
  * Mock implementation of {@link Rendition} and {@link com.adobe.granite.asset.api.Rendition}.
  */
-@SuppressWarnings("null")
+@SuppressWarnings({
+    "null",
+    "java:S112" // allow throwing RuntimException
+})
 class MockRendition extends ResourceWrapper implements Rendition, com.adobe.granite.asset.api.Rendition {
 
   private final Resource resource;

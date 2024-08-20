@@ -60,6 +60,9 @@ import com.day.text.Text;
 @ProviderType
 public final class MockLanguageManager implements LanguageManager {
 
+  /**
+   * @deprecated Deprecated
+   */
   @Override
   @Deprecated(forRemoval = true)
   public Map<Locale, Info> getAdjacentInfo(final ResourceResolver resourceResolver, final String path) {

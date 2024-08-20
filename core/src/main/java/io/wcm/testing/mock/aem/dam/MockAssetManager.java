@@ -64,7 +64,10 @@ import io.wcm.testing.mock.aem.builder.ContentBuilder;
 /**
  * Mock implementation of {@link AssetManager}
  */
-@SuppressWarnings("null")
+@SuppressWarnings({
+    "null",
+    "java:S112" // allow throwing RuntimException
+})
 class MockAssetManager implements AssetManager {
 
   private final ResourceResolver resourceResolver;

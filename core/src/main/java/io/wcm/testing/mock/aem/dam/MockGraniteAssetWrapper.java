@@ -42,7 +42,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * Mock implementation of Adobe Granite {@link Asset}. This is done by wrapping a {@link MockAsset}
  */
 @SuppressWarnings("null")
-public class MockGraniteAssetWrapper extends ResourceWrapper implements Asset {
+public final class MockGraniteAssetWrapper extends ResourceWrapper implements Asset {
 
   private final com.day.cq.dam.api.Asset asset;
 

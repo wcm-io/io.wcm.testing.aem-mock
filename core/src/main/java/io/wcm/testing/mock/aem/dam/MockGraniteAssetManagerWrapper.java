@@ -34,7 +34,8 @@ import com.day.cq.dam.api.DamConstants;
 /**
  * Mock implementation of Adobe Granite {@link AssetManager}. This is done by wrapping a {@link MockAssetManager}.
  */
-public class MockGraniteAssetManagerWrapper implements AssetManager {
+@SuppressWarnings("java:S112") // allow throwing RuntimException
+public final class MockGraniteAssetManagerWrapper implements AssetManager {
 
   private final ResourceResolver resourceResolver;
   private final com.day.cq.dam.api.AssetManager cqAssetManager;
@@ -63,7 +64,6 @@ public class MockGraniteAssetManagerWrapper implements AssetManager {
   }
 
   @Override
-  @SuppressWarnings("java:S112") // allow throwing RuntimException
   public void removeAsset(String s) {
     try {
       Resource assetResource = resourceResolver.getResource(s);

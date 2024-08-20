@@ -55,7 +55,10 @@ import com.day.cq.dam.api.Revision;
 /**
  * Mock implementation of {@link Asset}.
  */
-@SuppressWarnings("null")
+@SuppressWarnings({
+    "null",
+    "java:S112" // allow throwing RuntimException
+})
 class MockAsset extends ResourceWrapper implements Asset {
 
   private final ResourceResolver resourceResolver;
