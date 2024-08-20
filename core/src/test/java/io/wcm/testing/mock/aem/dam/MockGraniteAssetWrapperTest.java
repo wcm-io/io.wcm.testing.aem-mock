@@ -19,6 +19,13 @@
  */
 package io.wcm.testing.mock.aem.dam;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
@@ -36,12 +43,11 @@ import org.osgi.service.event.EventHandler;
 
 import com.adobe.granite.asset.api.Asset;
 import com.adobe.granite.asset.api.Rendition;
+import com.adobe.granite.asset.api.RenditionHandler;
 import com.day.cq.dam.api.DamEvent;
 
 import io.wcm.testing.mock.aem.context.TestAemContext;
 import io.wcm.testing.mock.aem.junit.AemContext;
-
-import static org.junit.Assert.*;
 
 public class MockGraniteAssetWrapperTest {
 
@@ -119,7 +125,7 @@ public class MockGraniteAssetWrapperTest {
 
   private void doTestAddRemoveRendition(final String renditionName) {
     InputStream is = new ByteArrayInputStream(BINARY_DATA);
-    Rendition rendition = asset.setRendition(renditionName, is, Map.of("jcr:mimeType", "application/octet-stream"));
+    Rendition rendition = asset.setRendition(renditionName, is, Map.of(RenditionHandler.PROPERTY_RENDITION_MIME_TYPE, "application/octet-stream"));
 
     assertNotNull(rendition);
     assertNotNull(asset.getRendition(renditionName));

@@ -82,19 +82,8 @@ public class MockGraniteAssetWrapper extends ResourceWrapper implements Asset {
   }
 
   @Override
-  public Rendition setRendition(String s, InputStream inputStream, Map<String, Object> map) {
-    if (map.size() == 1) {
-      Object val = map.values().iterator().next();
-      if (val != null) {
-        return (Rendition)asset.addRendition(s, inputStream, val.toString());
-      }
-    }
-    return (Rendition)asset.addRendition(s, inputStream, map);
-  }
-
-  @Override
-  public Rendition setRendition(String s, Binary binary, Map<String, Object> map) {
-    return (Rendition)asset.addRendition(s, binary, map);
+  public Rendition setRendition(String name, InputStream inputStream, Map<String, Object> map) {
+    return (Rendition)asset.addRendition(name, inputStream, map);
   }
 
   @Override
@@ -130,6 +119,11 @@ public class MockGraniteAssetWrapper extends ResourceWrapper implements Asset {
 
   @Override
   public AssetMetadata getAssetMetadata() {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public Rendition setRendition(String s, Binary binary, Map<String, Object> map) {
     throw new UnsupportedOperationException();
   }
 

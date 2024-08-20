@@ -19,9 +19,19 @@
  */
 package io.wcm.testing.mock.aem.dam;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
@@ -32,6 +42,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.osgi.service.event.EventHandler;
 
+import com.adobe.granite.asset.api.RenditionHandler;
 import com.day.cq.dam.api.Asset;
 import com.day.cq.dam.api.DamConstants;
 import com.day.cq.dam.api.DamEvent;
@@ -42,8 +53,6 @@ import com.day.cq.wcm.foundation.WCMRenditionPicker;
 import io.wcm.testing.mock.aem.context.TestAemContext;
 import io.wcm.testing.mock.aem.dam.MockAssetManagerTest.DamEventHandler;
 import io.wcm.testing.mock.aem.junit.AemContext;
-
-import static org.junit.Assert.*;
 
 @SuppressWarnings("null")
 public class MockAssetTest {
@@ -143,6 +152,22 @@ public class MockAssetTest {
   @Test
   public void testAddRemoveRendition() {
     doTestAddRemoveRendition("test.bin");
+  }
+
+  @Test
+  public void testAddRenditionWithMap() {
+    InputStream is = new ByteArrayInputStream(BINARY_DATA);
+    Rendition rendition = asset.addRendition("rendition1", is, Map.of(RenditionHandler.PROPERTY_RENDITION_MIME_TYPE, "application/octet-stream"));
+    assertNotNull(rendition);
+  }
+
+  @Test
+  public void testAddRenditionWithMapWithoutMimetype() {
+    InputStream is = new ByteArrayInputStream(BINARY_DATA);
+    Map<String, Object> emptyMap = Map.of();
+    assertThrows(UnsupportedOperationException.class, () -> {
+      asset.addRendition("rendition1", is, emptyMap);
+    });
   }
 
   @Test

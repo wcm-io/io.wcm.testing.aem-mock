@@ -43,6 +43,7 @@ import org.jetbrains.annotations.NotNull;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.event.EventAdmin;
 
+import com.adobe.granite.asset.api.RenditionHandler;
 import com.day.cq.commons.jcr.JcrConstants;
 import com.day.cq.dam.api.Asset;
 import com.day.cq.dam.api.DamConstants;
@@ -246,13 +247,17 @@ class MockAsset extends ResourceWrapper implements Asset {
     return resource.getValueMap().get(JcrConstants.JCR_UUID, "");
   }
 
-
-  // --- unsupported operations ---
-
   @Override
   public Rendition addRendition(String name, InputStream is, Map<String, Object> map) {
-    throw new UnsupportedOperationException();
+    Object mimeTypeObject = map.get(RenditionHandler.PROPERTY_RENDITION_MIME_TYPE);
+    if (mimeTypeObject instanceof String) {
+      return addRendition(name, is, mimeTypeObject.toString());
+    }
+    throw new UnsupportedOperationException("Mime type property missing in map: " + RenditionHandler.PROPERTY_RENDITION_MIME_TYPE);
   }
+
+
+  // --- unsupported operations ---
 
   @Override
   public Rendition getCurrentOriginal() {
