@@ -24,6 +24,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -223,6 +224,12 @@ public class MockAssetTest {
     assertNotNull(graniteAsset);
     assertEquals(asset, graniteAsset.adaptTo(Asset.class));
     assertEquals(graniteAsset.adaptTo(Resource.class), asset.adaptTo(Resource.class));
+  }
+
+  @Test
+  public void testAdaptTo() {
+    assertSame(asset, asset.adaptTo(Asset.class));
+    assertSame(asset, asset.adaptTo(com.adobe.granite.asset.api.Asset.class).adaptTo(Asset.class));
   }
 
 }

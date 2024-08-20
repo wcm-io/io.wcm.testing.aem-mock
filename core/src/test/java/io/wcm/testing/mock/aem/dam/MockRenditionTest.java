@@ -22,6 +22,7 @@ package io.wcm.testing.mock.aem.dam;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
 
 import org.apache.sling.api.resource.Resource;
 import org.junit.Before;
@@ -76,7 +77,7 @@ public class MockRenditionTest {
   }
 
   @Test
-  public void testEquals() throws Exception {
+  public void testEquals() {
     Rendition rendition1 = this.context.resourceResolver()
         .getResource("/content/dam/sample/portraits/scott_reynolds.jpg/jcr:content/renditions/original").adaptTo(Rendition.class);
     Rendition rendition2 = this.context.resourceResolver()
@@ -86,6 +87,12 @@ public class MockRenditionTest {
 
     assertEquals(rendition1, rendition2);
     assertNotEquals(rendition1, rendition3);
+  }
+
+  @Test
+  public void testAdaptTo() {
+    assertSame(rendition, rendition.adaptTo(Rendition.class));
+    assertSame(rendition, rendition.adaptTo(com.adobe.granite.asset.api.Rendition.class));
   }
 
 }
