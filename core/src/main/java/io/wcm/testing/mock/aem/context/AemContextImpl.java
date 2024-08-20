@@ -63,6 +63,7 @@ import io.wcm.testing.mock.aem.xf.MockExperienceFragmentAdapterFactory;
  * Should not be used directly but via the JUnit 4 rule or JUnit 5 extension.
  */
 @ConsumerType
+@SuppressWarnings("java:S112") // allow throwing RuntimException
 public class AemContextImpl extends SlingContextImpl {
 
   // default to publish instance run mode

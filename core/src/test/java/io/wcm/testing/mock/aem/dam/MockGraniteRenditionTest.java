@@ -19,15 +19,19 @@
  */
 package io.wcm.testing.mock.aem.dam;
 
-import com.adobe.granite.asset.api.Rendition;
-import io.wcm.testing.mock.aem.context.TestAemContext;
-import io.wcm.testing.mock.aem.junit.AemContext;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.apache.sling.api.resource.Resource;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import com.adobe.granite.asset.api.Rendition;
+
+import io.wcm.testing.mock.aem.context.TestAemContext;
+import io.wcm.testing.mock.aem.junit.AemContext;
 
 @SuppressWarnings("null")
 public class MockGraniteRenditionTest {
@@ -65,7 +69,7 @@ public class MockGraniteRenditionTest {
   }
 
   @Test
-  public void testEquals() throws Exception {
+  public void testEquals() {
     Rendition rendition1 = this.context.resourceResolver()
         .getResource("/content/dam/sample/portraits/scott_reynolds.jpg/jcr:content/renditions/original").adaptTo(Rendition.class);
     Rendition rendition2 = this.context.resourceResolver()

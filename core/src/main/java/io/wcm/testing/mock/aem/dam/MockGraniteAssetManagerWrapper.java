@@ -63,6 +63,7 @@ public class MockGraniteAssetManagerWrapper implements AssetManager {
   }
 
   @Override
+  @SuppressWarnings("java:S112") // allow throwing RuntimException
   public void removeAsset(String s) {
     try {
       Resource assetResource = resourceResolver.getResource(s);
