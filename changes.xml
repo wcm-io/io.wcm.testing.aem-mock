@@ -28,7 +28,7 @@
         Add mock implementation of Adobe Granite Asset API.
       </action>
       <action type="update" dev="sseifert">
-        Update to latest OSGi Mock, Sling Mock.
+        Update to latest OSGi Mock, Resource Resolver Mock, Sling Mock.
       </action>
     </release>
 
