@@ -2,7 +2,7 @@
  * #%L
  * wcm.io
  * %%
- * Copyright (C) 2014 wcm.io
+ * Copyright (C) 2024 wcm.io
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,12 +20,9 @@
 package io.wcm.testing.mock.aem.dam;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -35,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.ResourceResolverType;
@@ -43,66 +41,57 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.osgi.service.event.EventHandler;
 
+import com.adobe.granite.asset.api.Asset;
+import com.adobe.granite.asset.api.Rendition;
 import com.adobe.granite.asset.api.RenditionHandler;
-import com.day.cq.dam.api.Asset;
-import com.day.cq.dam.api.DamConstants;
 import com.day.cq.dam.api.DamEvent;
-import com.day.cq.dam.api.Rendition;
-import com.day.cq.dam.commons.util.UIHelper;
-import com.day.cq.wcm.foundation.WCMRenditionPicker;
 
 import io.wcm.testing.mock.aem.context.TestAemContext;
-import io.wcm.testing.mock.aem.dam.MockAssetManagerTest.DamEventHandler;
 import io.wcm.testing.mock.aem.junit.AemContext;
 
-@SuppressWarnings("null")
-public class MockAssetTest {
+public class MockGraniteAssetWrapperTest {
 
   private static final byte[] BINARY_DATA = new byte[] {
       0x01, 0x02, 0x03, 0x04, 0x05
   };
 
   @Rule
-  public AemContext context = TestAemContext.newAemContext();
+  public final AemContext context = TestAemContext.newAemContext();
 
   private Asset asset;
-  private DamEventHandler damEventHandler;
+  private MockAssetManagerTest.DamEventHandler damEventHandler;
 
   @Before
+  @SuppressWarnings("null")
   public void setUp() {
     context.load().json("/json-import-samples/dam.json", "/content/dam/sample");
 
     Resource resource = this.context.resourceResolver().getResource("/content/dam/sample/portraits/scott_reynolds.jpg");
     this.asset = resource.adaptTo(Asset.class);
 
-    damEventHandler = (DamEventHandler)context.registerService(EventHandler.class, new DamEventHandler());
+    this.damEventHandler = (MockAssetManagerTest.DamEventHandler)context.registerService(EventHandler.class, new MockAssetManagerTest.DamEventHandler());
   }
 
   @Test
   public void testProperties() {
     assertEquals("scott_reynolds.jpg", asset.getName());
     assertEquals("/content/dam/sample/portraits/scott_reynolds.jpg", asset.getPath());
-    assertEquals(1368001317000L, asset.getLastModified());
-    assertEquals("admin", asset.getModifier());
-    assertEquals("image/jpeg", asset.getMimeType());
     assertNotEquals(0, asset.hashCode());
-  }
 
-  @Test
-  public void testMetadata() {
-    assertEquals(807L, asset.getMetadata().get(DamConstants.TIFF_IMAGEWIDTH));
-    assertEquals(595L, asset.getMetadata(DamConstants.TIFF_IMAGELENGTH));
-    assertEquals("Scott Reynolds", asset.getMetadataValue(DamConstants.DC_TITLE));
-    assertEquals("Scott Reynolds", asset.getMetadataValueFromJcr(DamConstants.DC_TITLE));
+    if (context.resourceResolverType() == ResourceResolverType.JCR_OAK) {
+      assertNotNull(asset.getIdentifier());
+    }
+    else {
+      assertEquals("442d55b6-d534-4faf-9394-c9c20d095985", asset.getIdentifier());
+    }
   }
 
   @Test
   public void testRenditions() {
-    List<Rendition> renditions = asset.getRenditions();
+    List<Rendition> renditions = IteratorUtils.toList(asset.listRenditions());
     assertEquals(4, renditions.size());
     assertTrue(hasRendition(renditions, "cq5dam.thumbnail.48.48.png"));
-    assertEquals("original", asset.getOriginal().getName());
-    assertEquals("original", asset.getRendition(new WCMRenditionPicker()).getName());
+    assertEquals("original", asset.getRendition("original").getName());
   }
 
   private boolean hasRendition(List<Rendition> renditions, String renditionName) {
@@ -115,16 +104,28 @@ public class MockAssetTest {
   }
 
   @Test
+  public void testRemoveNonExistingRendition() {
+    try {
+      asset.removeRendition("non-existing");
+    } catch (Exception e) {
+      fail("removeRendition should not fail on non-existing renditions!");
+    }
+  }
+
+  @Test
+  @SuppressWarnings("null")
   public void testEquals() {
     Asset asset1 = this.context.resourceResolver().getResource("/content/dam/sample/portraits/scott_reynolds.jpg").adaptTo(Asset.class);
     Asset asset2 = this.context.resourceResolver().getResource("/content/dam/sample/portraits/scott_reynolds.jpg").adaptTo(Asset.class);
+    Object otherObject = new Object();
 
     assertEquals(asset1, asset2);
+    assertNotEquals(asset1, otherObject);
   }
 
   private void doTestAddRemoveRendition(final String renditionName) {
     InputStream is = new ByteArrayInputStream(BINARY_DATA);
-    Rendition rendition = asset.addRendition(renditionName, is, "application/octet-stream");
+    Rendition rendition = asset.setRendition(renditionName, is, Map.of(RenditionHandler.PROPERTY_RENDITION_MIME_TYPE, "application/octet-stream"));
 
     assertNotNull(rendition);
     assertNotNull(asset.getRendition(renditionName));
@@ -156,80 +157,11 @@ public class MockAssetTest {
   }
 
   @Test
-  public void testAddRenditionWithMap() {
-    InputStream is = new ByteArrayInputStream(BINARY_DATA);
-    Rendition rendition = asset.addRendition("rendition1", is, Map.of(RenditionHandler.PROPERTY_RENDITION_MIME_TYPE, "application/octet-stream"));
-    assertNotNull(rendition);
-  }
-
-  @Test
-  public void testAddRenditionWithMapWithoutMimetype() {
-    InputStream is = new ByteArrayInputStream(BINARY_DATA);
-    Map<String, Object> emptyMap = Map.of();
-    assertThrows(UnsupportedOperationException.class, () -> {
-      asset.addRendition("rendition1", is, emptyMap);
-    });
-  }
-
-  @Test
-  public void testRenditionListMutable() {
-    // make sure rendition list is modifiable by calling getBestfitRendition which does a sort on it
-    UIHelper.getBestfitRendition(asset, 100);
-  }
-
-  @Test
-  public void testBatchMode() {
-    if (context.resourceResolverType() == ResourceResolverType.JCR_MOCK) {
-      // resource resolver revert not support for JCR_MOCK - skip test
-      return;
-    }
-
-    // when batch mode is set to true ResourceResolver commit isn't called keeping the changes transient
-    asset.setBatchMode(true);
-    assertTrue(asset.isBatchMode());
-    doTestAddRemoveRendition("testwithbatchmode.bin");
-    assertTrue(context.resourceResolver().hasChanges());
-
-    context.resourceResolver().revert();
-
-    // when batch mode is set to false ResourceResolver commit is called and there are no more pending changes
-    asset.setBatchMode(false);
-    assertFalse(asset.isBatchMode());
-    doTestAddRemoveRendition("testwithoutbatchmode.bin");
-    assertFalse(context.resourceResolver().hasChanges());
-  }
-
-  @Test
-  public void testGetID() {
-    if (context.resourceResolverType() == ResourceResolverType.JCR_OAK) {
-      assertNotNull(asset.getID());
-    }
-    else {
-      assertEquals("442d55b6-d534-4faf-9394-c9c20d095985", asset.getID());
-    }
-  }
-
-  @Test
-  public void testRemoveNonExistingRendition() {
-    try {
-      asset.removeRendition("non-existing");
-    } catch (Exception e) {
-      fail("removeRendition should not fail on non-existing renditions!");
-    }
-  }
-
-  @Test
-  public void testGraniteAdaptation() {
-    com.adobe.granite.asset.api.Asset graniteAsset = asset.adaptTo(com.adobe.granite.asset.api.Asset.class);
-    assertNotNull(graniteAsset);
-    assertEquals(asset, graniteAsset.adaptTo(Asset.class));
-    assertEquals(graniteAsset.adaptTo(Resource.class), asset.adaptTo(Resource.class));
-  }
-
-  @Test
-  public void testAdaptTo() {
-    assertSame(asset, asset.adaptTo(Asset.class));
-    assertSame(asset, asset.adaptTo(com.adobe.granite.asset.api.Asset.class).adaptTo(Asset.class));
+  public void testCQAdaptation() {
+    com.day.cq.dam.api.Asset cqAsset = asset.adaptTo(com.day.cq.dam.api.Asset.class);
+    assertNotNull(cqAsset);
+    assertEquals(asset, cqAsset.adaptTo(Asset.class));
+    assertEquals(cqAsset.adaptTo(Resource.class), asset.adaptTo(Resource.class));
   }
 
 }

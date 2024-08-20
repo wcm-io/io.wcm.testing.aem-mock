@@ -63,6 +63,7 @@ import io.wcm.testing.mock.aem.xf.MockExperienceFragmentAdapterFactory;
  * Should not be used directly but via the JUnit 4 rule or JUnit 5 extension.
  */
 @ConsumerType
+@SuppressWarnings("java:S112") // allow throwing RuntimException
 public class AemContextImpl extends SlingContextImpl {
 
   // default to publish instance run mode
@@ -176,6 +177,17 @@ public class AemContextImpl extends SlingContextImpl {
     AssetManager assetManager = resourceResolver().adaptTo(AssetManager.class);
     if (assetManager == null) {
       throw new RuntimeException("No asset manager");
+    }
+    return assetManager;
+  }
+
+  /**
+   * @return Adobe Granite Asset manager
+   */
+  public @NotNull com.adobe.granite.asset.api.AssetManager graniteAssetManager() {
+    com.adobe.granite.asset.api.AssetManager assetManager = resourceResolver().adaptTo(com.adobe.granite.asset.api.AssetManager.class);
+    if (assetManager == null) {
+      throw new RuntimeException("No granite asset manager");
     }
     return assetManager;
   }
