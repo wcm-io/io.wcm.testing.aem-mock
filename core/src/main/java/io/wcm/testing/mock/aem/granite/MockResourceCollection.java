@@ -112,9 +112,7 @@ class MockResourceCollection implements ResourceCollection {
     throw new UnsupportedOperationException();
   }
 
-  // AEM 6.5.5
   @Override
-  @SuppressWarnings("unused")
   public boolean hasNode(String arg0) {
     throw new UnsupportedOperationException();
   }

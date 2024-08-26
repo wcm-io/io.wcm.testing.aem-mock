@@ -43,6 +43,7 @@ import org.jetbrains.annotations.NotNull;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.event.EventAdmin;
 
+import com.adobe.granite.asset.api.RenditionHandler;
 import com.day.cq.commons.jcr.JcrConstants;
 import com.day.cq.dam.api.Asset;
 import com.day.cq.dam.api.DamConstants;
@@ -54,7 +55,10 @@ import com.day.cq.dam.api.Revision;
 /**
  * Mock implementation of {@link Asset}.
  */
-@SuppressWarnings("null")
+@SuppressWarnings({
+    "null",
+    "java:S112" // allow throwing RuntimException
+})
 class MockAsset extends ResourceWrapper implements Asset {
 
   private final ResourceResolver resourceResolver;
@@ -76,11 +80,14 @@ class MockAsset extends ResourceWrapper implements Asset {
     this.bundleContext = bundleContext;
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public <AdapterType> AdapterType adaptTo(Class<AdapterType> type) {
     if (type == Resource.class) {
-      return (AdapterType)resource;
+      return type.cast(resource);
+    }
+    //to be able to adapt to granite asset
+    if (type == com.adobe.granite.asset.api.Asset.class) {
+      return type.cast(new MockGraniteAssetWrapper(this));
     }
     return super.adaptTo(type);
   }
@@ -243,13 +250,17 @@ class MockAsset extends ResourceWrapper implements Asset {
     return resource.getValueMap().get(JcrConstants.JCR_UUID, "");
   }
 
-
-  // --- unsupported operations ---
-
   @Override
   public Rendition addRendition(String name, InputStream is, Map<String, Object> map) {
-    throw new UnsupportedOperationException();
+    Object mimeTypeObject = map.get(RenditionHandler.PROPERTY_RENDITION_MIME_TYPE);
+    if (mimeTypeObject instanceof String) {
+      return addRendition(name, is, mimeTypeObject.toString());
+    }
+    throw new UnsupportedOperationException("Mime type property missing in map: " + RenditionHandler.PROPERTY_RENDITION_MIME_TYPE);
   }
+
+
+  // --- unsupported operations ---
 
   @Override
   public Rendition getCurrentOriginal() {
@@ -311,27 +322,24 @@ class MockAsset extends ResourceWrapper implements Asset {
     throw new UnsupportedOperationException();
   }
 
-  // AEM 6.5
-  @SuppressWarnings("unused")
-  public Rendition addRendition(String arg0, Binary arg1, String arg2) {
+  @Override
+  public Rendition addRendition(String name, Binary binary, String mimeType) {
     throw new UnsupportedOperationException();
   }
 
-  // AEM 6.5
-  @SuppressWarnings("unused")
-  public Rendition addRendition(String arg0, Binary arg1, Map<String, Object> arg2) {
+  @Override
+  public Rendition addRendition(String name, Binary binary, Map<String, Object> arg2) {
     throw new UnsupportedOperationException();
   }
 
-  // AEM 6.5.5
-  @SuppressWarnings("unused")
-  public Revision createRevision(String arg0, String arg1, User arg2) {
+  @Override
+  public Revision createRevision(String name, String binary, User arg2) {
     throw new UnsupportedOperationException();
   }
 
   // AEM Cloud
   @SuppressWarnings("unused")
-  public Rendition setRendition(String arg0, Binary arg1, String arg2) {
+  public Rendition setRendition(String name, Binary binary, String mimeType) {
     throw new UnsupportedOperationException();
   }
 

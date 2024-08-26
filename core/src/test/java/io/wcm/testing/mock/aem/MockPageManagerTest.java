@@ -149,6 +149,7 @@ public class MockPageManagerTest {
   }
 
   @Test
+  @SuppressWarnings("java:S2699") // ensure no error is thrown
   public void testCreatePageWithDefaultContent_Classic_WTES23() throws Exception {
     context.load().json("/WTEST-23/sample_templates.json", "/content/templates");
     context.pageManager().create("/content", "", "/content/templates/sample-template", "Some title", true);

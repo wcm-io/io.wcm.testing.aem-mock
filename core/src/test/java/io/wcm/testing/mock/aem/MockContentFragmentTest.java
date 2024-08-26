@@ -73,27 +73,27 @@ public class MockContentFragmentTest {
 
     // create variation
     VariationTemplate varTemplate = cf.createVariation("v1", "V1", "desc1");
-    ContentVariation var = param1.createVariation(varTemplate);
-    assertEquals("v1", var.getName());
-    assertEquals("V1", var.getTitle());
-    assertEquals("desc1", var.getDescription());
-    var.setContent("var_value", null);
-    assertEquals("var_value", var.getContent());
+    ContentVariation variation = param1.createVariation(varTemplate);
+    assertEquals("v1", variation.getName());
+    assertEquals("V1", variation.getTitle());
+    assertEquals("desc1", variation.getDescription());
+    variation.setContent("var_value", null);
+    assertEquals("var_value", variation.getContent());
 
     assertEquals(1, IteratorUtils.toList(cf.listAllVariations()).size());
     assertEquals(1, IteratorUtils.toList(param1.getVariations()).size());
-    var = param1.getVariation("v1");
-    assertEquals("v1", var.getName());
+    variation = param1.getVariation("v1");
+    assertEquals("v1", variation.getName());
 
     // remove variation
-    param1.removeVariation(var);
+    param1.removeVariation(variation);
 
     // create variation with only name
     varTemplate = cf.createVariation("v2", null, null);
-    var = param1.createVariation(varTemplate);
-    assertEquals("v2", var.getName());
-    assertEquals("v2", var.getTitle());
-    assertEquals("", var.getDescription());
+    variation = param1.createVariation(varTemplate);
+    assertEquals("v2", variation.getName());
+    assertEquals("v2", variation.getTitle());
+    assertEquals("", variation.getDescription());
   }
 
   @Test
@@ -138,21 +138,21 @@ public class MockContentFragmentTest {
 
     // create variation
     VariationTemplate varTemplate = cf.createVariation("v1", "V1", "desc1");
-    ContentVariation var = contentElement.createVariation(varTemplate);
-    assertEquals("v1", var.getName());
-    assertEquals("V1", var.getTitle());
-    assertEquals("desc1", var.getDescription());
-    var.setContent("Var-Text", "text/plain");
-    assertEquals("Var-Text", var.getContent());
-    assertEquals("text/plain", var.getContentType());
+    ContentVariation variation = contentElement.createVariation(varTemplate);
+    assertEquals("v1", variation.getName());
+    assertEquals("V1", variation.getTitle());
+    assertEquals("desc1", variation.getDescription());
+    variation.setContent("Var-Text", "text/plain");
+    assertEquals("Var-Text", variation.getContent());
+    assertEquals("text/plain", variation.getContentType());
 
     assertEquals(1, IteratorUtils.toList(cf.listAllVariations()).size());
     assertEquals(1, IteratorUtils.toList(contentElement.getVariations()).size());
-    var = contentElement.getVariation("v1");
-    assertEquals("v1", var.getName());
+    variation = contentElement.getVariation("v1");
+    assertEquals("v1", variation.getName());
 
     // remove variation
-    contentElement.removeVariation(var);
+    contentElement.removeVariation(variation);
   }
 
 }

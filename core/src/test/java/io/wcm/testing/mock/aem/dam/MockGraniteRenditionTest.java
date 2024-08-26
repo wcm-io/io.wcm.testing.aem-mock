@@ -22,21 +22,19 @@ package io.wcm.testing.mock.aem.dam;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
 
 import org.apache.sling.api.resource.Resource;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import com.day.cq.commons.jcr.JcrConstants;
-import com.day.cq.dam.api.Rendition;
+import com.adobe.granite.asset.api.Rendition;
 
 import io.wcm.testing.mock.aem.context.TestAemContext;
 import io.wcm.testing.mock.aem.junit.AemContext;
 
 @SuppressWarnings("null")
-public class MockRenditionTest {
+public class MockGraniteRenditionTest {
 
   @Rule
   public AemContext context = TestAemContext.newAemContext();
@@ -57,13 +55,7 @@ public class MockRenditionTest {
     assertEquals("original", rendition.getName());
     assertEquals("/content/dam/sample/portraits/scott_reynolds.jpg/jcr:content/renditions/original", rendition.getPath());
     assertEquals("image/jpeg", rendition.getMimeType());
-    assertEquals("admin", rendition.getProperties().get(JcrConstants.JCR_LAST_MODIFIED_BY, String.class));
     assertNotEquals(0, rendition.hashCode());
-  }
-
-  @Test
-  public void testAsset() {
-    assertEquals("/content/dam/sample/portraits/scott_reynolds.jpg", rendition.getAsset().getPath());
   }
 
   @Test
@@ -87,12 +79,6 @@ public class MockRenditionTest {
 
     assertEquals(rendition1, rendition2);
     assertNotEquals(rendition1, rendition3);
-  }
-
-  @Test
-  public void testAdaptTo() {
-    assertSame(rendition, rendition.adaptTo(Rendition.class));
-    assertSame(rendition, rendition.adaptTo(com.adobe.granite.asset.api.Rendition.class));
   }
 
 }

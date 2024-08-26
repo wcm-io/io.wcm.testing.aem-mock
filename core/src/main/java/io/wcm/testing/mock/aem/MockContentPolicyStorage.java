@@ -47,6 +47,7 @@ import io.wcm.testing.mock.aem.builder.ContentBuilder;
  * their mappings. Basically it stores one global content policy per resource type, and one mapping
  * for it. This is usually enough for unit tests.
  */
+@SuppressWarnings("java:S112") // allow throwing RuntimException
 public final class MockContentPolicyStorage {
 
   static final String RT_CONTENTPOLICY = "wcm/core/components/policy/policy";

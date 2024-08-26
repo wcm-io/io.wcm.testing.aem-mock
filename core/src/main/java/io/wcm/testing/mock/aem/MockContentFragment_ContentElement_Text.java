@@ -51,6 +51,7 @@ import com.day.cq.dam.api.Rendition;
 /**
  * Mock implementation of {@link ContentElement} for text-based content.
  */
+@SuppressWarnings("java:S112") // allow throwing RuntimException
 class MockContentFragment_ContentElement_Text implements ContentElement {
 
   private final MockContentFragment contentFragment;

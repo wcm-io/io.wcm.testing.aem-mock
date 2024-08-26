@@ -38,10 +38,13 @@ import com.day.cq.dam.api.Rendition;
 import com.day.cq.dam.commons.util.DamUtil;
 
 /**
- * Mock implementation of {@link Rendition}.
+ * Mock implementation of {@link Rendition} and {@link com.adobe.granite.asset.api.Rendition}.
  */
-@SuppressWarnings("null")
-class MockRendition extends ResourceWrapper implements Rendition {
+@SuppressWarnings({
+    "null",
+    "java:S112" // allow throwing RuntimException
+})
+class MockRendition extends ResourceWrapper implements Rendition, com.adobe.granite.asset.api.Rendition {
 
   private final Resource resource;
   private final Resource contentResource;
@@ -59,6 +62,10 @@ class MockRendition extends ResourceWrapper implements Rendition {
   public <AdapterType> AdapterType adaptTo(Class<AdapterType> type) {
     if (type == Resource.class) {
       return (AdapterType)resource;
+    }
+    //to be able to adapt to granite rendition and back
+    if (type == Rendition.class || type == com.adobe.granite.asset.api.Rendition.class) {
+      return (AdapterType)this;
     }
     return super.adaptTo(type);
   }
@@ -119,7 +126,7 @@ class MockRendition extends ResourceWrapper implements Rendition {
 
   // --- unsupported operations ---
 
-  // AEM 6.5
+  @Override
   public Binary getBinary() {
     throw new UnsupportedOperationException();
   }

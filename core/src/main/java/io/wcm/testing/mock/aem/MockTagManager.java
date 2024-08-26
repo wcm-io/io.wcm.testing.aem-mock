@@ -62,6 +62,7 @@ import com.day.cq.wcm.api.NameConstants;
  * Mock implementation of {@link TagManager}.
  */
 @ProviderType
+@SuppressWarnings("java:S112") // allow throwing RuntimException
 public final class MockTagManager implements TagManager {
 
   /** resource type for created tags */
