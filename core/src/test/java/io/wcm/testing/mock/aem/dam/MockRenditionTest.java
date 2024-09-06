@@ -23,7 +23,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
+import static org.mockito.Mockito.CALLS_REAL_METHODS;
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 
+import java.net.URI;
+
+import javax.jcr.RepositoryException;
+
+import org.apache.jackrabbit.api.binary.BinaryDownload;
 import org.apache.sling.api.resource.Resource;
 import org.junit.Before;
 import org.junit.Rule;
@@ -93,6 +100,12 @@ public class MockRenditionTest {
   public void testAdaptTo() {
     assertSame(rendition, rendition.adaptTo(Rendition.class));
     assertSame(rendition, rendition.adaptTo(com.adobe.granite.asset.api.Rendition.class));
+  }
+
+  @Test
+  public void testBinaryDownload() throws RepositoryException {
+    BinaryDownload d = (BinaryDownload) rendition.getBinary();
+    assertNotNull(d.getURI(null));
   }
 
 }
