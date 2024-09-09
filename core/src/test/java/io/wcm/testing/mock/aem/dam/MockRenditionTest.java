@@ -110,6 +110,8 @@ public class MockRenditionTest {
     assertTrue(binary instanceof BinaryDownload);
     assertEquals("https://blostore.local/blostore//content/dam/sample/portraits/scott_reynolds.jpg/jcr:content/renditions/original",
         ((BinaryDownload)binary).getURI(null).toString());
+
+    binary.dispose();
   }
 
 }

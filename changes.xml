@@ -24,7 +24,7 @@
   <body>
 
     <release version="5.6.2" date="not released">
-      <action type="update" dev="jhoh" issue="50">
+      <action type="update" dev="joerghoh" issue="50">
         Add support for Rendition.getBinary() method.
       </action>
       <action type="update" dev="sseifert">
