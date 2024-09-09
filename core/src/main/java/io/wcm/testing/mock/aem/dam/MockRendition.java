@@ -129,9 +129,6 @@ class MockRendition extends ResourceWrapper implements Rendition, com.adobe.gran
     return StringUtils.equals(getPath(), ((MockRendition)obj).getPath());
   }
 
-
-  // --- unsupported operations ---
-
   @Override
   public Binary getBinary() {
     return new MockBinary(this);
