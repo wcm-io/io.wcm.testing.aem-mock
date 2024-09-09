@@ -137,49 +137,49 @@ class MockRendition extends ResourceWrapper implements Rendition, com.adobe.gran
     return new MockBinary(this);
   }
 
-  
-  
-  private class MockBinary implements BinaryDownload {
 
-	private Rendition rendition;
-	
-	public MockBinary (Rendition rendition) {
-		this.rendition = rendition;
-	}
-	  
-	  
-	@Override
-	public InputStream getStream() throws RepositoryException {
-		return rendition.getStream();
-	}
+  private static class MockBinary implements BinaryDownload {
 
-	@Override
-	public int read(byte[] b, long position) throws IOException, RepositoryException {
-		throw new UnsupportedOperationException();
-	}
+    private Rendition rendition;
 
-	@Override
-	public long getSize() throws RepositoryException {
-		return rendition.getSize();
-	}
+    MockBinary(Rendition rendition) {
+      this.rendition = rendition;
+    }
 
-	@Override
-	public void dispose() {
-		// nothing to do
-	}
 
-	@Override
-	public @Nullable URI getURI(BinaryDownloadOptions downloadOptions) throws RepositoryException {
-		final String path = "https://blostore.local:12345/blostore/" + rendition.getPath();
-		try {
-			return new URI(path);
-		} catch (URISyntaxException e) {
-			// nothing
-		}
-		return null;
-	}
+    @Override
+    public InputStream getStream() throws RepositoryException {
+      return rendition.getStream();
+    }
+
+    @Override
+    public int read(byte[] b, long position) throws IOException, RepositoryException {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public long getSize() throws RepositoryException {
+      return rendition.getSize();
+    }
+
+    @Override
+    public void dispose() {
+      // nothing to do
+    }
+
+    @Override
+    public @Nullable URI getURI(BinaryDownloadOptions downloadOptions) throws RepositoryException {
+      final String path = "https://blostore.local:12345/blostore/" + rendition.getPath();
+      try {
+        return new URI(path);
+      }
+      catch (URISyntaxException e) {
+        // nothing
+      }
+      return null;
+    }
 
   }
-  
-  
+
+
 }

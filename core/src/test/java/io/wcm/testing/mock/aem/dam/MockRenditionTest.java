@@ -23,10 +23,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
-import static org.mockito.Mockito.CALLS_REAL_METHODS;
-import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
-
-import java.net.URI;
 
 import javax.jcr.RepositoryException;
 
@@ -104,7 +100,7 @@ public class MockRenditionTest {
 
   @Test
   public void testBinaryDownload() throws RepositoryException {
-    BinaryDownload d = (BinaryDownload) rendition.getBinary();
+    BinaryDownload d = (BinaryDownload)rendition.getBinary();
     assertNotNull(d.getURI(null));
   }
 
