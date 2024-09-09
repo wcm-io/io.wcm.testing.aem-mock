@@ -166,7 +166,7 @@ class MockRendition extends ResourceWrapper implements Rendition, com.adobe.gran
 
     @Override
     public @Nullable URI getURI(BinaryDownloadOptions downloadOptions) throws RepositoryException {
-      final String path = "https://blostore.local:12345/blostore/" + rendition.getPath();
+      final String path = "https://blostore.local/blostore/" + rendition.getPath();
       try {
         return new URI(path);
       }

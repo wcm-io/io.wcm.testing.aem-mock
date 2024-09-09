@@ -23,7 +23,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
+import javax.jcr.Binary;
 import javax.jcr.RepositoryException;
 
 import org.apache.jackrabbit.api.binary.BinaryDownload;
@@ -100,8 +102,14 @@ public class MockRenditionTest {
 
   @Test
   public void testBinaryDownload() throws RepositoryException {
-    BinaryDownload d = (BinaryDownload)rendition.getBinary();
-    assertNotNull(d.getURI(null));
+    Binary binary = rendition.getBinary();
+    assertNotNull(binary);
+    assertEquals(0L, binary.getSize());
+    assertNotNull(binary.getStream());
+
+    assertTrue(binary instanceof BinaryDownload);
+    assertEquals("https://blostore.local/blostore//content/dam/sample/portraits/scott_reynolds.jpg/jcr:content/renditions/original",
+        ((BinaryDownload)binary).getURI(null).toString());
   }
 
 }
