@@ -23,7 +23,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
+import javax.jcr.Binary;
+import javax.jcr.RepositoryException;
+
+import org.apache.jackrabbit.api.binary.BinaryDownload;
 import org.apache.sling.api.resource.Resource;
 import org.junit.Before;
 import org.junit.Rule;
@@ -93,6 +98,20 @@ public class MockRenditionTest {
   public void testAdaptTo() {
     assertSame(rendition, rendition.adaptTo(Rendition.class));
     assertSame(rendition, rendition.adaptTo(com.adobe.granite.asset.api.Rendition.class));
+  }
+
+  @Test
+  public void testBinaryDownload() throws RepositoryException {
+    Binary binary = rendition.getBinary();
+    assertNotNull(binary);
+    assertEquals(0L, binary.getSize());
+    assertNotNull(binary.getStream());
+
+    assertTrue(binary instanceof BinaryDownload);
+    assertEquals("https://blostore.local/blostore//content/dam/sample/portraits/scott_reynolds.jpg/jcr:content/renditions/original",
+        ((BinaryDownload)binary).getURI(null).toString());
+
+    binary.dispose();
   }
 
 }

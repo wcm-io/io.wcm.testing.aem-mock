@@ -21,16 +21,22 @@ package io.wcm.testing.mock.aem.dam;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import javax.jcr.Binary;
+import javax.jcr.RepositoryException;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.jackrabbit.api.binary.BinaryDownload;
+import org.apache.jackrabbit.api.binary.BinaryDownloadOptions;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceUtil;
 import org.apache.sling.api.resource.ResourceWrapper;
 import org.apache.sling.api.resource.ValueMap;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import com.day.cq.commons.jcr.JcrConstants;
 import com.day.cq.dam.api.Asset;
@@ -123,12 +129,54 @@ class MockRendition extends ResourceWrapper implements Rendition, com.adobe.gran
     return StringUtils.equals(getPath(), ((MockRendition)obj).getPath());
   }
 
-
-  // --- unsupported operations ---
-
   @Override
   public Binary getBinary() {
-    throw new UnsupportedOperationException();
+    return new MockBinary(this);
   }
+
+
+  private static class MockBinary implements BinaryDownload {
+
+    private Rendition rendition;
+
+    MockBinary(Rendition rendition) {
+      this.rendition = rendition;
+    }
+
+
+    @Override
+    public InputStream getStream() throws RepositoryException {
+      return rendition.getStream();
+    }
+
+    @Override
+    public int read(byte[] b, long position) throws IOException, RepositoryException {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public long getSize() throws RepositoryException {
+      return rendition.getSize();
+    }
+
+    @Override
+    public void dispose() {
+      // nothing to do
+    }
+
+    @Override
+    public @Nullable URI getURI(BinaryDownloadOptions downloadOptions) throws RepositoryException {
+      final String path = "https://blostore.local/blostore/" + rendition.getPath();
+      try {
+        return new URI(path);
+      }
+      catch (URISyntaxException e) {
+        // nothing
+      }
+      return null;
+    }
+
+  }
+
 
 }
