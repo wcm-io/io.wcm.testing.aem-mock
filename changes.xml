@@ -27,9 +27,6 @@
       <action type="update" dev="joerghoh" issue="50">
         Add support for Rendition.getBinary() method.
       </action>
-      <action type="update" dev="sseifert">
-        Update to latest OSGi Mock.
-      </action>
     </release>
 
     <release version="5.6.0" date="2024-08-26">
