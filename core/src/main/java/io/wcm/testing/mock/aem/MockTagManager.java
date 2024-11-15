@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -377,7 +378,7 @@ public final class MockTagManager implements TagManager {
     if (resource == null) {
       return Collections.emptyList();
     }
-    Set<Tag> treeTags = new HashSet<>();
+    Set<Tag> treeTags = new LinkedHashSet<>();
     Queue<Resource> searchResources = new LinkedList<>();
     searchResources.add(resource);
 
