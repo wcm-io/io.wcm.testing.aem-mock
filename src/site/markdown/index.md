@@ -13,7 +13,7 @@ Mock implementation of selected AEM APIs.
 * [Java ImageIO - Advanced Image File Format Support](usage-imageio.html)
 * [API documentation (JUnit 4)](junit4/apidocs/)
 * [API documentation (JUnit 5)](junit5/apidocs/)
-* [Changelog](changes-report.html)
+* [Changelog](changes.html)
 
 
 ### Implemented mock features
