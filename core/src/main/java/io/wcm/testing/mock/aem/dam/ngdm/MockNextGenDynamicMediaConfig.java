@@ -25,6 +25,7 @@ import com.adobe.cq.ui.wcm.commons.config.NextGenDynamicMediaConfig;
 
 /**
  * Mock implementation of {@link NextGenDynamicMediaConfig}.
+ *
  * <p>
  * This OSGi service is not registered by default in AEM Mocks, as it is not available in all contexts.
  * </p>
