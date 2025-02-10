@@ -36,9 +36,11 @@ import com.day.cq.dam.api.Asset;
 
 /**
  * Mock implementation of {@link AssetDelivery} for Web-Optimized Image Delivery.
+ *
  * <p>
  * As Asset ID a md5 hash of the path is used.
  * </p>
+ *
  * <p>
  * This OSGi service is not registered by default in AEM Mocks, as it is not available in all contexts
  * (e.g. not in AEM 6.5 and AEMaaCS SDK).

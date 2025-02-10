@@ -449,9 +449,11 @@ public final class MockLanguageManager implements LanguageManager {
 
     /**
      * Gets the InfoImpl for a child resource under the current InfoImpl's path.
+     *
      * <p>
      * This constructs a new InfoImpl using the path getPath() + / + relPath.
      * </p>
+     *
      * @param relPath Path relative to the current path.
      * @param resourceResolver A resource resolver.
      * @return A new InfoImpl for the resource specified at relPath.
