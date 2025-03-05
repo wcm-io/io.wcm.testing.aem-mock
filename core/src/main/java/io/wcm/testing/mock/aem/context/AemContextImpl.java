@@ -85,7 +85,7 @@ public class AemContextImpl extends SlingContextImpl {
     registerInjectActivateService(new MockAssetStore());
     registerInjectActivateService(new MockPublishUtils());
     registerInjectActivateService(new MockAemBindingsValuesProvider(),
-        MockAemBindingsValuesProvider.PROPERTY_CONTEXT, this);
+        MockAemBindingsValuesProvider.PROPERTY_AEM_CONTEXT_OBJECT, this);
     registerInjectActivateService(new MockPageManagerFactory());
     registerInjectActivateService(new MockLanguageManager());
     registerInjectActivateService(new MockResourceCollectionManager());
