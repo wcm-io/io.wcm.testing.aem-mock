@@ -24,6 +24,12 @@
     xsi:schemaLocation="http://maven.apache.org/changes/2.0.0 https://maven.apache.org/xsd/changes-2.0.0.xsd">
   <body>
 
+    <release version="5.6.8" date="not released">
+      <action type="update" dev="sseifert" issue="54">
+        MockAemBindingsValuesProvider: Avoid clash with org.apache.sling.scripting.core 2.4.10 by using a different service property name for passing the AemContext object.
+      </action>
+    </release>
+
     <release version="5.6.6" date="2025-02-10">
       <action type="update" dev="sseifert" issue="53">
         Add dependency to icu4j 74.2 (required by com.day.cq.cq-commons 5.14.14 / AEMaaCS 2025.1.19352.20250131T194709Z-250100).

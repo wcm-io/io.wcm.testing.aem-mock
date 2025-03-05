@@ -43,14 +43,14 @@ import io.wcm.testing.mock.aem.context.MockAemSlingBindings.SlingBindingsPropert
     property = "MockSlingBindings-ignore=true")
 class MockAemBindingsValuesProvider implements BindingsValuesProvider {
 
-  static final String PROPERTY_CONTEXT = "context";
+  static final String PROPERTY_AEM_CONTEXT_OBJECT = "aemContextObject";
 
   @SuppressWarnings("java:S1845") // naming
   private AemContextImpl context;
 
   @Activate
   private void activate(Map<String, Object> config) {
-    this.context = (AemContextImpl)config.get(PROPERTY_CONTEXT);
+    this.context = (AemContextImpl)config.get(PROPERTY_AEM_CONTEXT_OBJECT);
   }
 
   @Deactivate
