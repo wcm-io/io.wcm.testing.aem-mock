@@ -47,8 +47,8 @@ public final class MockGraniteAssetWrapper extends ResourceWrapper implements As
   private final com.day.cq.dam.api.Asset asset;
 
   @SuppressFBWarnings("NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE") // adaption to Resource will always work
-  MockGraniteAssetWrapper(com.day.cq.dam.api.Asset asset) {
-    super(asset.adaptTo(Resource.class));
+  MockGraniteAssetWrapper(com.day.cq.dam.api.Asset asset, Resource resource) {
+    super(resource);
     this.asset = asset;
   }
 

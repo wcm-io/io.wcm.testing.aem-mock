@@ -48,7 +48,7 @@ public final class MockGraniteAssetManagerWrapper implements AssetManager {
   @Override
   public Asset createAsset(String s) {
     com.day.cq.dam.api.Asset asset = cqAssetManager.createAsset(s, null, null, false);
-    return new MockGraniteAssetWrapper(asset);
+    return new MockGraniteAssetWrapper(asset, ((MockAsset)asset).resource);
   }
 
   @Override
