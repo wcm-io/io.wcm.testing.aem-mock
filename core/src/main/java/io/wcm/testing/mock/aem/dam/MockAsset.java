@@ -32,11 +32,11 @@ import javax.jcr.Binary;
 import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jackrabbit.api.security.user.User;
+import org.apache.sling.api.adapter.SlingAdaptable;
 import org.apache.sling.api.resource.PersistenceException;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ResourceUtil;
-import org.apache.sling.api.resource.ResourceWrapper;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.testing.mock.sling.loader.ContentLoader;
 import org.jetbrains.annotations.NotNull;
@@ -59,10 +59,10 @@ import com.day.cq.dam.api.Revision;
     "null",
     "java:S112" // allow throwing RuntimException
 })
-class MockAsset extends ResourceWrapper implements Asset {
+class MockAsset extends SlingAdaptable implements Asset {
 
   private final ResourceResolver resourceResolver;
-  private final Resource resource;
+  protected final Resource resource;
   private final ValueMap contentProps;
   private final Resource renditionsResource;
   private final EventAdmin eventAdmin;
@@ -70,7 +70,6 @@ class MockAsset extends ResourceWrapper implements Asset {
   private boolean batchMode;
 
   MockAsset(@NotNull Resource resource, EventAdmin eventAdmin, BundleContext bundleContext) {
-    super(resource);
     this.resourceResolver = resource.getResourceResolver();
     this.resource = resource;
     Resource contentResource = resource.getChild(JcrConstants.JCR_CONTENT);
@@ -81,13 +80,13 @@ class MockAsset extends ResourceWrapper implements Asset {
   }
 
   @Override
-  public <AdapterType> AdapterType adaptTo(Class<AdapterType> type) {
+  public <AdapterType> AdapterType adaptTo(@NotNull Class<AdapterType> type) {
     if (type == Resource.class) {
       return type.cast(resource);
     }
     //to be able to adapt to granite asset
     if (type == com.adobe.granite.asset.api.Asset.class) {
-      return type.cast(new MockGraniteAssetWrapper(this));
+      return type.cast(new MockGraniteAssetWrapper(this, resource));
     }
     return super.adaptTo(type);
   }
@@ -101,6 +100,16 @@ class MockAsset extends ResourceWrapper implements Asset {
   @Override
   public Object getMetadata(String name) {
     return getMetadata().get(name);
+  }
+
+  @Override
+  public String getPath() {
+    return resource.getPath();
+  }
+
+  @Override
+  public String getName() {
+    return resource.getName();
   }
 
   @Override
