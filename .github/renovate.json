@@ -5,7 +5,6 @@
     "github>wcm-io/renovate-config:automerge-parent"
   ],
   "ignoreDeps": [
-    "junit:*",
-    "org.junit.jupiter:*"
+    "com.ibm.icu:icu4j"
   ]
 }
