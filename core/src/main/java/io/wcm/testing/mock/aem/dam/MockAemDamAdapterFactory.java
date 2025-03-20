@@ -77,7 +77,7 @@ public final class MockAemDamAdapterFactory implements AdapterFactory {
   private @Nullable <AdapterType> AdapterType getAdapter(@NotNull final Resource resource, @NotNull final Class<AdapterType> type) {
     if (DamUtil.isAsset(resource)) {
       if (type == com.adobe.granite.asset.api.Asset.class) {
-        return type.cast(new MockGraniteAssetWrapper(new MockAsset(resource, eventAdmin, bundleContext)));
+        return type.cast(new MockGraniteAssetWrapper(new MockAsset(resource, eventAdmin, bundleContext), resource));
       }
       else if (type == Asset.class) {
         return type.cast(new MockAsset(resource, eventAdmin, bundleContext));

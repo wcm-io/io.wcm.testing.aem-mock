@@ -1,0 +1,11 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "github>wcm-io/renovate-config:maven",
+    "github>wcm-io/renovate-config:automerge-parent"
+  ],
+  "ignoreDeps": [
+    "com.day.commons:day-commons-gfx",
+    "com.ibm.icu:icu4j"
+  ]
+}
