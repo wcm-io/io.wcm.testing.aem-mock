@@ -28,6 +28,9 @@
       <action type="update" dev="sseifert" issue="40">
         MockAsset: Do not extend from ResourceWrapper to not rely on its adaptTo() implementation.
       </action>
+      <action type="update" dev="sseifert">
+        Update to latest Sling Mock.
+      </action>
     </release>
 
     <release version="5.6.8" date="2025-03-05">
