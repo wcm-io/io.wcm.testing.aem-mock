@@ -59,7 +59,7 @@
     <resourceresolver-mock.version>1.5.0</resourceresolver-mock.version>
 
     <!-- Sling Mock -->
-    <sling-mock.version>3.5.5-SNAPSHOT</sling-mock.version>
+    <sling-mock.version>3.5.4</sling-mock.version>
 
     <!-- Servlet Helpers -->
     <servlet-helpers.version>1.4.6</servlet-helpers.version>
