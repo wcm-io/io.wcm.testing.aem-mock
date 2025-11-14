@@ -44,6 +44,13 @@ class ThreadsafeMockAdapterManagerWrapper implements AdapterManager {
                 protected AdapterManagerBundleContextFactory initialValue() {
                     return new AdapterManagerBundleContextFactory();
                 }
+
+                @Override
+                protected AdapterManagerBundleContextFactory childValue(AdapterManagerBundleContextFactory parentValue) {
+                    // Create a new instance for child threads instead of sharing the parent's instance
+                    // This prevents race conditions when parent and child threads have different lifecycles
+                    return new AdapterManagerBundleContextFactory();
+                }
             };
 
     @Override
@@ -73,7 +80,7 @@ class ThreadsafeMockAdapterManagerWrapper implements AdapterManager {
 
     private static class AdapterManagerBundleContextFactory {
 
-        private BundleContext bundleContext;
+        private volatile BundleContext bundleContext;
 
         public void setBundleContext(@NotNull final BundleContext bundleContext) {
             log.debug("Set bundle context for AdapterManager, bundleContext={}", bundleContext);
