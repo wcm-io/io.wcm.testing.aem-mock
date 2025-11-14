@@ -1,0 +1,310 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.sling.testing.mock.osgi;
+
+import java.io.File;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Dictionary;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
+import org.osgi.framework.ServiceReference;
+import org.osgi.framework.Version;
+
+/**
+ * Mock {@link Bundle} implementation.
+ */
+public final class MockBundle implements Bundle {
+
+    private static final AtomicLong BUNDLE_ID_COUNTER = new AtomicLong();
+
+    private final long bundleId;
+    private final BundleContext bundleContext;
+    private Map<String, String> headers = Collections.emptyMap();
+    private String symbolicName;
+    private long lastModified;
+    private Version version = Version.emptyVersion;
+
+    /**
+     * Constructor
+     * @param bundleContext Bundle context
+     * @param bundleId Bundle ID
+     */
+    MockBundle(BundleContext bundleContext, long bundleId) {
+        this.bundleId = bundleId;
+        this.bundleContext = bundleContext;
+        this.symbolicName =
+                (bundleId == Constants.SYSTEM_BUNDLE_ID ? Constants.SYSTEM_BUNDLE_SYMBOLICNAME : "mock-bundle");
+    }
+
+    /**
+     * Constructor
+     * @param bundleContext Bundle context
+     */
+    public MockBundle(BundleContext bundleContext) {
+        this(bundleContext, BUNDLE_ID_COUNTER.incrementAndGet());
+    }
+
+    @Override
+    public long getBundleId() {
+        return this.bundleId;
+    }
+
+    @Override
+    public BundleContext getBundleContext() {
+        return this.bundleContext;
+    }
+
+    @Override
+    public URL getEntry(final String name) {
+
+        String nameToQuery = name.startsWith("/") ? name : "/" + name;
+
+        return getClass().getResource(nameToQuery);
+    }
+
+    @Override
+    public int getState() {
+        return Bundle.ACTIVE;
+    }
+
+    @Override
+    public Dictionary<String, String> getHeaders() {
+        return MapUtil.toDictionary(headers);
+    }
+
+    @Override
+    public Dictionary<String, String> getHeaders(final String locale) {
+        // localization not supported, always return default headers
+        return getHeaders();
+    }
+
+    /**
+     * Set headers for mock bundle
+     * @param value Header map
+     */
+    public void setHeaders(Map<String, String> value) {
+        this.headers = value;
+    }
+
+    @Override
+    public String getSymbolicName() {
+        return this.symbolicName;
+    }
+
+    /**
+     * Set symbolic name for mock bundle
+     * @param value Symbolic name
+     */
+    public void setSymbolicName(String value) {
+        this.symbolicName = value;
+    }
+
+    @Override
+    public long getLastModified() {
+        return lastModified;
+    }
+
+    /**
+     * Set the last modified value for the mock bundle
+     * @param lastModified last modified
+     */
+    public void setLastModified(long lastModified) {
+        this.lastModified = lastModified;
+    }
+
+    @Override
+    public Enumeration<String> getEntryPaths(final String path) {
+
+        String queryPath = path.startsWith("/") ? path : "/" + path;
+
+        URL res = getClass().getResource(queryPath);
+        if (res == null) {
+            return null;
+        }
+
+        List<String> matching = new ArrayList<>();
+
+        try {
+            File file = new File(res.toURI());
+            if (file.isDirectory()) {
+                for (File entry : file.listFiles()) {
+                    String name = entry.isDirectory() ? entry.getName() + "/" : entry.getName();
+                    matching.add(relativeWithTrailingSlash(queryPath.substring(1, queryPath.length())) + name);
+                }
+            }
+        } catch (URISyntaxException | RuntimeException e) {
+            throw new RuntimeException("Failed opening file from " + res, e);
+        }
+
+        if (matching.isEmpty()) {
+            return null;
+        }
+
+        return Collections.enumeration(matching);
+    }
+
+    private String relativeWithTrailingSlash(String queryPath) {
+
+        // make relative
+        if (queryPath.startsWith("/")) {
+            queryPath = queryPath.substring(1, queryPath.length());
+        }
+
+        // remove trailing slash
+        if (!queryPath.isEmpty() && !queryPath.endsWith("/")) {
+            queryPath = queryPath + "/";
+        }
+
+        return queryPath;
+    }
+
+    @Override
+    public String getLocation() {
+        if (bundleId == Constants.SYSTEM_BUNDLE_ID) {
+            return Constants.SYSTEM_BUNDLE_LOCATION;
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public Version getVersion() {
+        return version;
+    }
+
+    /**
+     * Sets a new version for this bundle
+     *
+     * @param version the new version
+     */
+    public void setVersion(Version version) {
+        this.version = version;
+    }
+
+    /**
+     * This is primarily used within the context of unit testing by
+     * {@link org.apache.felix.scr.impl.inject.internal.Annotations#toObject(Class, Map, Bundle, boolean)} for injection of
+     * {@code Class}-typed OSGi config attributes for default values and String properties representing FQDNs.
+     *
+     * @param name The name of the class to load.
+     * @return the class
+     * @throws ClassNotFoundException for more obvious reasons than if this was running in actual OSGi framework
+     */
+    @Override
+    public Class<?> loadClass(final String name) throws ClassNotFoundException {
+        return getClass().getClassLoader().loadClass(name);
+    }
+
+    // --- unsupported operations ---
+    @Override
+    public Enumeration<URL> findEntries(final String path, final String filePattern, final boolean recurse) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public ServiceReference<?>[] getRegisteredServices() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public URL getResource(final String name) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Enumeration<URL> getResources(final String name) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public ServiceReference<?>[] getServicesInUse() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean hasPermission(final Object permission) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void start() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void stop() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void uninstall() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void update() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void update(final InputStream inputStream) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void start(final int options) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void stop(final int options) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Map<X509Certificate, List<X509Certificate>> getSignerCertificates(final int signersType) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int compareTo(Bundle o) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <A> A adapt(Class<A> type) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public File getDataFile(String filename) {
+        throw new UnsupportedOperationException();
+    }
+}

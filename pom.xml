@@ -49,6 +49,8 @@
   </properties>
 
   <modules>
+    <module>sling-org-apache-sling-testing-osgi-mock</module>
+    <module>sling-org-apache-sling-testing-sling-mock</module>
     <module>parent</module>
     <module>core</module>
     <module>junit4</module>

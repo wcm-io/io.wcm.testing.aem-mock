@@ -1,0 +1,368 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.sling.testing.mock.sling.resource;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.math.BigDecimal;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
+import org.apache.commons.collections4.IterableUtils;
+import org.apache.commons.collections4.IteratorUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.jackrabbit.JcrConstants;
+import org.apache.sling.api.resource.PersistenceException;
+import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ResourceUtil;
+import org.apache.sling.api.resource.ValueMap;
+import org.apache.sling.testing.mock.sling.ResourceResolverType;
+import org.apache.sling.testing.mock.sling.builder.ContentBuilder;
+import org.apache.sling.testing.mock.sling.context.models.ResourceModel;
+import org.apache.sling.testing.mock.sling.junit.SlingContext;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+/**
+ * Implements simple write and read resource and values test. Sling CRUD API is
+ * used to create the test data.
+ */
+@SuppressWarnings("null")
+public abstract class AbstractSlingCrudResourceResolverTest {
+
+    @Rule
+    public SlingContext context = new SlingContext(getResourceResolverType());
+
+    private static final String STRING_VALUE = "value1";
+    private static final String[] STRING_ARRAY_VALUE = new String[] {"value1", "value2"};
+    private static final int INTEGER_VALUE = 25;
+    private static final long LONG_VALUE = 250L;
+    private static final double DOUBLE_VALUE = 3.555d;
+    private static final BigDecimal BIGDECIMAL_VALUE = new BigDecimal("12345.678");
+    private static final boolean BOOLEAN_VALUE = true;
+    private static final Date DATE_VALUE = new Date(10000);
+    private static final Calendar CALENDAR_VALUE = Calendar.getInstance();
+    private static final byte[] BINARY_VALUE = new byte[] {0x01, 0x02, 0x03, 0x04, 0x05, 0x06};
+
+    protected Resource testRoot;
+
+    protected abstract ResourceResolverType getResourceResolverType();
+
+    @Before
+    public final void setUp() throws IOException {
+
+        // prepare some test data using Sling CRUD API
+        Resource rootNode = getTestRootResource();
+
+        Map<String, Object> props = new HashMap<String, Object>();
+        props.put(JcrConstants.JCR_PRIMARYTYPE, JcrConstants.NT_UNSTRUCTURED);
+        props.put("stringProp", STRING_VALUE);
+        props.put("stringArrayProp", STRING_ARRAY_VALUE);
+        props.put("integerProp", INTEGER_VALUE);
+        props.put("longProp", LONG_VALUE);
+        props.put("doubleProp", DOUBLE_VALUE);
+        props.put("bigDecimalProp", BIGDECIMAL_VALUE);
+        props.put("booleanProp", BOOLEAN_VALUE);
+        props.put("dateProp", DATE_VALUE);
+        props.put("calendarProp", CALENDAR_VALUE);
+        props.put("binaryProp", new ByteArrayInputStream(BINARY_VALUE));
+        Resource node1 = context.resourceResolver().create(rootNode, "node1", props);
+
+        context.resourceResolver().create(node1, "node11", Map.<String, Object>of("stringProp11", STRING_VALUE));
+        context.resourceResolver().create(node1, "node12", ValueMap.EMPTY);
+
+        context.resourceResolver().commit();
+    }
+
+    /**
+     * Return a test root resource, created on demand, with a unique path
+     * @throws PersistenceException
+     */
+    protected Resource getTestRootResource() throws PersistenceException {
+        if (this.testRoot == null) {
+            this.testRoot =
+                    context.resourceResolver().getResource(context.uniqueRoot().content());
+        }
+        return this.testRoot;
+    }
+
+    @Test
+    public void testSimpleProperties() throws IOException {
+        Resource resource1 =
+                context.resourceResolver().getResource(getTestRootResource().getPath() + "/node1");
+        assertNotNull(resource1);
+        assertEquals("node1", resource1.getName());
+
+        ValueMap props = ResourceUtil.getValueMap(resource1);
+        assertEquals(STRING_VALUE, props.get("stringProp", String.class));
+        assertArrayEquals(STRING_ARRAY_VALUE, props.get("stringArrayProp", String[].class));
+        assertEquals((Integer) INTEGER_VALUE, props.get("integerProp", Integer.class));
+        assertEquals((Long) LONG_VALUE, props.get("longProp", Long.class));
+        assertEquals(DOUBLE_VALUE, props.get("doubleProp", Double.class), 0.0001);
+        assertEquals(BIGDECIMAL_VALUE, props.get("bigDecimalProp", BigDecimal.class));
+        assertEquals(BOOLEAN_VALUE, props.get("booleanProp", Boolean.class));
+    }
+
+    @Test
+    public void testSimpleProperties_IntegerLongConversion() throws IOException {
+        Resource resource1 =
+                context.resourceResolver().getResource(getTestRootResource().getPath() + "/node1");
+        ValueMap props = ResourceUtil.getValueMap(resource1);
+
+        assertEquals((Integer) (int) LONG_VALUE, props.get("longProp", Integer.class));
+        assertEquals((Long) (long) INTEGER_VALUE, props.get("integerProp", Long.class));
+    }
+
+    @Test
+    public void testSimpleProperties_DecimalConversion() throws IOException {
+        Resource resource1 =
+                context.resourceResolver().getResource(getTestRootResource().getPath() + "/node1");
+        ValueMap props = ResourceUtil.getValueMap(resource1);
+
+        assertEquals(
+                new BigDecimal(DOUBLE_VALUE).doubleValue(),
+                props.get("doubleProp", BigDecimal.class).doubleValue(),
+                0.0001d);
+        assertEquals(BIGDECIMAL_VALUE.doubleValue(), props.get("bigDecimalProp", Double.class), 0.0001d);
+    }
+
+    @Test
+    public void testSimpleProperties_DeepPathAccess() throws IOException {
+        Resource resource1 = context.resourceResolver().getResource(testRoot.getPath());
+        assertNotNull(resource1);
+        assertEquals(testRoot.getName(), resource1.getName());
+
+        ValueMap props = ResourceUtil.getValueMap(resource1);
+        assertEquals(STRING_VALUE, props.get("node1/stringProp", String.class));
+        assertArrayEquals(STRING_ARRAY_VALUE, props.get("node1/stringArrayProp", String[].class));
+        assertEquals((Integer) INTEGER_VALUE, props.get("node1/integerProp", Integer.class));
+        assertEquals((Long) LONG_VALUE, props.get("node1/longProp", Long.class));
+        assertEquals(DOUBLE_VALUE, props.get("node1/doubleProp", Double.class), 0.0001);
+        assertEquals(BIGDECIMAL_VALUE, props.get("node1/bigDecimalProp", BigDecimal.class));
+        assertEquals(BOOLEAN_VALUE, props.get("node1/booleanProp", Boolean.class));
+        assertEquals(STRING_VALUE, props.get("node1/node11/stringProp11", String.class));
+    }
+
+    @Test
+    public void testDateProperty() throws IOException {
+        Resource resource1 =
+                context.resourceResolver().getResource(getTestRootResource().getPath() + "/node1");
+        ValueMap props = ResourceUtil.getValueMap(resource1);
+        assertEquals(DATE_VALUE, props.get("dateProp", Date.class));
+    }
+
+    @Test
+    public void testDatePropertyToCalendar() throws IOException {
+        Resource resource1 =
+                context.resourceResolver().getResource(getTestRootResource().getPath() + "/node1");
+        ValueMap props = ResourceUtil.getValueMap(resource1);
+        Calendar calendarValue = props.get("dateProp", Calendar.class);
+        assertNotNull(calendarValue);
+        assertEquals(DATE_VALUE, calendarValue.getTime());
+    }
+
+    @Test
+    public void testCalendarProperty() throws IOException {
+        Resource resource1 =
+                context.resourceResolver().getResource(getTestRootResource().getPath() + "/node1");
+        ValueMap props = ResourceUtil.getValueMap(resource1);
+        assertEquals(
+                CALENDAR_VALUE.getTime(),
+                props.get("calendarProp", Calendar.class).getTime());
+    }
+
+    @Test
+    public void testCalendarPropertyToDate() throws IOException {
+        Resource resource1 =
+                context.resourceResolver().getResource(getTestRootResource().getPath() + "/node1");
+        ValueMap props = ResourceUtil.getValueMap(resource1);
+        Date dateValue = props.get("calendarProp", Date.class);
+        assertNotNull(dateValue);
+        assertEquals(CALENDAR_VALUE.getTime(), dateValue);
+    }
+
+    @Test
+    public void testListChildren() throws IOException {
+        Resource resource1 =
+                context.resourceResolver().getResource(getTestRootResource().getPath() + "/node1");
+
+        List<Resource> children = IteratorUtils.toList(resource1.listChildren());
+        assertEquals(2, children.size());
+        assertEquals("node11", children.get(0).getName());
+        assertEquals("node12", children.get(1).getName());
+    }
+
+    @Test
+    public void testListChildren_RootNode() throws IOException {
+        Resource resource1 = context.resourceResolver().getResource("/");
+
+        List<Resource> children = IteratorUtils.toList(resource1.listChildren());
+        assertFalse(children.isEmpty());
+        assertTrue(containsResource(children, getTestRootResource().getParent()));
+
+        children = IterableUtils.toList(resource1.getChildren());
+        assertFalse(children.isEmpty());
+        assertTrue(containsResource(children, getTestRootResource().getParent()));
+    }
+
+    private boolean containsResource(List<Resource> children, Resource resource) {
+        for (Resource child : children) {
+            if (StringUtils.equals(child.getPath(), resource.getPath())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Test
+    public void testBinaryData() throws IOException {
+        Resource resource1 =
+                context.resourceResolver().getResource(getTestRootResource().getPath() + "/node1");
+
+        Resource binaryPropResource = resource1.getChild("binaryProp");
+        InputStream is = binaryPropResource.adaptTo(InputStream.class);
+        byte[] dataFromResource = IOUtils.toByteArray(is);
+        is.close();
+        assertArrayEquals(BINARY_VALUE, dataFromResource);
+
+        // read second time to ensure not the original input stream was returned
+        // and this time using another syntax
+        InputStream is2 = ResourceUtil.getValueMap(resource1).get("binaryProp", InputStream.class);
+        byte[] dataFromResource2 = IOUtils.toByteArray(is2);
+        is2.close();
+        assertArrayEquals(BINARY_VALUE, dataFromResource2);
+    }
+
+    @Test
+    public void testPrimaryTypeResourceType() throws PersistenceException {
+        Resource resource =
+                context.resourceResolver().getResource(getTestRootResource().getPath() + "/node1");
+        assertEquals(JcrConstants.NT_UNSTRUCTURED, resource.getResourceType());
+    }
+
+    @Test
+    public void testGetRootResourceByNullPath() {
+        Resource rootResource = context.resourceResolver().resolve((String) null);
+        assertNotNull(rootResource);
+        assertEquals("/", rootResource.getPath());
+    }
+
+    @Test
+    public void testSearchPath() {
+        ContentBuilder builder = new ContentBuilder(context.resourceResolver());
+        builder.resource("/libs/any/path");
+
+        Resource resource = context.resourceResolver().getResource("any/path");
+        assertNotNull(resource);
+        assertEquals("/libs/any/path", resource.getPath());
+
+        builder.resource("/apps/any/path");
+
+        resource = context.resourceResolver().getResource("any/path");
+        assertNotNull(resource);
+        assertEquals("/apps/any/path", resource.getPath());
+    }
+
+    @Test
+    public void testPendingChangesCommit() throws PersistenceException {
+
+        // skip this test for JCR_MOCK because it does not track pending changes
+        if (getResourceResolverType() == ResourceResolverType.JCR_MOCK) {
+            return;
+        }
+
+        context.resourceResolver().delete(getTestRootResource());
+        assertTrue(context.resourceResolver().hasChanges());
+
+        context.resourceResolver().commit();
+        assertFalse(context.resourceResolver().hasChanges());
+    }
+
+    @Test
+    public void testCreateNestedResources() throws IOException {
+        Resource nested = context.create()
+                .resource(
+                        getTestRootResource().getPath() + "/nested",
+                        new TreeMap<>(Map.<String, Object>of(
+                                "prop1",
+                                "value1",
+                                "child1",
+                                new TreeMap<>(Map.<String, Object>of(
+                                        "prop2", "value2",
+                                        "child1a", Map.<String, Object>of("prop3", "value3"),
+                                        "child1b", Map.<String, Object>of("prop4", "value4"))),
+                                "child2",
+                                Map.<String, Object>of("prop5", "value5"))));
+
+        assertNotNull(nested);
+        assertEquals("value1", nested.getValueMap().get("prop1", String.class));
+
+        List<Resource> children = IterableUtils.toList(nested.getChildren());
+        assertEquals(2, children.size());
+
+        Resource child1 = children.get(0);
+        assertEquals("child1", child1.getName());
+        assertEquals("value2", child1.getValueMap().get("prop2", String.class));
+
+        Resource child2 = children.get(1);
+        assertEquals("child2", child2.getName());
+        assertEquals("value5", child2.getValueMap().get("prop5", String.class));
+
+        List<Resource> child1children = IterableUtils.toList(child1.getChildren());
+        assertEquals(2, child1children.size());
+
+        Resource child1a = child1children.get(0);
+        assertEquals("child1a", child1a.getName());
+        assertEquals("value3", child1a.getValueMap().get("prop3", String.class));
+
+        Resource child1b = child1children.get(1);
+        assertEquals("child1b", child1b.getName());
+        assertEquals("value4", child1b.getValueMap().get("prop4", String.class));
+    }
+
+    @Test
+    public void testResourceWithoutResourceType() throws PersistenceException {
+        Resource noResourceType =
+                context.create().resource(getTestRootResource().getPath() + "/noResourceType");
+        assertNotNull(noResourceType.getResourceType());
+    }
+
+    @Test
+    public void testResourceInsideAndOutsideModel() {
+        context.addModelsForClasses(ResourceModel.class);
+        Resource resource = context.currentResource("/");
+        assertNotNull(resource);
+        ResourceModel model = resource.adaptTo(ResourceModel.class);
+        assertNotNull(model);
+        assertEquals(resource, model.getAdaptable());
+    }
+}

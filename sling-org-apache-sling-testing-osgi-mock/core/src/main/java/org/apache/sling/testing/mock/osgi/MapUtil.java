@@ -1,0 +1,120 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.sling.testing.mock.osgi;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Dictionary;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Map;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+/**
+ * Map util methods.
+ */
+public final class MapUtil {
+
+    private MapUtil() {
+        // static methods only
+    }
+
+    /**
+     * Convert map to dictionary.
+     * @param <T> Key
+     * @param <U> Value
+     * @param map Map
+     * @return Dictionary
+     */
+    public static @Nullable <T, U> Dictionary<T, U> toDictionary(@Nullable Map<T, U> map) {
+        if (map == null) {
+            return null;
+        }
+        Hashtable<T, U> hashtable = new Hashtable<>();
+        for (Map.Entry<T, U> entry : map.entrySet()) {
+            if (entry.getKey() != null && entry.getValue() != null) {
+                hashtable.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return hashtable;
+    }
+
+    /**
+     * Convert Dictionary to map
+     * @param <T> Key
+     * @param <U> Value
+     * @param dictionary Dictionary
+     * @return Map
+     */
+    public static @Nullable <T, U> Map<T, U> toMap(@Nullable Dictionary<T, U> dictionary) {
+        if (dictionary == null) {
+            return null;
+        }
+        Map<T, U> map = new HashMap<T, U>();
+        Enumeration<T> keys = dictionary.keys();
+        while (keys.hasMoreElements()) {
+            T key = keys.nextElement();
+            map.put(key, dictionary.get(key));
+        }
+        return map;
+    }
+
+    /**
+     * Convert key/value pairs to dictionary
+     * @param args Key/value pairs
+     * @return Dictionary
+     */
+    public static @Nullable Dictionary<String, Object> toDictionary(@NotNull Object @NotNull ... args) {
+        return toDictionary(toMap(args));
+    }
+
+    /**
+     * Convert key/value pairs to map
+     * @param args Key/value pairs
+     * @return Map
+     */
+    @SuppressWarnings("unchecked")
+    public static @NotNull Map<String, Object> toMap(@NotNull Object @NotNull ... args) {
+        if (args == null || args.length == 0) {
+            return Collections.emptyMap();
+        }
+        if (args.length == 1) {
+            if (args[0] instanceof Map) {
+                return (Map) args[0];
+            } else if (args[0] instanceof Dictionary) {
+                return toMap((Dictionary) args[0]);
+            }
+        }
+        if (args.length % 2 != 0) {
+            throw new IllegalArgumentException("args must be an even number of name/values:" + Arrays.asList(args));
+        }
+        final Map<String, Object> result = new HashMap<>();
+        for (int i = 0; i < args.length; i += 2) {
+            Object key = args[i];
+            Object value = args[i + 1];
+            if (key != null && value != null) {
+                result.put(key.toString(), value);
+            }
+        }
+        return result;
+    }
+}
