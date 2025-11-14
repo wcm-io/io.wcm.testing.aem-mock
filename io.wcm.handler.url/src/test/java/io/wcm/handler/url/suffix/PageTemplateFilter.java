@@ -17,8 +17,32 @@
  * limitations under the License.
  * #L%
  */
+package io.wcm.handler.url.suffix;
+
+import java.util.function.Predicate;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.day.cq.wcm.api.NameConstants;
+import com.day.cq.wcm.api.Page;
+
 /**
- * Rule for providing easy access to AEM context in JUnit tests.
+ * Filters pages by template path.
  */
-@org.osgi.annotation.versioning.Version("2.1.0")
-package io.wcm.testing.mock.aem.junit;
+class PageTemplateFilter implements Predicate<Page> {
+
+  private final String templatePath;
+
+  /**
+   * @param templatePath Template path
+   */
+  PageTemplateFilter(String templatePath) {
+    this.templatePath = templatePath;
+  }
+
+  @Override
+  public boolean test(Page page) {
+    return StringUtils.equals(page.getProperties().get(NameConstants.PN_TEMPLATE, String.class), templatePath);
+  }
+
+}

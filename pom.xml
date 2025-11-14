@@ -54,6 +54,7 @@
     <module>junit4</module>
     <module>junit5</module>
     <module>relocate</module>
+    <module>io.wcm.handler.url</module>
   </modules>
 
   <build>

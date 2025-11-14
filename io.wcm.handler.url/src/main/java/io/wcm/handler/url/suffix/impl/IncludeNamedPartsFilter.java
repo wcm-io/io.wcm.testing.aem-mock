@@ -17,18 +17,32 @@
  * limitations under the License.
  * #L%
  */
-package io.wcm.testing.mock.aem.junit;
+package io.wcm.handler.url.suffix.impl;
 
-import org.apache.sling.testing.mock.osgi.context.ContextCallback;
-import org.osgi.annotation.versioning.ConsumerType;
+import java.util.function.Predicate;
 
 /**
- * Callback interface for application-specific setup and teardown operations to customize the
- * {@link AemContext} JUnit rule.
+ * Filter that discards all resource-suffix-parts and only keeps specific key-value-parts
  */
-@ConsumerType
-public interface AemContextCallback extends ContextCallback<AemContext> {
+public class IncludeNamedPartsFilter implements Predicate<String> {
 
-  // specialized version of ContextCallback
+  private final String[] keysToKeep;
+
+  /**
+   * @param keysToKeep Keys to keep
+   */
+  public IncludeNamedPartsFilter(String... keysToKeep) {
+    this.keysToKeep = keysToKeep;
+  }
+
+  @Override
+  public boolean test(String suffixPart) {
+    for (String key : keysToKeep) {
+      if (suffixPart.startsWith(key + UrlSuffixUtil.KEY_VALUE_DELIMITER)) {
+        return true;
+      }
+    }
+    return false;
+  }
 
 }
