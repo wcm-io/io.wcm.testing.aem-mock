@@ -350,6 +350,25 @@
                     </configuration>
                 </plugin>
 
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <configuration>
+
+                        <!-- Activate parallel test execution for JUnit 5 (run classes concurrently, methods sequentially, fixed parallelism) -->
+                        <properties>
+                        <configurationParameters>
+                            junit.jupiter.execution.parallel.enabled = true
+                            junit.jupiter.execution.parallel.mode.default = same_thread
+                            junit.jupiter.execution.parallel.mode.classes.default = concurrent
+                            junit.jupiter.execution.parallel.config.strategy = fixed
+                            junit.jupiter.execution.parallel.config.fixed.parallelism = 2
+                        </configurationParameters>
+                        </properties>
+
+                    </configuration>
+                </plugin>
+
             </plugins>
         </pluginManagement>
     </build>
