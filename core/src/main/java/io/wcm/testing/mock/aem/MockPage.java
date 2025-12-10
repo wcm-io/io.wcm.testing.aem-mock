@@ -67,12 +67,7 @@ class MockPage extends SlingAdaptable implements Page {
     this.resource = resource;
     this.contentResource = this.resource.getChild(JcrConstants.JCR_CONTENT);
     this.resourceResolver = resource.getResourceResolver();
-    if (this.contentResource != null) {
-      this.properties = this.contentResource.getValueMap();
-    }
-    else {
-      this.properties = ValueMap.EMPTY;
-    }
+    this.properties = ResourceUtil.getValueMap(this.contentResource);
   }
 
   @Override
@@ -117,6 +112,9 @@ class MockPage extends SlingAdaptable implements Page {
 
   @Override
   public Resource getContentResource(final String relPath) {
+    if (this.contentResource == null) {
+      return null;
+    }
     return this.contentResource.getChild(relPath);
   }
 
