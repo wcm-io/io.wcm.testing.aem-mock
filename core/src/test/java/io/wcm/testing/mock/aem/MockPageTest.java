@@ -30,6 +30,7 @@ import static org.mockito.Mockito.mock;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -153,6 +154,15 @@ public class MockPageTest {
     assertNotNull(this.page.getContentResource("par"));
     assertNull(this.page.getContentResource("nonExistingResource"));
     assertTrue(this.page.hasContent());
+  }
+
+  @Test
+  public void testContentResourceAbsence() {
+    final Resource resource = context.create().resource("/content/sample/en/absence", "jcr:primaryType", "cq:Page");
+    final Page absencePage = Objects.requireNonNull(resource.adaptTo(Page.class));
+    assertNull(absencePage.getContentResource());
+    assertNull(absencePage.getContentResource("par"));
+    assertNull(absencePage.getContentResource("par/image"));
   }
 
   @Test
