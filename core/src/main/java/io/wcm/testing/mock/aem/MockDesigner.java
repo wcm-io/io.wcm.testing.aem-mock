@@ -19,6 +19,12 @@
  */
 package io.wcm.testing.mock.aem;
 
+import com.day.cq.wcm.api.NameConstants;
+import com.day.cq.wcm.commons.WCMUtils;
+import com.day.text.Text;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.sling.api.resource.NonExistingResource;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 
@@ -27,11 +33,33 @@ import com.day.cq.wcm.api.PageManager;
 import com.day.cq.wcm.api.designer.Design;
 import com.day.cq.wcm.api.designer.Designer;
 import com.day.cq.wcm.api.designer.Style;
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.LinkedHashSet;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * Mock implementation of {@link Designer}.
  */
 class MockDesigner implements Designer {
+  private static final Logger log = LoggerFactory.getLogger(MockDesigner.class);
+
+  @SuppressWarnings({"java:S1075","deprecation"}) // Repository path
+  static final String LEGACY_DEFAULT_DESIGN_PATH = DEFAULT_DESIGN_PATH;
+  static final String LEGACY_DESIGNS_PATH_PREFIX = StringUtils.substringBeforeLast(LEGACY_DEFAULT_DESIGN_PATH, String.valueOf('/')) + '/';
+
+  @SuppressWarnings("java:S1075") // Repository path
+  static final String LIBS_DEFAULT_DESIGN_PATH = "/libs/settings/wcm/designs/default";
+
+  static final Set<String> DEFAULT_DESIGN_PATHS = new LinkedHashSet<>();
+
+  static {
+    DEFAULT_DESIGN_PATHS.add(LEGACY_DEFAULT_DESIGN_PATH);
+    DEFAULT_DESIGN_PATHS.add(LIBS_DEFAULT_DESIGN_PATH);
+  }
 
   private final ResourceResolver resourceResolver;
 
@@ -41,46 +69,84 @@ class MockDesigner implements Designer {
 
   @Override
   public String getDesignPath(Page page) {
-    return null;
+    if (page == null) {
+      return null;
+    }
+    final String path = WCMUtils.getInheritedProperty(page, resourceResolver, NameConstants.PN_DESIGN_PATH);
+    if (path != null) {
+      return path;
+    }
+    if (resourceResolver.getResource(LEGACY_DEFAULT_DESIGN_PATH) != null) {
+      return LEGACY_DEFAULT_DESIGN_PATH;
+    }
+    return LIBS_DEFAULT_DESIGN_PATH;
   }
 
   @Override
   public Design getDesign(Page page) {
-    return getDefaultDesign();
+    if (page == null) {
+      return null;
+    }
+    final String designPath = getDesignPath(page);
+    if (designPath == null) {
+      return getDefaultDesign();
+    }
+    return getDesign(designPath);
   }
 
   @Override
   public boolean hasDesign(String id) {
-    return true;
+    final Design design = getDesign(idToPath(id));
+    return !DEFAULT_DESIGN_PATHS.contains(design.getPath());
   }
 
   @Override
   public Design getDesign(String id) {
+    final String path = idToPath(id);
+    final Resource resource = resourceResolver.getResource(path);
+    if (resource != null) {
+      return new MockDesign(resource);
+    }
+    if (!DEFAULT_DESIGN_PATHS.contains(path)) {
+      log.warn("Design with path {} not found, returning the default design", path);
+    }
     return getDefaultDesign();
   }
 
   @Override
   public Style getStyle(Resource resource) {
-    if (resource != null) {
-      PageManager pageManager = resource.getResourceResolver().adaptTo(PageManager.class);
-      if (pageManager != null) {
-        Page page = pageManager.getContainingPage(resource);
-        if (page != null) {
-          return getDesign(page).getStyle(resource);
-        }
+    return getStyle(resource, null);
+  }
+
+  @Override
+  public Style getStyle(Resource resource, String cellPath) {
+    final PageManager pageManager = Objects.requireNonNull(resourceResolver.adaptTo(PageManager.class));
+    final Page page = pageManager.getContainingPage(resource);
+    if (page != null) {
+      final Design design = this.getDesign(page);
+      if (design != null) {
+        return design.getStyle(cellPath == null ? Text.getName(resource.getPath()) : cellPath);
       }
     }
     return null;
   }
 
   @Override
-  public Style getStyle(Resource resource, String cellPath) {
-    return getStyle(resource);
-  }
-
-  @Override
   public Design getDefaultDesign() {
-    return new MockDesign(resourceResolver);
+    for (final String path : DEFAULT_DESIGN_PATHS) {
+      final Resource designResource = resourceResolver.getResource(path);
+      if (designResource != null) {
+        return new MockDesign(designResource);
+      }
+    }
+    return new MockDesign(new NonExistingResource(resourceResolver, LIBS_DEFAULT_DESIGN_PATH));
   }
 
+  @NotNull
+  private String idToPath(@NotNull final String id) {
+    if (StringUtils.startsWithAny(id, ArrayUtils.add(resourceResolver.getSearchPath(), "/conf/"))) {
+      return id;
+    }
+    return LEGACY_DESIGNS_PATH_PREFIX + StringUtils.removeStart(StringUtils.removeStart(id, LEGACY_DESIGNS_PATH_PREFIX), String.valueOf('/'));
+  }
 }

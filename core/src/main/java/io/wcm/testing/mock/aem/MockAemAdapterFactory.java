@@ -30,6 +30,7 @@ import static io.wcm.testing.mock.aem.MockContentPolicyStorage.RT_CONTENT_POLICY
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
+import com.day.cq.wcm.api.designer.Design;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.adapter.AdapterFactory;
 import org.apache.sling.api.resource.Resource;
@@ -68,6 +69,7 @@ import com.day.cq.wcm.api.policies.ContentPolicyMapping;
         AdapterFactory.ADAPTER_CLASSES + "=com.day.cq.tagging.TagManager",
         AdapterFactory.ADAPTER_CLASSES + "=com.day.cq.tagging.Tag",
         AdapterFactory.ADAPTER_CLASSES + "=com.day.cq.wcm.api.designer.Designer",
+        AdapterFactory.ADAPTER_CLASSES + "=com.day.cq.wcm.api.designer.Design",
         AdapterFactory.ADAPTER_CLASSES + "=com.adobe.cq.dam.cfm.ContentFragment",
         AdapterFactory.ADAPTER_CLASSES + "=com.day.cq.wcm.api.policies.ContentPolicy",
         AdapterFactory.ADAPTER_CLASSES + "=com.day.cq.wcm.api.policies.ContentPolicyMapping",
@@ -103,6 +105,9 @@ public final class MockAemAdapterFactory implements AdapterFactory {
     }
     if (type == ContentPolicy.class && resource.isResourceType(RT_CONTENTPOLICY)) {
       return (AdapterType)new MockContentPolicy(resource);
+    }
+    if (type == Design.class && isPrimaryType(resource, Designer.NT_DESIGN)) {
+      return (AdapterType)new MockDesign(resource);
     }
     if (type == ContentPolicyMapping.class
         && (resource.isResourceType(RT_CONTENT_POLICY_MAPPING) || resource.isResourceType(RT_CONTENT_POLICY_MAPPINGS))

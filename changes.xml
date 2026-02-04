@@ -24,6 +24,27 @@
     xsi:schemaLocation="http://maven.apache.org/changes/2.0.0 https://maven.apache.org/xsd/changes-2.0.0.xsd">
   <body>
 
+    <release version="unreleased" date="2026-02-03">
+      <action type="update" dev="henrykuijpers" issue="86">
+        MockDesigner/MockDesign: Support the creation of designs in ContentBuilder.
+      </action>
+      <action type="update" dev="henrykuijpers" issue="86">
+        MockDesigner: Add designer-method in AemContextImpl.
+      </action>
+      <action type="update" dev="henrykuijpers" issue="86">
+        MockStyle: Simplify implementation by using ValueMapDecorator.
+      </action>
+      <action type="update" dev="henrykuijpers" issue="86">
+        MockDesigner: Implement getting designs and fallbacks to the default designs. Support legacy designs.
+      </action>
+      <action type="update" dev="henrykuijpers" issue="86">
+        MockDesign: Implement MockDesign#getContentResource + MockDesign#getId() + MockDesign#getJSON.
+      </action>
+      <action type="update" dev="henrykuijpers" issue="86">
+        MockAemAdapterFactory: Support getting a Design from a Resource.
+      </action>
+    </release>
+
     <release version="5.6.14" date="2025-12-15">
       <action type="fix" dev="henrykuijpers" issue="82">
         MockPage: Don't throw NPE when requesting a deep content resource when the content resource itself is absent.

@@ -30,7 +30,10 @@ import java.nio.charset.StandardCharsets;
 import java.security.AccessControlException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
+import com.day.cq.wcm.api.designer.Design;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.ModifiableValueMap;
 import org.apache.sling.api.resource.PersistenceException;
@@ -38,6 +41,7 @@ import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ResourceUtil;
 import org.apache.sling.api.resource.ValueMap;
+import org.apache.sling.jcr.resource.api.JcrResourceConstants;
 import org.apache.sling.testing.mock.osgi.MapUtil;
 import org.apache.sling.testing.mock.sling.builder.ImmutableValueMap;
 import org.apache.sling.testing.mock.sling.loader.ContentLoader;
@@ -653,4 +657,19 @@ public final class ContentBuilder extends org.apache.sling.testing.mock.sling.bu
     return resource(page, name, MapUtil.toMap(properties));
   }
 
+  public @NotNull Design design(@NotNull final String path, @NotNull final String title, @NotNull Object @NotNull... properties) {
+    return design(path, ArrayUtils.addAll(properties, JcrConstants.JCR_TITLE, title));
+  }
+
+  public @NotNull Design design(@NotNull final String path, @NotNull Object @NotNull... properties) {
+    final Map<String, Object> propsMap;
+    if (properties.length > 0) {
+      propsMap = MapUtil.toMap(properties);
+    } else {
+      propsMap = new HashMap<>();
+    }
+    propsMap.putIfAbsent(JcrResourceConstants.SLING_RESOURCE_TYPE_PROPERTY, "wcm/core/components/designer");
+    final Page page = page(path, null, propsMap);
+    return Objects.requireNonNull(Objects.requireNonNull(page.adaptTo(Resource.class)).adaptTo(Design.class));
+  }
 }
