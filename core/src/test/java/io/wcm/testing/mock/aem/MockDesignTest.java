@@ -42,12 +42,8 @@ public class MockDesignTest {
 
     @Test
     public void getJSON() throws JSONException {
-        final Calendar dateProp = Calendar.getInstance();
-        dateProp.setTimeZone(TimeZone.getTimeZone("Europe/Amsterdam"));
-        dateProp.setTimeInMillis(1383430039843L);
-        final Calendar dateProp2 = Calendar.getInstance();
-        dateProp2.setTimeZone(TimeZone.getTimeZone("UTC"));
-        dateProp2.setTimeInMillis(1253410638984L);
+        final Calendar dateProp = getCalendar("Europe/Amsterdam", 1383430039843L);
+        final Calendar dateProp2 = getCalendar("UTC", 1253410638984L);
         final Design design = context.create().design("/etc/designs/test", "Test",
                 "a", true,
                 "b", 10L,
@@ -62,7 +58,7 @@ public class MockDesignTest {
                 .add("c", "test")
                 .add("d", 100)
                 .add("e", "Sat Nov 02 2013 23:07:19 GMT+0100")
-                .add("f", "Sun Sep 20 2009 03:37:18 GMT+0200")
+                .add("f", "Sun Sep 20 2009 01:37:18 GMT+0000")
                 .add("jcr:title", "Test");
         if (context.resourceResolverType() == ResourceResolverType.JCR_OAK) {
             expectedJson
@@ -88,5 +84,12 @@ public class MockDesignTest {
                 super.compareValues(prefix, expectedValue, actualValue, result);
             }
         }
+    }
+
+    @NotNull
+    private static Calendar getCalendar(@NotNull final String zoneId, final long millis) {
+        final Calendar c1 = Calendar.getInstance(TimeZone.getTimeZone(zoneId));
+        c1.setTimeInMillis(millis);
+        return c1;
     }
 }

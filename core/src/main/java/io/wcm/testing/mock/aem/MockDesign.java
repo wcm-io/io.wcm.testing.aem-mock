@@ -21,7 +21,7 @@ package io.wcm.testing.mock.aem;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Map;
@@ -58,7 +58,7 @@ class MockDesign implements Design {
           JcrConstants.JCR_MIXINTYPES
   );
 
-  private static final SimpleDateFormat JSON_DATE_FORMAT = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss 'GMT'Z",Locale.US);
+  private static final DateTimeFormatter JSON_DATE_FORMAT = DateTimeFormatter.ofPattern("EEE MMM dd yyyy HH:mm:ss 'GMT'Z", Locale.US);
 
   private final Style emptyStyle = new MockStyle(ValueMap.EMPTY, this);
   private final Resource resource;
@@ -198,7 +198,8 @@ class MockDesign implements Design {
       } else if (value instanceof Boolean) {
         builder.add(key, (boolean) value);
       } else if (value instanceof Calendar) {
-        builder.add(key, JSON_DATE_FORMAT.format(((Calendar) value).getTime()));
+        final Calendar calendar = (Calendar) value;
+        builder.add(key, JSON_DATE_FORMAT.format(calendar.toInstant().atZone(calendar.getTimeZone().toZoneId())));
       } else {
         throw new RuntimeException("Unrecognized property value of type " + value.getClass());
       }
