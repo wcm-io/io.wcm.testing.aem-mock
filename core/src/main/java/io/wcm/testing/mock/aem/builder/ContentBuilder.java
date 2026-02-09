@@ -32,7 +32,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import com.day.cq.wcm.api.designer.Design;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.ModifiableValueMap;
@@ -64,6 +63,7 @@ import com.day.cq.wcm.api.NameConstants;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.day.cq.wcm.api.WCMException;
+import com.day.cq.wcm.api.designer.Design;
 import com.day.image.Layer;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -657,10 +657,22 @@ public final class ContentBuilder extends org.apache.sling.testing.mock.sling.bu
     return resource(page, name, MapUtil.toMap(properties));
   }
 
+  /**
+   * Create a design page.
+   * @param path Path of the design resource
+   * @param properties Properties for the design resource
+   * @return Design object
+   */
   public @NotNull Design design(@NotNull final String path, @NotNull final String title, @NotNull Object @NotNull... properties) {
     return design(path, ArrayUtils.addAll(properties, JcrConstants.JCR_TITLE, title));
   }
 
+  /**
+   * Create a design page.
+   * @param path Path of the design resource
+   * @param properties Properties for the design resource
+   * @return Design object
+   */
   public @NotNull Design design(@NotNull final String path, @NotNull Object @NotNull... properties) {
     final Map<String, Object> propsMap;
     if (properties.length > 0) {

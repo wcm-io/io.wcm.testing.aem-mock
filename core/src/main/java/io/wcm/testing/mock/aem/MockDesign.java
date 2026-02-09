@@ -32,20 +32,20 @@ import javax.json.Json;
 import javax.json.JsonObjectBuilder;
 import javax.servlet.jsp.PageContext;
 
-import com.day.cq.commons.jcr.JcrConstants;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceUtil;
 import org.apache.sling.api.resource.ValueMap;
+import org.apache.sling.jcr.resource.api.JcrResourceConstants;
+import org.jetbrains.annotations.NotNull;
 
+import com.day.cq.commons.jcr.JcrConstants;
 import com.day.cq.wcm.api.designer.Cell;
 import com.day.cq.wcm.api.designer.ComponentStyle;
 import com.day.cq.wcm.api.designer.Design;
 import com.day.cq.wcm.api.designer.Style;
 import com.day.cq.wcm.api.policies.ContentPolicy;
 import com.day.cq.wcm.api.policies.ContentPolicyManager;
-import org.apache.sling.jcr.resource.api.JcrResourceConstants;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Mock implementation of {@link Design}.
@@ -86,11 +86,11 @@ class MockDesign implements Design {
   }
 
   @Override
-  public Style getStyle(Resource resource) {
-    ContentPolicyManager contentPolicyManager = resource.getResourceResolver().adaptTo(ContentPolicyManager.class);
+  public Style getStyle(Resource res) {
+    ContentPolicyManager contentPolicyManager = res.getResourceResolver().adaptTo(ContentPolicyManager.class);
     if (contentPolicyManager instanceof MockContentPolicyManager) {
       // unwrap resource to make sure the correct resource type is used when using resource-type forcing wrappers
-      Resource unwrappedResource = ResourceUtil.unwrap(resource);
+      Resource unwrappedResource = ResourceUtil.unwrap(res);
       ContentPolicy policy = ((MockContentPolicyManager)contentPolicyManager).getPolicy(unwrappedResource);
       if (policy != null) {
         return new MockStyle(policy.getProperties(), this);
@@ -100,8 +100,8 @@ class MockDesign implements Design {
   }
 
   @Override
-  public Style getStyle(Resource resource, boolean ignoreExcludedComponents) {
-    return getStyle(resource);
+  public Style getStyle(Resource res, boolean ignoreExcludedComponents) {
+    return getStyle(res);
   }
 
   @Override
@@ -190,15 +190,15 @@ class MockDesign implements Design {
         return;
       }
       if (value instanceof String) {
-        builder.add(key, (String) value);
+        builder.add(key, (String)value);
       } else if (value instanceof Long) {
-        builder.add(key, (long) value);
+        builder.add(key, (long)value);
       } else if (value instanceof Integer) {
-        builder.add(key, (int) value);
+        builder.add(key, (int)value);
       } else if (value instanceof Boolean) {
-        builder.add(key, (boolean) value);
+        builder.add(key, (boolean)value);
       } else if (value instanceof Calendar) {
-        final Calendar calendar = (Calendar) value;
+        final Calendar calendar = (Calendar)value;
         builder.add(key, JSON_DATE_FORMAT.format(calendar.toInstant().atZone(calendar.getTimeZone().toZoneId())));
       } else {
         throw new RuntimeException("Unrecognized property value of type " + value.getClass());

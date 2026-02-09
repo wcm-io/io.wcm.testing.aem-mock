@@ -19,7 +19,8 @@
  */
 package io.wcm.testing.mock.aem;
 
-import static io.wcm.testing.mock.aem.MockDesigner.*;
+import static io.wcm.testing.mock.aem.MockDesigner.LEGACY_DEFAULT_DESIGN_PATH;
+import static io.wcm.testing.mock.aem.MockDesigner.LIBS_DEFAULT_DESIGN_PATH;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
@@ -27,8 +28,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-import com.day.cq.wcm.api.NameConstants;
-import com.day.cq.wcm.api.designer.Design;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
@@ -36,7 +35,9 @@ import org.jetbrains.annotations.NotNull;
 import org.junit.Rule;
 import org.junit.Test;
 
+import com.day.cq.wcm.api.NameConstants;
 import com.day.cq.wcm.api.Page;
+import com.day.cq.wcm.api.designer.Design;
 
 import io.wcm.testing.mock.aem.context.TestAemContext;
 import io.wcm.testing.mock.aem.junit.AemContext;
@@ -126,7 +127,7 @@ public class MockDesignerTest {
   private static Matcher<Design> designWithPath(@NotNull final String expectedPath) {
     return new TypeSafeMatcher<>() {
       @Override
-      protected boolean matchesSafely(@NotNull final Design design) {
+      protected boolean matchesSafely(Design design) {
         return expectedPath.equals(design.getPath());
       }
 

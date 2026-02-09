@@ -24,7 +24,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import com.day.cq.wcm.api.designer.Designer;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolverFactory;
@@ -39,6 +38,7 @@ import com.day.cq.dam.api.AssetManager;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.day.cq.wcm.api.components.ComponentContext;
+import com.day.cq.wcm.api.designer.Designer;
 import com.day.cq.wcm.api.policies.ContentPolicyMapping;
 import com.day.cq.wcm.commons.WCMUtils;
 
@@ -171,6 +171,9 @@ public class AemContextImpl extends SlingContextImpl {
     return pageManager;
   }
 
+  /**
+   * @return Designer
+   */
   public @NotNull Designer designer() {
     Designer designer = resourceResolver().adaptTo(Designer.class);
     if (designer == null) {

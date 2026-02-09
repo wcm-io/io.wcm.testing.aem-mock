@@ -1,8 +1,14 @@
 package io.wcm.testing.mock.aem;
 
-import com.day.cq.wcm.api.designer.Design;
-import io.wcm.testing.mock.aem.context.TestAemContext;
-import io.wcm.testing.mock.aem.junit.AemContext;
+import static org.junit.Assert.assertEquals;
+
+import java.util.Calendar;
+import java.util.Set;
+import java.util.TimeZone;
+
+import javax.json.Json;
+import javax.json.JsonObjectBuilder;
+
 import org.apache.sling.testing.mock.sling.ResourceResolverType;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
@@ -13,13 +19,10 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.skyscreamer.jsonassert.JSONCompareResult;
 import org.skyscreamer.jsonassert.comparator.DefaultComparator;
 
-import javax.json.Json;
-import javax.json.JsonObjectBuilder;
-import java.util.Calendar;
-import java.util.Set;
-import java.util.TimeZone;
+import com.day.cq.wcm.api.designer.Design;
 
-import static org.junit.Assert.assertEquals;
+import io.wcm.testing.mock.aem.context.TestAemContext;
+import io.wcm.testing.mock.aem.junit.AemContext;
 
 public class MockDesignTest {
 
@@ -73,7 +76,7 @@ public class MockDesignTest {
         @NotNull
         private final Set<String> ignoredFields;
 
-        public IgnoringFieldsComparator(@NotNull final JSONCompareMode mode, @NotNull final String... ignoredFields) {
+        IgnoringFieldsComparator(@NotNull final JSONCompareMode mode, @NotNull final String... ignoredFields) {
             super(mode);
             this.ignoredFields = Set.of(ignoredFields);
         }
