@@ -663,6 +663,18 @@ public final class ContentBuilder extends org.apache.sling.testing.mock.sling.bu
    * @param properties Properties for the design resource
    * @return Design object
    */
+  public @NotNull Design design(@NotNull final String path, @NotNull final String title, @NotNull Map<String, Object> properties) {
+    Map<String, Object> updatedProperties = new HashMap<>(properties);
+    updatedProperties.put(JcrConstants.JCR_TITLE, title);
+    return design(path, updatedProperties);
+  }
+
+  /**
+   * Create a design page.
+   * @param path Path of the design resource
+   * @param properties Properties for the design resource
+   * @return Design object
+   */
   public @NotNull Design design(@NotNull final String path, @NotNull final String title, @NotNull Object @NotNull... properties) {
     return design(path, ArrayUtils.addAll(properties, JcrConstants.JCR_TITLE, title));
   }
@@ -673,15 +685,21 @@ public final class ContentBuilder extends org.apache.sling.testing.mock.sling.bu
    * @param properties Properties for the design resource
    * @return Design object
    */
-  public @NotNull Design design(@NotNull final String path, @NotNull Object @NotNull... properties) {
-    final Map<String, Object> propsMap;
-    if (properties.length > 0) {
-      propsMap = MapUtil.toMap(properties);
-    } else {
-      propsMap = new HashMap<>();
-    }
+  public @NotNull Design design(@NotNull final String path, @NotNull Map<String, Object> properties) {
+    final Map<String, Object> propsMap = new HashMap<>(properties);
     propsMap.putIfAbsent(JcrResourceConstants.SLING_RESOURCE_TYPE_PROPERTY, "wcm/core/components/designer");
     final Page page = page(path, null, propsMap);
     return Objects.requireNonNull(Objects.requireNonNull(page.adaptTo(Resource.class)).adaptTo(Design.class));
   }
+
+  /**
+   * Create a design page.
+   * @param path Path of the design resource
+   * @param properties Properties for the design resource
+   * @return Design object
+   */
+  public @NotNull Design design(@NotNull final String path, @NotNull Object @NotNull... properties) {
+    return design(path, MapUtil.toMap(properties));
+  }
+
 }
