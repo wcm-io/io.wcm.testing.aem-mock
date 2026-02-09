@@ -24,7 +24,7 @@
     xsi:schemaLocation="http://maven.apache.org/changes/2.0.0 https://maven.apache.org/xsd/changes-2.0.0.xsd">
   <body>
 
-    <release version="unreleased" date="2026-02-03">
+    <release version="5.6.16" date="not released">
       <action type="update" dev="henrykuijpers" issue="86">
         MockDesigner/MockDesign: Support the creation of designs in ContentBuilder.
       </action>
