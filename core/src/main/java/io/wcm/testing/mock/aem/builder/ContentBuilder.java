@@ -30,7 +30,9 @@ import java.nio.charset.StandardCharsets;
 import java.security.AccessControlException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.resource.ModifiableValueMap;
 import org.apache.sling.api.resource.PersistenceException;
@@ -38,6 +40,7 @@ import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ResourceUtil;
 import org.apache.sling.api.resource.ValueMap;
+import org.apache.sling.jcr.resource.api.JcrResourceConstants;
 import org.apache.sling.testing.mock.osgi.MapUtil;
 import org.apache.sling.testing.mock.sling.builder.ImmutableValueMap;
 import org.apache.sling.testing.mock.sling.loader.ContentLoader;
@@ -60,6 +63,7 @@ import com.day.cq.wcm.api.NameConstants;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.day.cq.wcm.api.WCMException;
+import com.day.cq.wcm.api.designer.Design;
 import com.day.image.Layer;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -651,6 +655,51 @@ public final class ContentBuilder extends org.apache.sling.testing.mock.sling.bu
    */
   public @NotNull Resource resource(@NotNull Page page, @NotNull String name, @NotNull Object @NotNull... properties) {
     return resource(page, name, MapUtil.toMap(properties));
+  }
+
+  /**
+   * Create a design page.
+   * @param path Path of the design resource
+   * @param properties Properties for the design resource
+   * @return Design object
+   */
+  public @NotNull Design design(@NotNull final String path, @NotNull final String title, @NotNull Map<String, Object> properties) {
+    Map<String, Object> updatedProperties = new HashMap<>(properties);
+    updatedProperties.put(JcrConstants.JCR_TITLE, title);
+    return design(path, updatedProperties);
+  }
+
+  /**
+   * Create a design page.
+   * @param path Path of the design resource
+   * @param properties Properties for the design resource
+   * @return Design object
+   */
+  public @NotNull Design design(@NotNull final String path, @NotNull final String title, @NotNull Object @NotNull... properties) {
+    return design(path, ArrayUtils.addAll(properties, JcrConstants.JCR_TITLE, title));
+  }
+
+  /**
+   * Create a design page.
+   * @param path Path of the design resource
+   * @param properties Properties for the design resource
+   * @return Design object
+   */
+  public @NotNull Design design(@NotNull final String path, @NotNull Map<String, Object> properties) {
+    final Map<String, Object> propsMap = new HashMap<>(properties);
+    propsMap.putIfAbsent(JcrResourceConstants.SLING_RESOURCE_TYPE_PROPERTY, "wcm/core/components/designer");
+    final Page page = page(path, null, propsMap);
+    return Objects.requireNonNull(Objects.requireNonNull(page.adaptTo(Resource.class)).adaptTo(Design.class));
+  }
+
+  /**
+   * Create a design page.
+   * @param path Path of the design resource
+   * @param properties Properties for the design resource
+   * @return Design object
+   */
+  public @NotNull Design design(@NotNull final String path, @NotNull Object @NotNull... properties) {
+    return design(path, MapUtil.toMap(properties));
   }
 
 }

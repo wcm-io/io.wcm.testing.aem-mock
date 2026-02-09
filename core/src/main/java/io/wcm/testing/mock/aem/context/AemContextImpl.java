@@ -38,6 +38,7 @@ import com.day.cq.dam.api.AssetManager;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.day.cq.wcm.api.components.ComponentContext;
+import com.day.cq.wcm.api.designer.Designer;
 import com.day.cq.wcm.api.policies.ContentPolicyMapping;
 import com.day.cq.wcm.commons.WCMUtils;
 
@@ -168,6 +169,17 @@ public class AemContextImpl extends SlingContextImpl {
       throw new RuntimeException("No page manager.");
     }
     return pageManager;
+  }
+
+  /**
+   * @return Designer
+   */
+  public @NotNull Designer designer() {
+    Designer designer = resourceResolver().adaptTo(Designer.class);
+    if (designer == null) {
+      throw new RuntimeException("No designer.");
+    }
+    return designer;
   }
 
   /**
