@@ -658,6 +658,42 @@ public final class ContentBuilder extends org.apache.sling.testing.mock.sling.bu
   }
 
   /**
+   * Create child resource below the design's <code>jcr:content</code> resource. If parent resource(s) do not exist they
+   * are created automatically using <code>nt:unstructured</code> nodes.
+   * @param design Design to create resource in
+   * @param name Child resource name
+   * @return Resource object
+   */
+  public @NotNull Resource resource(@NotNull Design design, @NotNull String name) {
+    return resource(design, name, ValueMap.EMPTY);
+  }
+
+  /**
+   * Create child resource below the design's <code>jcr:content</code> resource. If parent resource(s) do not exist they
+   * are created automatically using <code>nt:unstructured</code> nodes.
+   * @param design Design to create resource in
+   * @param name Child resource name
+   * @param properties Properties for resource.
+   * @return Resource object
+   */
+  public @NotNull Resource resource(@NotNull Design design, @NotNull String name, @NotNull Map<String, Object> properties) {
+    String path = design.getContentResource().getPath() + "/" + StringUtils.stripStart(name, "/");
+    return resource(path, properties);
+  }
+
+  /**
+   * Create child resource below the design's <code>jcr:content</code> resource. If parent resource(s) do not exist they
+   * are created automatically using <code>nt:unstructured</code> nodes.
+   * @param design Design to create resource in
+   * @param name Child resource name
+   * @param properties Properties for resource.
+   * @return Resource object
+   */
+  public @NotNull Resource resource(@NotNull Design design, @NotNull String name, @NotNull Object @NotNull... properties) {
+    return resource(design, name, MapUtil.toMap(properties));
+  }
+
+  /**
    * Create a design page.
    * @param path Path of the design resource
    * @param properties Properties for the design resource
