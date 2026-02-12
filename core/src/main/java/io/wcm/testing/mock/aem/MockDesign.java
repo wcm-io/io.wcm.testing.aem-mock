@@ -199,7 +199,7 @@ class MockDesign implements Design {
         .filter(entry -> !JSON_EXCLUDE_PROPERTY_NAMES.contains(entry.getKey()))
         .forEach(entry -> {
           if (entry.getValue() instanceof Calendar) {
-            Calendar calendar = (Calendar) entry.getValue();
+            Calendar calendar = (Calendar)entry.getValue();
             map.put(entry.getKey(), JSON_DATE_FORMAT.format(calendar.toInstant().atZone(calendar.getTimeZone().toZoneId())));
           } else {
             map.put(entry.getKey(), entry.getValue());
