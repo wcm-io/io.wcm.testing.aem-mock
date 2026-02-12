@@ -26,10 +26,9 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.jcr.RepositoryException;
-import javax.json.Json;
-import javax.json.JsonObjectBuilder;
 import javax.servlet.jsp.PageContext;
 
 import org.apache.commons.lang3.StringUtils;
@@ -46,6 +45,8 @@ import com.day.cq.wcm.api.designer.Design;
 import com.day.cq.wcm.api.designer.Style;
 import com.day.cq.wcm.api.policies.ContentPolicy;
 import com.day.cq.wcm.api.policies.ContentPolicyManager;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 
 /**
  * Mock implementation of {@link Design}.
@@ -59,6 +60,8 @@ class MockDesign implements Design {
   );
 
   private static final DateTimeFormatter JSON_DATE_FORMAT = DateTimeFormatter.ofPattern("EEE MMM dd yyyy HH:mm:ss 'GMT'Z", Locale.US);
+
+  private static final JsonMapper JSON_MAPPER = JsonMapper.builder().build();
 
   private final Style emptyStyle = new MockStyle(ValueMap.EMPTY, this);
   private final Resource resource;
@@ -109,17 +112,48 @@ class MockDesign implements Design {
     return resource.getPath();
   }
 
+  @Override
+  public Resource getContentResource() {
+    return this.resource.getChild(JcrConstants.JCR_CONTENT);
+  }
+
+  @Override
+  public String getId() {
+    return StringUtils.removeStart(resource.getPath(), MockDesigner.LEGACY_DESIGNS_PATH_PREFIX);
+  }
+
+  @Override
+  public String getJSON() {
+    final Resource contentResource = this.getContentResource();
+    if (contentResource != null) {
+      try {
+        final Map<String, Object> filteredMap = contentResource.getValueMap().entrySet().stream()
+            .filter(entry -> !JSON_EXCLUDE_PROPERTY_NAMES.contains(entry.getKey()))
+            .map(entry -> {
+              if (entry.getValue() instanceof Calendar) {
+                Calendar calendar = (Calendar)entry.getValue();
+                return Map.entry(entry.getKey(), (Object)JSON_DATE_FORMAT.format(calendar.toInstant().atZone(calendar.getTimeZone().toZoneId())));
+              }
+              else {
+                return entry;
+              }
+            })
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        return JSON_MAPPER.writeValueAsString(filteredMap);
+      }
+      catch (JsonProcessingException ex) {
+        throw new RuntimeException("Unable to serialize design content resource properties to JSON", ex);
+      }
+    }
+    return "{}";
+  }
+
 
   // --- unsupported operations ---
 
   @Override
   public Map<String, ComponentStyle> getComponentStyles(Cell cell) {
     throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public Resource getContentResource() {
-    return this.resource.getChild(JcrConstants.JCR_CONTENT);
   }
 
   @Override
@@ -131,21 +165,6 @@ class MockDesign implements Design {
   @SuppressWarnings("deprecation")
   public com.day.cq.commons.Doctype getDoctype(Style style) {
     throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public String getId() {
-    return StringUtils.removeStart(resource.getPath(), MockDesigner.LEGACY_DESIGNS_PATH_PREFIX);
-  }
-
-  @Override
-  public String getJSON() {
-    final JsonObjectBuilder builder = Json.createObjectBuilder();
-    final Resource contentResource = this.getContentResource();
-    if (contentResource != null) {
-      addSafePropertiesToJson(builder, contentResource);
-    }
-    return builder.build().toString();
   }
 
   @Override
@@ -184,31 +203,4 @@ class MockDesign implements Design {
     throw new UnsupportedOperationException();
   }
 
-  private static void addSafePropertiesToJson(@NotNull final JsonObjectBuilder builder, @NotNull final Resource resource) {
-    resource.getValueMap().forEach((key, value) -> {
-      if (JSON_EXCLUDE_PROPERTY_NAMES.contains(key)) {
-        return;
-      }
-      if (value instanceof String) {
-        builder.add(key, (String)value);
-      } else if (value instanceof Long) {
-        builder.add(key, (long)value);
-      } else if (value instanceof Integer) {
-        builder.add(key, (int)value);
-      } else if (value instanceof Boolean) {
-        builder.add(key, (boolean)value);
-      } else if (value instanceof Calendar) {
-        final Calendar calendar = (Calendar)value;
-        builder.add(key, JSON_DATE_FORMAT.format(calendar.toInstant().atZone(calendar.getTimeZone().toZoneId())));
-      } else {
-        throw new RuntimeException("Unrecognized property value of type " + value.getClass());
-      }
-    });
-
-    resource.getChildren().forEach(child -> {
-      final JsonObjectBuilder subObject = Json.createObjectBuilder();
-      addSafePropertiesToJson(subObject, child);
-      builder.add(child.getName(), subObject);
-    });
-  }
 }
