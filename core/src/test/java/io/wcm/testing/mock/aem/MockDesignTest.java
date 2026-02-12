@@ -22,11 +22,10 @@ package io.wcm.testing.mock.aem;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
-
-import javax.json.Json;
-import javax.json.JsonObjectBuilder;
 
 import org.apache.sling.testing.mock.sling.ResourceResolverType;
 import org.jetbrains.annotations.NotNull;
@@ -39,11 +38,15 @@ import org.skyscreamer.jsonassert.JSONCompareResult;
 import org.skyscreamer.jsonassert.comparator.DefaultComparator;
 
 import com.day.cq.wcm.api.designer.Design;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 
 import io.wcm.testing.mock.aem.context.TestAemContext;
 import io.wcm.testing.mock.aem.junit.AemContext;
 
 public class MockDesignTest {
+
+  private static final JsonMapper JSON_MAPPER = JsonMapper.builder().build();
 
   @Rule
   public AemContext context = TestAemContext.newAemContext();
@@ -63,7 +66,7 @@ public class MockDesignTest {
   }
 
   @Test
-  public void getJSON() throws JSONException {
+  public void getJSON() throws JsonProcessingException, JSONException {
     final Calendar dateProp = getCalendar("Europe/Amsterdam", 1383430039843L);
     final Calendar dateProp2 = getCalendar("UTC", 1253410638984L);
     final Design design = context.create().design("/etc/designs/test", "Test",
@@ -73,21 +76,20 @@ public class MockDesignTest {
         "d", 100,
         "e", dateProp,
         "f", dateProp2);
-    final JsonObjectBuilder expectedJson = Json
-        .createObjectBuilder()
-        .add("a", true)
-        .add("b", 10)
-        .add("c", "test")
-        .add("d", 100)
-        .add("e", "Sat Nov 02 2013 23:07:19 GMT+0100")
-        .add("f", "Sun Sep 20 2009 01:37:18 GMT+0000")
-        .add("jcr:title", "Test");
+
+    final Map<String,Object> expectedData = new HashMap<>();
+    expectedData.put("a", true);
+    expectedData.put("b", 10);
+    expectedData.put("c", "test");
+    expectedData.put("d", 100);
+    expectedData.put("e", "Sat Nov 02 2013 23:07:19 GMT+0100");
+    expectedData.put("f", "Sun Sep 20 2009 01:37:18 GMT+0000");
+    expectedData.put("jcr:title", "Test");
     if (context.resourceResolverType() == ResourceResolverType.JCR_OAK) {
-      expectedJson
-          .add("jcr:created", "<value-ignored>")
-          .add("jcr:createdBy", "admin");
+      expectedData.put("jcr:created", "<value-ignored>");
+      expectedData.put("jcr:createdBy", "admin");
     }
-    JSONAssert.assertEquals(expectedJson.build().toString(), design.getJSON(),
+    JSONAssert.assertEquals(JSON_MAPPER.writeValueAsString(expectedData), design.getJSON(),
         new IgnoringFieldsComparator(JSONCompareMode.STRICT, "jcr:created"));
   }
 
