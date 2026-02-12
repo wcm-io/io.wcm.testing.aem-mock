@@ -23,10 +23,10 @@ import java.io.IOException;
 import java.io.Writer;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.jcr.RepositoryException;
 import javax.servlet.jsp.PageContext;
@@ -127,19 +127,9 @@ class MockDesign implements Design {
     final Resource contentResource = this.getContentResource();
     if (contentResource != null) {
       try {
-        final Map<String, Object> filteredMap = contentResource.getValueMap().entrySet().stream()
-            .filter(entry -> !JSON_EXCLUDE_PROPERTY_NAMES.contains(entry.getKey()))
-            .map(entry -> {
-              if (entry.getValue() instanceof Calendar) {
-                Calendar calendar = (Calendar)entry.getValue();
-                return Map.entry(entry.getKey(), (Object)JSON_DATE_FORMAT.format(calendar.toInstant().atZone(calendar.getTimeZone().toZoneId())));
-              }
-              else {
-                return entry;
-              }
-            })
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        return JSON_MAPPER.writeValueAsString(filteredMap);
+        final Map<String, Object> map = new HashMap<>();
+        addSafePropertiesToJson(map, contentResource);
+        return JSON_MAPPER.writeValueAsString(map);
       }
       catch (JsonProcessingException ex) {
         throw new RuntimeException("Unable to serialize design content resource properties to JSON", ex);
@@ -203,4 +193,22 @@ class MockDesign implements Design {
     throw new UnsupportedOperationException();
   }
 
+  private void addSafePropertiesToJson(@NotNull final Map<String, Object> map,
+                                       @NotNull final Resource contentResource) {
+    contentResource.getValueMap().entrySet().stream()
+        .filter(entry -> !JSON_EXCLUDE_PROPERTY_NAMES.contains(entry.getKey()))
+        .forEach(entry -> {
+          if (entry.getValue() instanceof Calendar) {
+            Calendar calendar = (Calendar)entry.getValue();
+            map.put(entry.getKey(), JSON_DATE_FORMAT.format(calendar.toInstant().atZone(calendar.getTimeZone().toZoneId())));
+          } else {
+            map.put(entry.getKey(), entry.getValue());
+          }
+        });
+    contentResource.getChildren().forEach(child -> {
+      final Map<String, Object> subMap = new HashMap<>();
+      addSafePropertiesToJson(subMap, child);
+      map.put(child.getName(), subMap);
+    });
+  }
 }

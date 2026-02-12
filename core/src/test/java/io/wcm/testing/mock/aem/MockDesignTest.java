@@ -76,19 +76,25 @@ public class MockDesignTest {
         "d", 100,
         "e", dateProp,
         "f", dateProp2);
+    context.create().resource(design, "test", "a", false, "b", 440);
 
-    final Map<String,Object> expectedData = new HashMap<>();
-    expectedData.put("a", true);
-    expectedData.put("b", 10);
-    expectedData.put("c", "test");
-    expectedData.put("d", 100);
-    expectedData.put("e", "Sat Nov 02 2013 23:07:19 GMT+0100");
-    expectedData.put("f", "Sun Sep 20 2009 01:37:18 GMT+0000");
-    expectedData.put("jcr:title", "Test");
+    final Map<String, Object> expectedData = new HashMap<>();
     if (context.resourceResolverType() == ResourceResolverType.JCR_OAK) {
       expectedData.put("jcr:created", "<value-ignored>");
       expectedData.put("jcr:createdBy", "admin");
     }
+    expectedData.putAll(Map.of(
+        "a", true,
+        "b", 10,
+        "c", "test",
+        "d", 100,
+        "e", "Sat Nov 02 2013 23:07:19 GMT+0100",
+        "f", "Sun Sep 20 2009 01:37:18 GMT+0000",
+        "jcr:title", "Test",
+        "test", Map.of(
+            "a", false,
+            "b", 440
+    )));
     JSONAssert.assertEquals(JSON_MAPPER.writeValueAsString(expectedData), design.getJSON(),
         new IgnoringFieldsComparator(JSONCompareMode.STRICT, "jcr:created"));
   }
