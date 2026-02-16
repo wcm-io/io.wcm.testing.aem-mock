@@ -24,11 +24,11 @@
     xsi:schemaLocation="http://maven.apache.org/changes/2.0.0 https://maven.apache.org/xsd/changes-2.0.0.xsd">
   <body>
 
-    <release version="5.6.16" date="not released">
-      <action type="update" dev="henrykuijpers" issue="86">
+    <release version="5.7.0" date="2026-02-16">
+      <action type="add" dev="henrykuijpers" issue="86">
         MockDesigner/MockDesign: Support the creation of designs in ContentBuilder.
       </action>
-      <action type="update" dev="henrykuijpers" issue="86">
+      <action type="add" dev="henrykuijpers" issue="86">
         MockDesigner: Add designer-method in AemContextImpl.
       </action>
       <action type="update" dev="henrykuijpers" issue="86">
