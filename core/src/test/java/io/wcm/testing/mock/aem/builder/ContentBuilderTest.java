@@ -27,6 +27,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Map;
 
+import com.day.cq.wcm.api.designer.Design;
 import org.apache.sling.api.resource.Resource;
 import org.junit.Before;
 import org.junit.Rule;
@@ -358,6 +359,16 @@ public class ContentBuilderTest {
     assertNotNull(resource2);
     assertEquals(contentRoot + "/test1/page1/jcr:content/test2/test21", resource2.getPath());
     assertEquals("value1", resource2.getValueMap().get("prop1", String.class));
+  }
+
+  @Test
+  public void testDesign() {
+    final Design design = context.create().design("/apps/my-design", "My design",
+            "test", true);
+    assertNotNull(design);
+    assertEquals("/apps/my-design", design.getPath());
+    assertEquals("My design", design.getContentResource().getValueMap().get("jcr:title", String.class));
+    assertTrue(design.getContentResource().getValueMap().get("test", false));
   }
 
   @SuppressWarnings("null")
