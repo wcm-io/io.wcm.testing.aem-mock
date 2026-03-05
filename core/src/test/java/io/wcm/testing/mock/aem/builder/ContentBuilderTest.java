@@ -364,7 +364,7 @@ public class ContentBuilderTest {
   @Test
   public void testDesign() {
     final Design design = context.create().design("/apps/my-design", "My design",
-            "test", true);
+        "test", true);
     assertNotNull(design);
     assertEquals("/apps/my-design", design.getPath());
     assertEquals("My design", design.getContentResource().getValueMap().get("jcr:title", String.class));

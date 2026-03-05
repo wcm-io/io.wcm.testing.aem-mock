@@ -214,7 +214,8 @@ public class MockAssetTest {
   public void testRemoveNonExistingRendition() {
     try {
       asset.removeRendition("non-existing");
-    } catch (Exception e) {
+    }
+    catch (Exception e) {
       fail("removeRendition should not fail on non-existing renditions!");
     }
   }

@@ -64,7 +64,9 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Mock implementation of {@link PageManager}
  */
-@SuppressWarnings({ "deprecation", "null" })
+@SuppressWarnings({
+    "deprecation", "null"
+})
 class MockPageManager extends SlingAdaptable implements PageManager {
 
   private final ResourceResolver resourceResolver;

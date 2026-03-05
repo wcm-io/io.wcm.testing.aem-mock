@@ -43,16 +43,16 @@ class BeforeAllStaticMemberAemContextPluginTest {
   private static AemContextCallback contextAfterTeardown = mock(AemContextCallback.class);
 
   private static AemContext context = new AemContextBuilder()
-      .beforeSetUp(contextBeforeSetup)
-      .afterSetUp(contextAfterSetup)
-      .beforeTearDown(contextBeforeTeardown)
-      .afterTearDown(contextAfterTeardown)
-      .resourceResolverFactoryActivatorProps(Map.of("resource.resolver.searchpath", new String[] {
-          "/apps",
-          "/libs",
-          "/testpath",
-      }))
-      .build();
+    .beforeSetUp(contextBeforeSetup)
+    .afterSetUp(contextAfterSetup)
+    .beforeTearDown(contextBeforeTeardown)
+    .afterTearDown(contextAfterTeardown)
+    .resourceResolverFactoryActivatorProps(Map.of("resource.resolver.searchpath", new String[] {
+        "/apps",
+        "/libs",
+        "/testpath",
+    }))
+    .build();
 
   @BeforeAll
   static void beforeAll() throws Exception {

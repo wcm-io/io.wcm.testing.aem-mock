@@ -2,7 +2,7 @@
  * #%L
  * wcm.io
  * %%
- * Copyright (C) 2014 - 2015 wcm.io
+ * Copyright (C) 2014-2015 wcm.io
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,6 +45,7 @@ import io.wcm.testing.mock.aem.context.TestAemContext;
 import io.wcm.testing.mock.aem.junit.AemContext;
 
 public class MockTagTest {
+
   private static final String XPATH_PROPERTY = "@p";
   private static final String XPATH_PROPERTY_IN_JCR_CONTENT = "jcr:content/@p";
   private static final String XPATH_PROPERTY_IN_SUB_SUB_NODE = "jcr:content/test/@p";
@@ -297,7 +298,7 @@ public class MockTagTest {
 
   @Test
   public void getLocalizedTitlePaths() {
-    Map<Locale,String> localizedTitlePaths = aemApi.getLocalizedTitlePaths();
+    Map<Locale, String> localizedTitlePaths = aemApi.getLocalizedTitlePaths();
 
     assertNotNull(localizedTitlePaths);
     assertEquals(6, localizedTitlePaths.size());
@@ -309,8 +310,8 @@ public class MockTagTest {
   }
 
   private void assertTagExpression(@NotNull final Tag tag,
-                                   @NotNull final String tagId,
-                                   @NotNull final String tagPath) {
+      @NotNull final String tagId,
+      @NotNull final String tagPath) {
     for (final Map.Entry<String, String> entry : TAG_PROPERTY_CONVERSIONS.entrySet()) {
       final String property = entry.getKey();
       final String expectedXpathProperty = entry.getValue();
@@ -320,12 +321,12 @@ public class MockTagTest {
               " or jcr:like(" + expectedXpathProperty + ", '" + tagId + "/%')" +
               " or jcr:like(" + expectedXpathProperty + ", '" + tagRoot + "/" + tagPath + "/%'" +
               "))",
-          tag.getXPathSearchExpression(property)
-      );
+          tag.getXPathSearchExpression(property));
     }
   }
 
   private static final class NothingFilter implements Filter<Tag> {
+
     @Override
     public boolean includes(Tag tag) {
       return false;

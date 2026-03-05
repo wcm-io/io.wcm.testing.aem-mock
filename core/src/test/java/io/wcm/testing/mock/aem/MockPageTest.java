@@ -254,6 +254,7 @@ public class MockPageTest {
   @Test
   public void testListChildrenFiltered() {
     List<Page> childPages = IteratorUtils.toList(this.page.listChildren(new Filter<Page>() {
+
       @Override
       public boolean includes(final Page element) {
         return !StringUtils.equals("toolbar", element.getName());
@@ -265,6 +266,7 @@ public class MockPageTest {
   @Test
   public void testListChildrenFilteredDeep() {
     List<Page> childPages = IteratorUtils.toList(this.page.listChildren(new Filter<Page>() {
+
       @Override
       public boolean includes(final Page element) {
         return !StringUtils.equals("toolbar", element.getName());

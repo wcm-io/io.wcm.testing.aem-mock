@@ -1,3 +1,22 @@
+/*
+ * #%L
+ * wcm.io
+ * %%
+ * Copyright (C) 2023 wcm.io
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
 package io.wcm.testing.mock.aem.context;
 
 import java.util.Collection;
@@ -59,7 +78,7 @@ class MockOverrideSlingPathRequestWrapper extends SlingHttpServletRequestWrapper
     SimpleBindings additionalBindings = new SimpleBindings();
     additionalBindings.putAll(this.myBindings);
     Collection<BindingsValuesProvider> bindingsValuesProviders = bindingsValuesProvidersByContext
-        .getBindingsValuesProviders(new SlingModelsScriptEngineFactory(), "request");
+      .getBindingsValuesProviders(new SlingModelsScriptEngineFactory(), "request");
     Iterator<BindingsValuesProvider> bindingsValuesProviderIterator = bindingsValuesProviders.iterator();
 
     while (bindingsValuesProviderIterator.hasNext()) {
@@ -84,7 +103,9 @@ class MockOverrideSlingPathRequestWrapper extends SlingHttpServletRequestWrapper
    * Overriding `adaptTo` to avoid using the original request as the adaptable.
    */
   @Override
-  @SuppressWarnings({ "null", "unchecked" })
+  @SuppressWarnings({
+      "null", "unchecked"
+  })
   public <AdapterType> AdapterType adaptTo(Class<AdapterType> type) {
     AdapterType result = null;
     synchronized (this) {
@@ -105,7 +126,9 @@ class MockOverrideSlingPathRequestWrapper extends SlingHttpServletRequestWrapper
   private static class SlingModelsScriptEngineFactory extends AbstractScriptEngineFactory implements ScriptEngineFactory {
 
     SlingModelsScriptEngineFactory() {
-      this.setNames(new String[] { "sling-models-exporter", "sling-models" });
+      this.setNames(new String[] {
+          "sling-models-exporter", "sling-models"
+      });
     }
 
     @Override

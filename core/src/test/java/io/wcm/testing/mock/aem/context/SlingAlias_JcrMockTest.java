@@ -39,15 +39,15 @@ public class SlingAlias_JcrMockTest {
 
   @Rule
   public AemContext context = new AemContextBuilder(ResourceResolverType.JCR_MOCK)
-      /*
-       * The optimized alias resolution is based on ResourceChangeListener, which is not supported with JCR_MOCK,
-       * because JCR_MOCK does not support JCR Observation events. So, to use sling:alias with JCR_MOCK
-       * we have to disabled the optimized alias resolution.
-       * But be warned: This old code path is deprecated and likely to be removed in future Sling versions.
-       * See SLING-12054 and SLING-12025 as references.
-       */
-      .resourceResolverFactoryActivatorProps(Map.of("resource.resolver.optimize.alias.resolution", false))
-      .build();
+    /*
+     * The optimized alias resolution is based on ResourceChangeListener, which is not supported with JCR_MOCK,
+     * because JCR_MOCK does not support JCR Observation events. So, to use sling:alias with JCR_MOCK
+     * we have to disabled the optimized alias resolution.
+     * But be warned: This old code path is deprecated and likely to be removed in future Sling versions.
+     * See SLING-12054 and SLING-12025 as references.
+     */
+    .resourceResolverFactoryActivatorProps(Map.of("resource.resolver.optimize.alias.resolution", false))
+    .build();
 
   private String contentRoot;
 

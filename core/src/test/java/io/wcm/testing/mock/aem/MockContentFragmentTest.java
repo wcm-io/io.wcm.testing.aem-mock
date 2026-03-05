@@ -46,7 +46,9 @@ public class MockContentFragmentTest {
   public void testContentFragmentStructure() throws Exception {
     String assetPath = context.uniqueRoot().dam() + "/cfStructure";
     ContentFragment cf = context.create().contentFragmentStructured(assetPath,
-        "param1", "value1", "param2", 123, "param3", true, "param4", new String[] { "v1", "v2" });
+        "param1", "value1", "param2", 123, "param3", true, "param4", new String[] {
+            "v1", "v2"
+        });
     assertNotNull(cf);
 
     cf.setTitle("myTitle");

@@ -50,16 +50,16 @@ class AemContextPluginNestedTest {
   private final AemContextCallback contextAfterTeardown = mock(AemContextCallback.class);
 
   private final AemContext context = new AemContextBuilder()
-      .beforeSetUp(contextBeforeSetup)
-      .afterSetUp(contextAfterSetup)
-      .beforeTearDown(contextBeforeTeardown)
-      .afterTearDown(contextAfterTeardown)
-      .resourceResolverFactoryActivatorProps(Map.of("resource.resolver.searchpath", new String[] {
-          "/apps",
-          "/libs",
-          "/testpath",
-      }))
-      .build();
+    .beforeSetUp(contextBeforeSetup)
+    .afterSetUp(contextAfterSetup)
+    .beforeTearDown(contextBeforeTeardown)
+    .afterTearDown(contextAfterTeardown)
+    .resourceResolverFactoryActivatorProps(Map.of("resource.resolver.searchpath", new String[] {
+        "/apps",
+        "/libs",
+        "/testpath",
+    }))
+    .build();
 
   @Nested
   class NestedTest {

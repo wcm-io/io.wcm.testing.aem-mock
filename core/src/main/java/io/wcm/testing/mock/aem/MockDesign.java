@@ -54,10 +54,9 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 class MockDesign implements Design {
 
   private static final Set<String> JSON_EXCLUDE_PROPERTY_NAMES = Set.of(
-          JcrResourceConstants.SLING_RESOURCE_TYPE_PROPERTY,
-          JcrConstants.JCR_PRIMARYTYPE,
-          JcrConstants.JCR_MIXINTYPES
-  );
+      JcrResourceConstants.SLING_RESOURCE_TYPE_PROPERTY,
+      JcrConstants.JCR_PRIMARYTYPE,
+      JcrConstants.JCR_MIXINTYPES);
 
   private static final DateTimeFormatter JSON_DATE_FORMAT = DateTimeFormatter.ofPattern("EEE MMM dd yyyy HH:mm:ss 'GMT'Z", Locale.US);
 
@@ -194,17 +193,18 @@ class MockDesign implements Design {
   }
 
   private void addSafePropertiesToJson(@NotNull final Map<String, Object> map,
-                                       @NotNull final Resource contentResource) {
+      @NotNull final Resource contentResource) {
     contentResource.getValueMap().entrySet().stream()
-        .filter(entry -> !JSON_EXCLUDE_PROPERTY_NAMES.contains(entry.getKey()))
-        .forEach(entry -> {
-          if (entry.getValue() instanceof Calendar) {
-            Calendar calendar = (Calendar)entry.getValue();
-            map.put(entry.getKey(), JSON_DATE_FORMAT.format(calendar.toInstant().atZone(calendar.getTimeZone().toZoneId())));
-          } else {
-            map.put(entry.getKey(), entry.getValue());
-          }
-        });
+      .filter(entry -> !JSON_EXCLUDE_PROPERTY_NAMES.contains(entry.getKey()))
+      .forEach(entry -> {
+        if (entry.getValue() instanceof Calendar) {
+          Calendar calendar = (Calendar)entry.getValue();
+          map.put(entry.getKey(), JSON_DATE_FORMAT.format(calendar.toInstant().atZone(calendar.getTimeZone().toZoneId())));
+        }
+        else {
+          map.put(entry.getKey(), entry.getValue());
+        }
+      });
     contentResource.getChildren().forEach(child -> {
       final Map<String, Object> subMap = new HashMap<>();
       addSafePropertiesToJson(subMap, child);

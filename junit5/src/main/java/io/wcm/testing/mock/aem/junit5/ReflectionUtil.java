@@ -61,9 +61,9 @@ final class ReflectionUtil {
     }
 
     Field field = Arrays.stream(testClass.getDeclaredFields())
-        .filter(item -> type.isAssignableFrom(item.getType()))
-        .findFirst()
-        .orElse(null);
+      .filter(item -> type.isAssignableFrom(item.getType()))
+      .findFirst()
+      .orElse(null);
 
     if (field == null) {
       return getField(testClass.getSuperclass(), type);
@@ -87,10 +87,10 @@ final class ReflectionUtil {
     }
 
     Method method = Arrays.stream(testClass.getDeclaredMethods())
-        .filter(item -> item.getAnnotation(annotationClass) != null)
-        .filter(item -> hasParameter(item, parameterType))
-        .findFirst()
-        .orElse(null);
+      .filter(item -> item.getAnnotation(annotationClass) != null)
+      .filter(item -> hasParameter(item, parameterType))
+      .findFirst()
+      .orElse(null);
 
     if (method == null) {
       return getAnnotatedMethod(testClass.getSuperclass(), annotationClass, parameterType);
@@ -101,7 +101,7 @@ final class ReflectionUtil {
 
   private static boolean hasParameter(Method method, @NotNull Class<?> parameterType) {
     return Arrays.stream(method.getParameters())
-        .anyMatch(item -> parameterType.isAssignableFrom(item.getType()));
+      .anyMatch(item -> parameterType.isAssignableFrom(item.getType()));
   }
 
 }

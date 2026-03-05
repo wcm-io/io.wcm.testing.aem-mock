@@ -45,9 +45,12 @@ import java.util.Set;
  * Mock implementation of {@link Designer}.
  */
 class MockDesigner implements Designer {
+
   private static final Logger log = LoggerFactory.getLogger(MockDesigner.class);
 
-  @SuppressWarnings({"java:S1075","deprecation"}) // Repository path
+  @SuppressWarnings({
+      "java:S1075", "deprecation"
+  }) // Repository path
   static final String LEGACY_DEFAULT_DESIGN_PATH = DEFAULT_DESIGN_PATH;
   static final String LEGACY_DESIGNS_PATH_PREFIX = StringUtils.substringBeforeLast(LEGACY_DEFAULT_DESIGN_PATH, String.valueOf('/')) + '/';
 
