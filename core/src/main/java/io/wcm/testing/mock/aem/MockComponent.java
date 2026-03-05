@@ -89,13 +89,13 @@ class MockComponent extends SlingAdaptable implements Component {
   @Override
   public String getResourceType() {
     return Optional.ofNullable(this.props.get(PROPERTY_RESOURCE_TYPE, String.class))
-            .orElseGet(() -> Optional.of(this.getPath())
-                    .filter(path -> path.startsWith("/"))
-                    .flatMap(path -> Arrays.stream(this.resource.getResourceResolver().getSearchPath())
-                            .filter(path::startsWith)
-                            .map(searchPath -> path.substring(searchPath.length()))
-                            .findFirst())
-                    .orElseGet(this::getPath));
+      .orElseGet(() -> Optional.of(this.getPath())
+        .filter(path -> path.startsWith("/"))
+        .flatMap(path -> Arrays.stream(this.resource.getResourceResolver().getSearchPath())
+          .filter(path::startsWith)
+          .map(searchPath -> path.substring(searchPath.length()))
+          .findFirst())
+        .orElseGet(this::getPath));
   }
 
   @Override
@@ -124,7 +124,7 @@ class MockComponent extends SlingAdaptable implements Component {
 
   @Override
   public Map<String, String> getHtmlTagAttributes() {
-    Map<String,String> attrs = new HashMap<>();
+    Map<String, String> attrs = new HashMap<>();
     Resource htmlTagChild = resource.getChild(NameConstants.NN_HTML_TAG);
     if (htmlTagChild != null) {
       ValueMap htmlTagProps = htmlTagChild.getValueMap();

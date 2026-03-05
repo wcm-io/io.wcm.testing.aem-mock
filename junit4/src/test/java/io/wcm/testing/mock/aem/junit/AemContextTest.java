@@ -48,16 +48,16 @@ public class AemContextTest {
   // Run all unit tests for each resource resolver types listed here
   @Rule
   public AemContext context = new AemContextBuilder(TestAemContext.ALL_TYPES)
-  .beforeSetUp(contextBeforeSetup)
-  .afterSetUp(contextAfterSetup)
-  .beforeTearDown(contextBeforeTeardown)
-  .afterTearDown(contextAfterTeardown)
-      .resourceResolverFactoryActivatorProps(Map.of("resource.resolver.searchpath", new String[] {
-          "/apps",
-          "/libs",
-          "/testpath",
-  }))
-  .build();
+    .beforeSetUp(contextBeforeSetup)
+    .afterSetUp(contextAfterSetup)
+    .beforeTearDown(contextBeforeTeardown)
+    .afterTearDown(contextAfterTeardown)
+    .resourceResolverFactoryActivatorProps(Map.of("resource.resolver.searchpath", new String[] {
+        "/apps",
+        "/libs",
+        "/testpath",
+    }))
+    .build();
 
   @Before
   public void setUp() throws Exception {

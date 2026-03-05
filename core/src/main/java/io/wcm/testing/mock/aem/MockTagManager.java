@@ -2,7 +2,7 @@
  * #%L
  * wcm.io
  * %%
- * Copyright (C) 2014 - 2015 wcm.io
+ * Copyright (C) 2014-2015 wcm.io
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -100,7 +100,9 @@ public final class MockTagManager implements TagManager {
     tagsProperties.put(JcrConstants.JCR_PRIMARYTYPE, "sling:Folder");
     tagsProperties.put(JcrConstants.JCR_TITLE, "Tags");
     // locale strings that are recognized languages in child tags
-    tagsProperties.put("languages", new String[]{"en", "de", "es", "fr", "it", "pt_br", "zh_cn", "ch_tw", "ja", "ko_kr"});
+    tagsProperties.put("languages", new String[] {
+        "en", "de", "es", "fr", "it", "pt_br", "zh_cn", "ch_tw", "ja", "ko_kr"
+    });
 
     try {
       ResourceUtil.getOrCreateResource(resourceResolver, "/etc", etcProperties, null, true);
@@ -218,7 +220,8 @@ public final class MockTagManager implements TagManager {
         resourceResolver.commit();
         resourceResolver.refresh();
       }
-    } catch (PersistenceException e) {
+    }
+    catch (PersistenceException e) {
       log.error("error deleting tag", e);
     }
   }
@@ -276,7 +279,8 @@ public final class MockTagManager implements TagManager {
         for (String resourceTag : resourceTags) {
           resourceTagPaths.add(getPathFromID(resourceTag));
         }
-      } catch (InvalidTagFormatException e) {
+      }
+      catch (InvalidTagFormatException e) {
         log.error("invalid tag id encountered", e);
       }
 
@@ -287,16 +291,16 @@ public final class MockTagManager implements TagManager {
       boolean matches = false;
       if (oneMatchIsEnough) {
         // this is essentially an OR list, so break out on the first positive
-        oneMatched:
-          for (String tagPath : tagPaths) {
-            for (String resourceTagPath : resourceTagPaths) {
-              matches = doTagsMatch(resourceTagPath, tagPath);
-              if (matches) {
-                break oneMatched;
-              }
+        oneMatched: for (String tagPath : tagPaths) {
+          for (String resourceTagPath : resourceTagPaths) {
+            matches = doTagsMatch(resourceTagPath, tagPath);
+            if (matches) {
+              break oneMatched;
             }
           }
-      } else {
+        }
+      }
+      else {
         // this is essentially an AND list, so break out on the first failure
         matches = true;
         for (String tagPath : tagPaths) {

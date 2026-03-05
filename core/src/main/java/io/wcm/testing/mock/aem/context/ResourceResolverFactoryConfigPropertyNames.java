@@ -43,8 +43,8 @@ final class ResourceResolverFactoryConfigPropertyNames {
     try {
       Class<?> resourceResolverFactoryConfigClass = Class.forName(ResourceResolverFactoryConfig.class.getName());
       Set<String> methodNames = Stream.of(resourceResolverFactoryConfigClass.getDeclaredMethods())
-          .map(Method::getName)
-          .collect(Collectors.toSet());
+        .map(Method::getName)
+        .collect(Collectors.toSet());
       // use new names as fields do exist
       if (methodNames.contains("resource_resolver_vanitypath_allowlist")
           && methodNames.contains("resource_resolver_vanitypath_denylist")) {

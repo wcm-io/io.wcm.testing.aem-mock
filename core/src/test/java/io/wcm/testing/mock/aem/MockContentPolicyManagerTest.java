@@ -150,11 +150,9 @@ public class MockContentPolicyManagerTest {
         Map.of(
             "prop1", "value1",
             "child1", Map.of(
-                "prop2","value2",
+                "prop2", "value2",
                 "child2", Map.of(
-                    "prop3", "value3")
-                )
-            ));
+                    "prop3", "value3"))));
 
     ComponentContext componentContext = WCMUtils.getComponentContext(context.request());
     ContentPolicy policy = underTest.getPolicy(componentContext);

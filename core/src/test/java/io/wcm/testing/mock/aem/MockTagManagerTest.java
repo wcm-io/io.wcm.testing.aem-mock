@@ -2,7 +2,7 @@
  * #%L
  * wcm.io
  * %%
- * Copyright (C) 2014 - 2015 wcm.io
+ * Copyright (C) 2014-2015 wcm.io
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -174,7 +174,8 @@ public class MockTagManagerTest {
 
     try {
       resolver.commit();
-    } catch (PersistenceException e) {
+    }
+    catch (PersistenceException e) {
       fail(e.getMessage());
     }
 
@@ -202,7 +203,9 @@ public class MockTagManagerTest {
     assertFalse(resources.hasNext());
     assertEquals(2, resources.getPosition());
 
-    resources = tagManager.find("/content/sample/en/toolbar", new String[]{"wcmio:"});
+    resources = tagManager.find("/content/sample/en/toolbar", new String[] {
+        "wcmio:"
+    });
     assertNotNull(resources);
     assertEquals(0, resources.getPosition());
     assertTrue(resources.hasNext());
@@ -211,7 +214,9 @@ public class MockTagManagerTest {
     assertFalse(resources.hasNext());
     assertEquals(1, resources.getPosition());
 
-    resources = tagManager.find("/content", new String[] { "wcmio:nondescript", tagRoot + "/default" }, false);
+    resources = tagManager.find("/content", new String[] {
+        "wcmio:nondescript", tagRoot + "/default"
+    }, false);
     assertNotNull(resources);
     assertEquals(0, resources.getPosition());
     assertTrue(resources.hasNext());
@@ -220,7 +225,9 @@ public class MockTagManagerTest {
     assertFalse(resources.hasNext());
     assertEquals(1, resources.getPosition());
 
-    resources = tagManager.find("/content", new String[] { "wcmio:nondescript", tagRoot + "/default" }, true);
+    resources = tagManager.find("/content", new String[] {
+        "wcmio:nondescript", tagRoot + "/default"
+    }, true);
     assertNotNull(resources);
     assertEquals(0, resources.getPosition());
     assertTrue(resources.hasNext());
@@ -230,7 +237,9 @@ public class MockTagManagerTest {
     assertFalse(resources.hasNext());
     assertEquals(2, resources.getPosition());
 
-    resources = tagManager.find("/content", new String[] { "wcmio:nondescrip", tagRoot + "/default" }, true);
+    resources = tagManager.find("/content", new String[] {
+        "wcmio:nondescrip", tagRoot + "/default"
+    }, true);
     assertNull(resources);
   }
 

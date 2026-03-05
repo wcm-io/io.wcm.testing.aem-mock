@@ -53,9 +53,11 @@ public class MockExternalizerSlingMappingTest {
       ResourceResolverType.RESOURCEPROVIDER_MOCK,
       ResourceResolverType.JCR_MOCK,
       ResourceResolverType.JCR_OAK)
-      .resourceResolverFactoryActivatorProps(Map.of(
-          "resource.resolver.mapping", new String[] { "/content/:/" }))
-      .build();
+    .resourceResolverFactoryActivatorProps(Map.of(
+        "resource.resolver.mapping", new String[] {
+            "/content/:/"
+        }))
+    .build();
 
   private ResourceResolver resolver;
 

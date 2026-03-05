@@ -93,8 +93,7 @@ public class MockDesignTest {
         "jcr:title", "Test",
         "test", Map.of(
             "a", false,
-            "b", 440
-    )));
+            "b", 440)));
     JSONAssert.assertEquals(JSON_MAPPER.writeValueAsString(expectedData), design.getJSON(),
         new IgnoringFieldsComparator(JSONCompareMode.STRICT, "jcr:created"));
   }

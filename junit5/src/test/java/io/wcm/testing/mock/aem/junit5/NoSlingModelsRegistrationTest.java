@@ -34,8 +34,8 @@ import io.wcm.testing.mock.aem.modelsautoreg.ClasspathRegisteredModel;
 class NoSlingModelsRegistrationTest {
 
   private final AemContext context = new AemContextBuilder()
-      .registerSlingModelsFromClassPath(false)
-      .build();
+    .registerSlingModelsFromClassPath(false)
+    .build();
 
   @Test
   void testSlingModelClasspathRegistered() {

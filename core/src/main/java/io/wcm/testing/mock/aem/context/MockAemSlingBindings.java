@@ -178,7 +178,9 @@ final class MockAemSlingBindings {
     return null;
   }
 
-  @SuppressWarnings({ "null", "unused" })
+  @SuppressWarnings({
+      "null", "unused"
+  })
   @SuppressFBWarnings("RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE")
   private static Page getResourcePage(SlingHttpServletRequest request, AemContextImpl context) {
     Resource resource = request.getResource();
@@ -196,7 +198,9 @@ final class MockAemSlingBindings {
     return null;
   }
 
-  @SuppressWarnings({ "null", "unused" })
+  @SuppressWarnings({
+      "null", "unused"
+  })
   @SuppressFBWarnings("RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE")
   private static Component getComponent(SlingHttpServletRequest request) {
     Resource resource = request.getResource();

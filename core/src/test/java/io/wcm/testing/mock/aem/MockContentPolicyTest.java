@@ -81,8 +81,8 @@ public class MockContentPolicyTest {
   public void testAdaptToCustomSlingModel() {
     context.addModelsForClasses(ContentPolicyTestModel.class);
     Resource resource = context.create().resource("/content/test",
-            "prop1", "value1",
-            "prop2", true);
+        "prop1", "value1",
+        "prop2", true);
     ContentPolicy policy = new MockContentPolicy(resource);
     ContentPolicyTestModel underTest = policy.adaptTo(ContentPolicyTestModel.class);
 

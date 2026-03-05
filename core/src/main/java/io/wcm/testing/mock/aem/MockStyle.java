@@ -34,7 +34,9 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Mock implementation of {@link Style}.
  */
-@SuppressWarnings({ "squid:S2160", "null" }) // Not extending the equals implementation
+@SuppressWarnings({
+    "squid:S2160", "null"
+}) // Not extending the equals implementation
 @SuppressFBWarnings("EQ_DOESNT_OVERRIDE_EQUALS")
 class MockStyle extends ValueMapDecorator implements Style {
 

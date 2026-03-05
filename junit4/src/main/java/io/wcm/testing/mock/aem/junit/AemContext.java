@@ -59,7 +59,8 @@ public final class AemContext extends AemContextImpl implements TestRule {
    * <ul>
    * <li>No resource resolver type - default is used {@link MockSling#DEFAULT_RESOURCERESOLVER_TYPE}.</li>
    * <li>One resource resolver type - exactly this is used.</li>
-   * <li>More than one: all unit test methods are executed for all resource resolver types using {@link ListGenerator}.</li>
+   * <li>More than one: all unit test methods are executed for all resource resolver types using
+   * {@link ListGenerator}.</li>
    * </ul>
    * @param resourceResolverTypes Resource resolver type(s).
    */
@@ -176,12 +177,14 @@ public final class AemContext extends AemContextImpl implements TestRule {
       // use default rule that directly executes each test method once
       setResourceResolverType(this.resourceResolverTypes[0]);
       this.delegate = new ExternalResource() {
+
         @Override
         protected void before() {
           plugins.executeBeforeSetUpCallback(AemContext.this);
           AemContext.this.setUp();
           plugins.executeAfterSetUpCallback(AemContext.this);
         }
+
         @Override
         protected void after() {
           plugins.executeBeforeTearDownCallback(AemContext.this);
@@ -193,6 +196,7 @@ public final class AemContext extends AemContextImpl implements TestRule {
     else {
       // use ListGenerator rule that iterates over list of resource resolver types
       Callback<ResourceResolverType> parameterizedSetUpCallback = new Callback<ResourceResolverType>() {
+
         @Override
         public void execute(final ResourceResolverType currrentValue) {
           AemContext.this.setResourceResolverType(currrentValue);
@@ -202,6 +206,7 @@ public final class AemContext extends AemContextImpl implements TestRule {
         }
       };
       Callback<ResourceResolverType> parameterizedTearDownCallback = new Callback<ResourceResolverType>() {
+
         @Override
         public void execute(final ResourceResolverType currrentValue) {
           plugins.executeBeforeTearDownCallback(AemContext.this);

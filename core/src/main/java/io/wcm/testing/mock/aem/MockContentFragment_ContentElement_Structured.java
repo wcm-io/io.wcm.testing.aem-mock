@@ -129,8 +129,8 @@ class MockContentFragment_ContentElement_Structured implements ContentElement {
   @Override
   public ContentVariation getVariation(String variationName) {
     return getVariationsStream()
-        .filter(variation -> StringUtils.equals(variation.getName(), variationName))
-        .findFirst().orElse(null);
+      .filter(variation -> StringUtils.equals(variation.getName(), variationName))
+      .findFirst().orElse(null);
   }
 
   @Override
@@ -141,8 +141,8 @@ class MockContentFragment_ContentElement_Structured implements ContentElement {
   private Stream<ContentVariation> getVariationsStream() {
     return StreamSupport.stream(
         Spliterators.spliteratorUnknownSize(contentFragment.listAllVariations(), Spliterator.ORDERED), false)
-        .map(def -> (ContentVariation)new MockContentFragment_ContentVariation_Structured(def, structuredDataKey,
-            getVariationStrucuturedDataProps(def.getName())));
+      .map(def -> (ContentVariation)new MockContentFragment_ContentVariation_Structured(def, structuredDataKey,
+          getVariationStrucuturedDataProps(def.getName())));
   }
 
   private ModifiableValueMap getVariationStrucuturedDataProps(String variationName) {
@@ -150,7 +150,8 @@ class MockContentFragment_ContentElement_Structured implements ContentElement {
     try {
       return ResourceUtil.getOrCreateResource(contentResource.getResourceResolver(),
           contentResource.getPath() + "/data/" + variationName, JcrConstants.NT_UNSTRUCTURED,
-          JcrConstants.NT_UNSTRUCTURED, false).adaptTo(ModifiableValueMap.class);
+          JcrConstants.NT_UNSTRUCTURED, false)
+        .adaptTo(ModifiableValueMap.class);
     }
     catch (PersistenceException ex) {
       throw new RuntimeException("Unable to create variation data.", ex);

@@ -90,15 +90,19 @@ class MockResourceCollection implements ResourceCollection {
   }
 
   private static final class FilterPathCollector implements ProgressTrackerListener {
+
     private final List<String> paths = new ArrayList<>();
+
     @Override
     public void onMessage(ProgressTrackerListener.Mode mode, String action, String path) {
       paths.add(path);
     }
+
     @Override
     public void onError(Mode mode, String string, Exception exception) {
       // ignore
     }
+
     public List<String> getPaths() {
       return paths;
     }

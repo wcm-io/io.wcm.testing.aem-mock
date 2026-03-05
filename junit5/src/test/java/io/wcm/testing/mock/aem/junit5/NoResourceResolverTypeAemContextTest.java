@@ -36,7 +36,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 /**
  * Test with {@link NoResourceResolverTypeAemContext}.
  */
-@ExtendWith({ AemContextExtension.class, MockitoExtension.class })
+@ExtendWith({
+    AemContextExtension.class, MockitoExtension.class
+})
 class NoResourceResolverTypeAemContextTest {
 
   @Mock

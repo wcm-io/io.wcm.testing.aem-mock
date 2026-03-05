@@ -33,8 +33,8 @@ public class NoSlingModelsRegistrationTest {
 
   @Rule
   public AemContext context = new AemContextBuilder()
-      .registerSlingModelsFromClassPath(false)
-      .build();
+    .registerSlingModelsFromClassPath(false)
+    .build();
 
   @Test
   public void testSlingModelClasspathRegistered() {

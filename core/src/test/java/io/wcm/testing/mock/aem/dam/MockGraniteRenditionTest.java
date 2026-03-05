@@ -46,7 +46,7 @@ public class MockGraniteRenditionTest {
     context.load().json("/json-import-samples/dam.json", "/content/dam/sample");
 
     Resource resource = this.context.resourceResolver()
-        .getResource("/content/dam/sample/portraits/scott_reynolds.jpg/jcr:content/renditions/original");
+      .getResource("/content/dam/sample/portraits/scott_reynolds.jpg/jcr:content/renditions/original");
     this.rendition = resource.adaptTo(Rendition.class);
   }
 
@@ -71,11 +71,11 @@ public class MockGraniteRenditionTest {
   @Test
   public void testEquals() {
     Rendition rendition1 = this.context.resourceResolver()
-        .getResource("/content/dam/sample/portraits/scott_reynolds.jpg/jcr:content/renditions/original").adaptTo(Rendition.class);
+      .getResource("/content/dam/sample/portraits/scott_reynolds.jpg/jcr:content/renditions/original").adaptTo(Rendition.class);
     Rendition rendition2 = this.context.resourceResolver()
-        .getResource("/content/dam/sample/portraits/scott_reynolds.jpg/jcr:content/renditions/original").adaptTo(Rendition.class);
+      .getResource("/content/dam/sample/portraits/scott_reynolds.jpg/jcr:content/renditions/original").adaptTo(Rendition.class);
     Rendition rendition3 = this.context.resourceResolver()
-        .getResource("/content/dam/sample/portraits/scott_reynolds.jpg/jcr:content/renditions/cq5dam.thumbnail.48.48.png").adaptTo(Rendition.class);
+      .getResource("/content/dam/sample/portraits/scott_reynolds.jpg/jcr:content/renditions/cq5dam.thumbnail.48.48.png").adaptTo(Rendition.class);
 
     assertEquals(rendition1, rendition2);
     assertNotEquals(rendition1, rendition3);

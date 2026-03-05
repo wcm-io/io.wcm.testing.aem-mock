@@ -146,8 +146,8 @@ class MockContentFragment_ContentElement_Text implements ContentElement {
   @Override
   public ContentVariation getVariation(String variationName) {
     return getVariationsStream()
-        .filter(variation -> StringUtils.equals(variation.getName(), variationName))
-        .findFirst().orElse(null);
+      .filter(variation -> StringUtils.equals(variation.getName(), variationName))
+      .findFirst().orElse(null);
   }
 
   @Override
@@ -158,7 +158,7 @@ class MockContentFragment_ContentElement_Text implements ContentElement {
   private Stream<ContentVariation> getVariationsStream() {
     return StreamSupport.stream(
         Spliterators.spliteratorUnknownSize(contentFragment.listAllVariations(), Spliterator.ORDERED), false)
-        .map(def -> (ContentVariation)new MockContentFragment_ContentVariation_Text(def, asset));
+      .map(def -> (ContentVariation)new MockContentFragment_ContentVariation_Text(def, asset));
   }
 
   @Override
