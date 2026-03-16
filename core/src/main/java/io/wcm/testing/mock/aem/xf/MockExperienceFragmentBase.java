@@ -57,7 +57,9 @@ class MockExperienceFragmentBase extends SlingAdaptable {
   }
 
   @Override
-  @SuppressWarnings({ "unchecked", "null" })
+  @SuppressWarnings({
+      "unchecked", "null"
+  })
   public @Nullable <AdapterType> AdapterType adaptTo(@NotNull Class<AdapterType> type) {
     if (type == Resource.class) {
       return (AdapterType)page.adaptTo(Resource.class);

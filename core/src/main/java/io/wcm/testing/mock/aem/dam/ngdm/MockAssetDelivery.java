@@ -68,18 +68,18 @@ public final class MockAssetDelivery implements AssetDelivery {
     String format = getMandatoryStringParam(parameterMap, PARAM_FORMAT);
 
     String urlParams = parameterMap.entrySet().stream()
-        .filter(entry -> !DISALLOWED_URL_PARAMS.contains(entry.getKey()) && entry.getValue() != null)
-        .sorted(Map.Entry.comparingByKey())
-        .map(entry -> URLEncoder.encode(entry.getKey(), StandardCharsets.UTF_8) + "=" + URLEncoder.encode(entry.getValue().toString(), StandardCharsets.UTF_8))
-        .collect(Collectors.joining("&"));
+      .filter(entry -> !DISALLOWED_URL_PARAMS.contains(entry.getKey()) && entry.getValue() != null)
+      .sorted(Map.Entry.comparingByKey())
+      .map(entry -> URLEncoder.encode(entry.getKey(), StandardCharsets.UTF_8) + "=" + URLEncoder.encode(entry.getValue().toString(), StandardCharsets.UTF_8))
+      .collect(Collectors.joining("&"));
 
     String assetId = getAssetId(path);
 
     StringBuilder sb = new StringBuilder();
     sb.append(ASSET_DELIVERY_URL_PREFIX)
-        .append("/").append(assetId)
-        .append("/").append(URLEncoder.encode(seoname, StandardCharsets.UTF_8))
-        .append(".").append(URLEncoder.encode(format, StandardCharsets.UTF_8));
+      .append("/").append(assetId)
+      .append("/").append(URLEncoder.encode(seoname, StandardCharsets.UTF_8))
+      .append(".").append(URLEncoder.encode(format, StandardCharsets.UTF_8));
     if (!urlParams.isEmpty()) {
       sb.append("?").append(urlParams);
     }

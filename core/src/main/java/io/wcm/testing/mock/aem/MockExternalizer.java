@@ -135,8 +135,8 @@ public final class MockExternalizer implements Externalizer {
 
     // scheme, host name, port
     url.append(StringUtils.defaultString(scheme, StringUtils.defaultString(domainURI.getScheme(), "http")))
-        .append(SCHEME_SEPARATOR)
-        .append(getHost(scheme, domainURI.getHost(), domainURI.getPort()));
+      .append(SCHEME_SEPARATOR)
+      .append(getHost(scheme, domainURI.getHost(), domainURI.getPort()));
 
     // context path
     if (domainURI.getRawPath() != null) {
@@ -158,9 +158,9 @@ public final class MockExternalizer implements Externalizer {
 
     StringBuilder url = new StringBuilder();
     url.append(scheme).append(SCHEME_SEPARATOR)
-        .append(getHost(scheme, request.getServerName(), request.getServerPort()))
-        .append(request.getContextPath())
-        .append(getMappedPath(request.getResourceResolver(), path));
+      .append(getHost(scheme, request.getServerName(), request.getServerPort()))
+      .append(request.getContextPath())
+      .append(getMappedPath(request.getResourceResolver(), path));
     return url.toString();
   }
 

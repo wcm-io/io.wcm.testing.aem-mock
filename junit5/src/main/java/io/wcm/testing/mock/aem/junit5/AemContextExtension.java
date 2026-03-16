@@ -113,11 +113,10 @@ public final class AemContextExtension implements ParameterResolver, TestInstanc
         setAemContextInStore(extensionContext, aemContextField, null);
       }
       applyAemContext(extensionContext, aemContext ->
-        // call context plugins setup after @BeforeAll methods were called
-        /* please note: in JUnit5 there is no callback to be called after all @BeforeAll methods are called
-         * so we call it before @BeforeAll execution to make sure the plugin code is called at all */
-        aemContext.getContextPlugins().executeAfterSetUpCallback(aemContext)
-      );
+      // call context plugins setup after @BeforeAll methods were called
+      /* please note: in JUnit5 there is no callback to be called after all @BeforeAll methods are called
+       * so we call it before @BeforeAll execution to make sure the plugin code is called at all */
+      aemContext.getContextPlugins().executeAfterSetUpCallback(aemContext));
     }
   }
 
@@ -125,9 +124,8 @@ public final class AemContextExtension implements ParameterResolver, TestInstanc
   public void beforeEach(ExtensionContext extensionContext) {
     if (!isBeforeAllContext(extensionContext)) {
       applyAemContext(extensionContext, aemContext ->
-        // call context plugins setup after @BeforeEach methods were called
-        aemContext.getContextPlugins().executeAfterSetUpCallback(aemContext)
-      );
+      // call context plugins setup after @BeforeEach methods were called
+      aemContext.getContextPlugins().executeAfterSetUpCallback(aemContext));
     }
   }
 
@@ -135,9 +133,8 @@ public final class AemContextExtension implements ParameterResolver, TestInstanc
   public void afterTestExecution(ExtensionContext extensionContext) {
     if (!isBeforeAllContext(extensionContext)) {
       applyAemContext(extensionContext, aemContext ->
-        // call context plugins setup before @AfterEach methods are called
-        aemContext.getContextPlugins().executeBeforeTearDownCallback(aemContext)
-      );
+      // call context plugins setup before @AfterEach methods are called
+      aemContext.getContextPlugins().executeBeforeTearDownCallback(aemContext));
     }
   }
 
@@ -210,8 +207,8 @@ public final class AemContextExtension implements ParameterResolver, TestInstanc
 
   private Optional<Class<?>> getParameterFromTestMethod(ExtensionContext extensionContext, Class<?> type) {
     return Arrays.stream(extensionContext.getRequiredTestMethod().getParameterTypes())
-        .filter(type::isAssignableFrom)
-        .findFirst();
+      .filter(type::isAssignableFrom)
+      .findFirst();
   }
 
   /**

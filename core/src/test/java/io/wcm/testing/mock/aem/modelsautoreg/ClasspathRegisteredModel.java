@@ -31,7 +31,7 @@ import org.apache.sling.models.annotations.Model;
 @Model(adaptables = SlingHttpServletRequest.class)
 public interface ClasspathRegisteredModel {
 
-    @Inject
-    String getProp1();
+  @Inject
+  String getProp1();
 
 }

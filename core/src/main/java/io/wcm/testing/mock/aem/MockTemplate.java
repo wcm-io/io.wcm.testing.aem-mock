@@ -143,7 +143,9 @@ class MockTemplate extends ResourceWrapper implements Template {
   }
 
   @Override
-  @SuppressWarnings({ "unchecked", "null" })
+  @SuppressWarnings({
+      "unchecked", "null"
+  })
   public <AdapterType> AdapterType adaptTo(Class<AdapterType> type) {
     if (type == Resource.class) {
       return (AdapterType)this.getResource();

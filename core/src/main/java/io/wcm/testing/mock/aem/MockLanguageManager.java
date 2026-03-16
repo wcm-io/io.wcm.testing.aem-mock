@@ -67,22 +67,22 @@ public final class MockLanguageManager implements LanguageManager {
   @Deprecated(forRemoval = true)
   public Map<Locale, Info> getAdjacentInfo(final ResourceResolver resourceResolver, final String path) {
     return Optional.ofNullable(getAdjacentLanguageInfo(resourceResolver, path))
-        .map(Map::entrySet)
-        .map(Collection::stream)
-        .map(entries -> entries.collect(toLinkedMap(i -> i.getKey().getLocale(), Map.Entry::getValue)))
-        .orElse(null);
+      .map(Map::entrySet)
+      .map(Collection::stream)
+      .map(entries -> entries.collect(toLinkedMap(i -> i.getKey().getLocale(), Map.Entry::getValue)))
+      .orElse(null);
   }
 
   @Override
   @SuppressWarnings("null")
   public Map<Language, Info> getAdjacentLanguageInfo(final ResourceResolver resourceResolver, final String path) {
     return Optional.ofNullable(LanguageUtil.getLanguageRoot(path))
-        .map(root -> path.substring(root.length()))
-        .map(relPath -> relPath.startsWith("/") ? relPath.substring(1) : relPath)
-        .map(relPath -> this.getLanguageRootStream(resourceResolver, path)
-            .map(info -> info.getChild(relPath, resourceResolver))
-            .collect(toLinkedMap(InfoImpl::getLanguage, i -> (Info)i)))
-        .orElse(null);
+      .map(root -> path.substring(root.length()))
+      .map(relPath -> relPath.startsWith("/") ? relPath.substring(1) : relPath)
+      .map(relPath -> this.getLanguageRootStream(resourceResolver, path)
+        .map(info -> info.getChild(relPath, resourceResolver))
+        .collect(toLinkedMap(InfoImpl::getLanguage, i -> (Info)i)))
+      .orElse(null);
   }
 
   @Override
@@ -98,60 +98,62 @@ public final class MockLanguageManager implements LanguageManager {
   @Override
   public Locale getLanguage(final Resource resource, final boolean respectContent) {
     return Optional.ofNullable(getCqLanguage(resource, respectContent))
-        .map(Language::getLocale)
-        .orElse(null);
+      .map(Language::getLocale)
+      .orElse(null);
   }
 
   @Override
   @SuppressWarnings("null")
   public Language getCqLanguage(final Resource resource, final boolean respectContent) {
     Optional<Page> page = Optional.ofNullable(resource.getResourceResolver().adaptTo(PageManager.class))
-        .map(pm -> pm.getContainingPage(resource));
+      .map(pm -> pm.getContainingPage(resource));
 
     if (respectContent) {
       return page
-          .map(Page::getContentResource)
-          .map(HierarchyNodeInheritanceValueMap::new)
-          .map(vm -> vm.getInherited(JcrConstants.JCR_LANGUAGE, String.class))
-          .map(LanguageUtil::getLanguage)
-          .orElseGet(() -> this.getCqLanguage(resource, false));
+        .map(Page::getContentResource)
+        .map(HierarchyNodeInheritanceValueMap::new)
+        .map(vm -> vm.getInherited(JcrConstants.JCR_LANGUAGE, String.class))
+        .map(LanguageUtil::getLanguage)
+        .orElseGet(() -> this.getCqLanguage(resource, false));
     }
 
     return page
-        .map(Page::getPath)
-        .map(LanguageUtil::getLanguageRoot)
-        .map(Text::getName)
-        .map(Language::new)
-        .orElse(null);
+      .map(Page::getPath)
+      .map(LanguageUtil::getLanguageRoot)
+      .map(Text::getName)
+      .map(Language::new)
+      .orElse(null);
   }
 
   @Override
   public Collection<Locale> getLanguages(final ResourceResolver resourceResolver, final String path) {
     return this.getCqLanguages(resourceResolver, path).stream()
-        .map(Language::getLocale)
-        .collect(Collectors.toList());
+      .map(Language::getLocale)
+      .collect(Collectors.toList());
   }
 
   @Override
   public Collection<Language> getCqLanguages(final ResourceResolver resourceResolver, final String path) {
     return this.getLanguageRootStream(resourceResolver, path)
-        .map(InfoImpl::getLanguage)
-        .collect(Collectors.toList());
+      .map(InfoImpl::getLanguage)
+      .collect(Collectors.toList());
   }
 
   @Override
   @SuppressWarnings("null")
   public Collection<Page> getLanguageRoots(final ResourceResolver resourceResolver, final String path) {
     return this.getLanguageRootStream(resourceResolver, path)
-        .map(InfoImpl::getResource)
-        .filter(Objects::nonNull)
-        .map(res -> res.adaptTo(Page.class))
-        .filter(Objects::nonNull)
-        .collect(Collectors.toList());
+      .map(InfoImpl::getResource)
+      .filter(Objects::nonNull)
+      .map(res -> res.adaptTo(Page.class))
+      .filter(Objects::nonNull)
+      .collect(Collectors.toList());
   }
 
   @Override
-  @SuppressWarnings({ "null"})
+  @SuppressWarnings({
+      "null"
+  })
   public Page getLanguageRoot(final Resource resource) {
     return getLanguageRoot(resource, false);
   }
@@ -159,9 +161,7 @@ public final class MockLanguageManager implements LanguageManager {
   @Override
   public @Nullable Page getLanguageRoot(Resource res, boolean respectContent) {
     Resource languageRootResource = getLanguageRootResource(res, respectContent);
-    return (languageRootResource != null) ?
-            languageRootResource.adaptTo(Page.class) :
-            null;
+    return (languageRootResource != null) ? languageRootResource.adaptTo(Page.class) : null;
   }
 
   @Override
@@ -345,13 +345,13 @@ public final class MockLanguageManager implements LanguageManager {
   @SuppressWarnings("null")
   private Stream<InfoImpl> getLanguageRootStream(final ResourceResolver resourceResolver, final String path) {
     return Optional.ofNullable(LanguageUtil.getLanguageRoot(path))
-        .map(resourceResolver::getResource)
-        .map(Resource::getParent)
-        .map(Resource::listChildren)
-        .map(childIterator -> StreamSupport.stream(((Iterable<Resource>)() -> childIterator).spliterator(), false))
-        .orElseGet(Stream::empty)
-        .filter(res -> Objects.nonNull(LanguageUtil.getLanguage(res.getName())))
-        .map(res -> new InfoImpl(res.getPath(), res, LanguageUtil.getLanguage(res.getName())));
+      .map(resourceResolver::getResource)
+      .map(Resource::getParent)
+      .map(Resource::listChildren)
+      .map(childIterator -> StreamSupport.stream(((Iterable<Resource>)() -> childIterator).spliterator(), false))
+      .orElseGet(Stream::empty)
+      .filter(res -> Objects.nonNull(LanguageUtil.getLanguage(res.getName())))
+      .map(res -> new InfoImpl(res.getPath(), res, LanguageUtil.getLanguage(res.getName())));
   }
 
   /**
@@ -415,18 +415,18 @@ public final class MockLanguageManager implements LanguageManager {
     @Override
     public boolean hasContent() {
       return Optional.ofNullable(this.resource)
-          .map(res -> resource.getChild(JcrConstants.JCR_CONTENT))
-          .isPresent();
+        .map(res -> resource.getChild(JcrConstants.JCR_CONTENT))
+        .isPresent();
     }
 
     @Override
     @SuppressWarnings("null")
     public long getLastModified() {
       return Optional.ofNullable(this.resource)
-          .map(res -> resource.getChild(JcrConstants.JCR_CONTENT))
-          .map(Resource::getValueMap)
-          .map(vm -> vm.get(JcrConstants.JCR_LASTMODIFIED, Long.class))
-          .orElse(0L);
+        .map(res -> resource.getChild(JcrConstants.JCR_CONTENT))
+        .map(Resource::getValueMap)
+        .map(vm -> vm.get(JcrConstants.JCR_LASTMODIFIED, Long.class))
+        .orElse(0L);
     }
 
     /**

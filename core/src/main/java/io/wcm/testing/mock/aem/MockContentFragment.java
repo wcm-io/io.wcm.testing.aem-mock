@@ -126,7 +126,9 @@ final class MockContentFragment implements ContentFragment {
   }
 
   @Override
-  @SuppressWarnings({ "null", "unchecked" })
+  @SuppressWarnings({
+      "null", "unchecked"
+  })
   public <AdapterType> AdapterType adaptTo(Class<AdapterType> type) {
     if (type == Resource.class) {
       return (AdapterType)assetResource;
@@ -141,13 +143,13 @@ final class MockContentFragment implements ContentFragment {
   public Iterator<ContentElement> getElements() {
     if (structuredDataProps != null) {
       return structuredDataProps.keySet().stream()
-          .map(key -> (ContentElement)new MockContentFragment_ContentElement_Structured(this, key, structuredDataProps))
-          .iterator();
+        .map(key -> (ContentElement)new MockContentFragment_ContentElement_Structured(this, key, structuredDataProps))
+        .iterator();
     }
     else if (modelElementsResource != null) {
       return StreamSupport.stream(modelElementsResource.getChildren().spliterator(), false)
-          .map(resource -> (ContentElement)new MockContentFragment_ContentElement_Text(this, resource))
-          .iterator();
+        .map(resource -> (ContentElement)new MockContentFragment_ContentElement_Text(this, resource))
+        .iterator();
     }
     else {
       return Collections.emptyIterator();
@@ -226,8 +228,8 @@ final class MockContentFragment implements ContentFragment {
       return Collections.emptyIterator();
     }
     return StreamSupport.stream(variations.getChildren().spliterator(), false)
-        .map(resource -> (VariationDef)new MockContentFragment_VariationDef(resource))
-        .iterator();
+      .map(resource -> (VariationDef)new MockContentFragment_VariationDef(resource))
+      .iterator();
   }
 
 

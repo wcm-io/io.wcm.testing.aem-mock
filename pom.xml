@@ -18,21 +18,20 @@
   limitations under the License.
   #L%
   -->
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>io.wcm</groupId>
     <artifactId>io.wcm.testing.aem-mock.parent</artifactId>
-    <version>5.7.0</version>
+    <version>5.7.2</version>
     <relativePath>parent/pom.xml</relativePath>
   </parent>
 
   <groupId>io.wcm</groupId>
   <artifactId>io.wcm.testing.aem-mock.root</artifactId>
+  <version>5.7.2</version>
   <packaging>pom</packaging>
-  <version>5.7.0</version>
 
   <name>AEM Mocks</name>
   <url>${site.url}/${site.url.module.prefix}/</url>
@@ -40,8 +39,8 @@
   <scm>
     <connection>scm:git:https://github.com/wcm-io/io.wcm.testing.aem-mock.git</connection>
     <developerConnection>scm:git:https://github.com/wcm-io/io.wcm.testing.aem-mock.git</developerConnection>
-    <url>https://github.com/wcm-io/io.wcm.testing.aem-mock</url>
     <tag>HEAD</tag>
+    <url>https://github.com/wcm-io/io.wcm.testing.aem-mock</url>
   </scm>
 
   <properties>

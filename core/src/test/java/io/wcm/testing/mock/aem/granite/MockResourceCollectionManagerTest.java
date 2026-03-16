@@ -98,8 +98,12 @@ public class MockResourceCollectionManagerTest {
 
     assertNotNull(result);
     assertEquals(PKG_ROOT + "/pkg1", result.getPath());
-    assertPaths(result.list(new String[] { NT_PAGE }), samplePage1.getPath(), samplePage2.getPath());
-    assertPaths(result.list(new String[] { NT_DAM_ASSET }), sampleAsset.getPath());
+    assertPaths(result.list(new String[] {
+        NT_PAGE
+    }), samplePage1.getPath(), samplePage2.getPath());
+    assertPaths(result.list(new String[] {
+        NT_DAM_ASSET
+    }), sampleAsset.getPath());
   }
 
   @Test
@@ -153,7 +157,9 @@ public class MockResourceCollectionManagerTest {
       String nodeType, String... paths) throws RepositoryException {
     List<String> nodePaths = new ArrayList<>();
     for (ResourceCollection resourceCollection : resourceCollections) {
-      for (Node node : resourceCollection.list(new String[] { nodeType })) {
+      for (Node node : resourceCollection.list(new String[] {
+          nodeType
+      })) {
         nodePaths.add(node.getPath());
       }
     }

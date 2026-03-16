@@ -2,7 +2,7 @@
  * #%L
  * wcm.io
  * %%
- * Copyright (C) 2014 - 2015 wcm.io
+ * Copyright (C) 2014-2015 wcm.io
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -102,11 +102,11 @@ final class MockTag extends SlingAdaptable implements Tag, Comparable<Tag> {
   @Override
   public String toString() {
     StringBuilder string = new StringBuilder()
-        .append("Tag [")
-        .append("path=").append(getPath())
-        .append(", title=").append(getTitle())
-        .append(", desc=").append(getDescription())
-        .append("]");
+      .append("Tag [")
+      .append("path=").append(getPath())
+      .append(", title=").append(getTitle())
+      .append(", desc=").append(getDescription())
+      .append("]");
     return string.toString();
   }
 
@@ -354,14 +354,16 @@ final class MockTag extends SlingAdaptable implements Tag, Comparable<Tag> {
             break;
           }
           titlePath.insert(0, TITLEPATH_NS_DELIMITER);
-        } else {
+        }
+        else {
           titlePath.insert(0, TITLEPATH_DELIMITER);
         }
       }
       String title = ancestor.getTitle();
       if (title != null) {
         titlePath.insert(0, title);
-      } else {
+      }
+      else {
         titlePath.insert(0, ancestor.getName());
       }
 
@@ -379,7 +381,8 @@ final class MockTag extends SlingAdaptable implements Tag, Comparable<Tag> {
     for (Map.Entry<Locale, String> entry : map.entrySet()) {
       if (parent.isNamespace()) {
         entry.setValue(entry.getValue() + TITLEPATH_NS_DELIMITER + getTitle(entry.getKey()));
-      } else {
+      }
+      else {
         entry.setValue(entry.getValue() + TITLEPATH_DELIMITER + getTitle(entry.getKey()));
       }
     }
@@ -388,7 +391,8 @@ final class MockTag extends SlingAdaptable implements Tag, Comparable<Tag> {
     for (Map.Entry<Locale, String> entry : localMap.entrySet()) {
       if (parent == null) {
         map.put(entry.getKey(), entry.getValue());
-      } else if (!map.containsKey(entry.getKey())) {
+      }
+      else if (!map.containsKey(entry.getKey())) {
         map.put(entry.getKey(), parent.getTitlePath(entry.getKey()) + TITLEPATH_DELIMITER + entry.getValue());
       }
     }
@@ -407,8 +411,8 @@ final class MockTag extends SlingAdaptable implements Tag, Comparable<Tag> {
     // If the path contains a slash, we can simply extract the desired part, otherwise, we have to do a fallback to the default value
     // At the same time, we need to always remove the @-sign from any of the returned values, so we can append them correctly later
     return StringUtils.removeStart(StringUtils.contains(property, String.valueOf('/'))
-            ? pathPartExtractor.apply(property, String.valueOf('/'))
-            : defaultValue,
+        ? pathPartExtractor.apply(property, String.valueOf('/'))
+        : defaultValue,
         String.valueOf('@'));
   }
 }

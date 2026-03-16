@@ -18,39 +18,38 @@
   limitations under the License.
   #L%
   -->
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>io.wcm</groupId>
     <artifactId>io.wcm.parent_toplevel</artifactId>
-    <version>2.6.2</version>
+    <version>2.7.0</version>
     <relativePath />
   </parent>
 
   <groupId>io.wcm</groupId>
   <artifactId>io.wcm.testing.aem-mock.parent</artifactId>
-  <version>5.7.0</version>
+  <version>5.7.2</version>
   <packaging>pom</packaging>
 
   <name>AEM Mocks</name>
   <description>Mock implementation of selected AEM APIs.</description>
-
-  <ciManagement>
-    <system>GitHub Actions</system>
-    <url>https://github.com/wcm-io/io.wcm.testing.aem-mock/actions</url>
-  </ciManagement>
 
   <issueManagement>
     <system>GitHub</system>
     <url>https://github.com/wcm-io/io.wcm.testing.aem-mock/issues/</url>
   </issueManagement>
 
+  <ciManagement>
+    <system>GitHub Actions</system>
+    <url>https://github.com/wcm-io/io.wcm.testing.aem-mock/actions</url>
+  </ciManagement>
+
   <properties>
 
     <!-- OSGi Mocks -->
-    <osgi-mock.version>3.5.4</osgi-mock.version>
+    <osgi-mock.version>3.5.6</osgi-mock.version>
 
     <!-- JCR Mocks -->
     <jcr-mock.version>1.8.0</jcr-mock.version>
@@ -71,7 +70,7 @@
     <logging-logback.version>1.0.0</logging-logback.version>
 
     <!-- Enable reproducible builds -->
-    <project.build.outputTimestamp>2026-02-16T09:02:54Z</project.build.outputTimestamp>
+    <project.build.outputTimestamp>2026-03-16T09:36:24Z</project.build.outputTimestamp>
 
   </properties>
 

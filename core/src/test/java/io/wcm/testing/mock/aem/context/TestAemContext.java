@@ -2,7 +2,7 @@
  * #%L
  * wcm.io
  * %%
- * Copyright (C) 2014 - 2018 wcm.io
+ * Copyright (C) 2014-2018 wcm.io
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -65,7 +65,7 @@ public final class TestAemContext {
 
   public static @NotNull AemContextBuilder newAemContextBuilder(ResourceResolverType... resourceResolverTypes) {
     return new AemContextBuilder(resourceResolverTypes)
-        .afterSetUp(new SetUpCallback());
+      .afterSetUp(new SetUpCallback());
   }
 
   /**
@@ -84,7 +84,7 @@ public final class TestAemContext {
                 "SLING-INF/nodetypes/aem-dam.cnd",
                 "SLING-INF/nodetypes/aem-dam1.cnd",
                 "SLING-INF/nodetypes/vlt.cnd"),
-                context.resourceResolverType().getNodeTypeMode());
+            context.resourceResolverType().getNodeTypeMode());
       }
       catch (RepositoryException ex) {
         throw new RuntimeException("Unable to register AEM nodetypes: " + ex.getMessage(), ex);

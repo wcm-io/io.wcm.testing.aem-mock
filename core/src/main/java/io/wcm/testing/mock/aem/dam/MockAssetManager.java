@@ -83,7 +83,9 @@ class MockAssetManager implements AssetManager {
   }
 
   @Override
-  @SuppressFBWarnings({ "BAD_PRACTICE", "STYLE" })
+  @SuppressFBWarnings({
+      "BAD_PRACTICE", "STYLE"
+  })
   public Asset createAsset(String assetPath, InputStream inputStream, String mimeType, boolean autoSave) {
     String assetContentPath = assetPath + "/" + JCR_CONTENT;
     String metadataPath = assetContentPath + "/" + METADATA_FOLDER;
@@ -212,7 +214,9 @@ class MockAssetManager implements AssetManager {
   }
 
   // AEM Cloud
-  @SuppressWarnings({ "unused", "PMD.UseObjectForClearerAPI" })
+  @SuppressWarnings({
+      "unused", "PMD.UseObjectForClearerAPI"
+  })
   public Asset createOrUpdateAsset(String arg0, Binary arg1, String arg2, boolean arg3, boolean arg4, String arg5, String arg6) {
     throw new UnsupportedOperationException();
   }

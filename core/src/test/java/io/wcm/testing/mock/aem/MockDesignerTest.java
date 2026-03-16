@@ -80,7 +80,7 @@ public class MockDesignerTest {
   public void testGetDesignPage() {
     final Design design = context.create().design("/etc/designs/test");
     final Page page = context.create().page("/content/page1", null,
-            NameConstants.PN_DESIGN_PATH, design.getPath());
+        NameConstants.PN_DESIGN_PATH, design.getPath());
     assertThat(context.designer().getDesign(page), is(designWithPath(design.getPath())));
   }
 
@@ -108,7 +108,7 @@ public class MockDesignerTest {
 
   @Test
   public void testGetDefaultDesignNonExisting() {
-      assertThat(context.designer().getDefaultDesign(), designWithPath(LIBS_DEFAULT_DESIGN_PATH));
+    assertThat(context.designer().getDefaultDesign(), designWithPath(LIBS_DEFAULT_DESIGN_PATH));
   }
 
   @Test
@@ -126,6 +126,7 @@ public class MockDesignerTest {
   @NotNull
   private static Matcher<Design> designWithPath(@NotNull final String expectedPath) {
     return new TypeSafeMatcher<>() {
+
       @Override
       protected boolean matchesSafely(Design design) {
         return expectedPath.equals(design.getPath());
