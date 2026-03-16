@@ -49,7 +49,7 @@
   <properties>
 
     <!-- OSGi Mocks -->
-    <osgi-mock.version>3.5.5-SNAPSHOT</osgi-mock.version>
+    <osgi-mock.version>3.5.6</osgi-mock.version>
 
     <!-- JCR Mocks -->
     <jcr-mock.version>1.8.0</jcr-mock.version>
