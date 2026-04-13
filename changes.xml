@@ -26,7 +26,7 @@
 
     <release version="5.7.4" date="not released">
       <action type="update" dev="sseifert">
-        Update to latest OSGi Mock.
+        Update to latest OSGi Mock, Sling Mock.
       </action>
     </release>
 
