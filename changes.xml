@@ -24,7 +24,13 @@
     xsi:schemaLocation="http://maven.apache.org/changes/2.0.0 https://maven.apache.org/xsd/changes-2.0.0.xsd">
   <body>
 
-    <release version="5.7.4" date="not released">
+    <release version="5.8.0" date="not released">
+      <action type="update" dev="sseifert">
+        Switch to AEM 6.5.24 as minimum version (also compatible with AEM 6.6.2 / AEM 6.5 LTS SP2 and AEMaaCS).
+      </action>
+    </release>
+
+    <release version="5.7.4" date="2026-04-17">
       <action type="update" dev="sseifert">
         Update to latest OSGi Mock, Sling Mock.
       </action>
