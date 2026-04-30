@@ -28,6 +28,9 @@
       <action type="update" dev="sseifert">
         Switch to AEM 6.5.24 as minimum version (also compatible with AEM 6.6.2 / AEM 6.5 LTS SP2 and AEMaaCS).
       </action>
+      <action type="update" dev="sseifert">
+        Update to latest JCR Mock.
+      </action>
     </release>
 
     <release version="5.7.4" date="2026-04-17">
