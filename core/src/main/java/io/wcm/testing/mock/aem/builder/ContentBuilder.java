@@ -27,7 +27,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.security.AccessControlException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -617,7 +616,7 @@ public final class ContentBuilder extends org.apache.sling.testing.mock.sling.bu
     try {
       return tagManager.createTag(tagId, tagTitle, null, true);
     }
-    catch (AccessControlException | InvalidTagFormatException ex) {
+    catch (InvalidTagFormatException ex) {
       throw new RuntimeException("Unable to create tag: " + tagId, ex);
     }
   }

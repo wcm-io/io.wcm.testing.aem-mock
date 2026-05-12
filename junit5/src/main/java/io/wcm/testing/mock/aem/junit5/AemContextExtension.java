@@ -65,6 +65,7 @@ public final class AemContextExtension implements ParameterResolver, TestInstanc
     }
   }
 
+  @SuppressWarnings("java:S3011") // accessibility bypass
   private void setAemContextInStore(@NotNull ExtensionContext extensionContext,
       @NotNull Field aemContextField, @Nullable Object testInstance) throws IllegalAccessException {
     AemContext aemContext = (AemContext)aemContextField.get(testInstance);

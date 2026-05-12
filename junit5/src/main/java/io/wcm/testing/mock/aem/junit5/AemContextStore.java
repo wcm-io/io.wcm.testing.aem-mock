@@ -94,20 +94,21 @@ final class AemContextStore {
     return context.getStore(AEM_CONTEXT_NAMESPACE);
   }
 
+  @SuppressWarnings({
+      "PMD.AvoidCatchingGenericException", "null"
+  })
   private static AemContext createAemContext(Optional<Class<?>> aemContextType) {
     Class<?> type = aemContextType.orElse(DEFAULT_AEM_CONTEXT_TYPE);
     if (type == AemContext.class) {
       type = DEFAULT_AEM_CONTEXT_TYPE;
     }
     try {
-      Constructor constructor = ((Class<?>)type).getConstructor();
+      Constructor<?> constructor = type.getConstructor();
       AemContext aemContext = (AemContext)constructor.newInstance();
       aemContext.setUpContext();
       return aemContext;
     }
-    // CHECKSTYLE:OFF
     catch (Exception ex) {
-      // CHECKSTYLE:ON
       throw new IllegalStateException("Could not create " + type.getName() + " instance.", ex);
     }
   }

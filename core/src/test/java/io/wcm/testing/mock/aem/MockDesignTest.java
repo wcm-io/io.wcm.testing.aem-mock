@@ -66,6 +66,7 @@ public class MockDesignTest {
   }
 
   @Test
+  @SuppressWarnings("deprecation")
   public void getJSON() throws JsonProcessingException, JSONException {
     final Calendar dateProp = getCalendar("Europe/Amsterdam", 1383430039843L);
     final Calendar dateProp2 = getCalendar("UTC", 1253410638984L);
@@ -109,6 +110,7 @@ public class MockDesignTest {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void compareValues(final String prefix, final Object expectedValue, final Object actualValue, final JSONCompareResult result) throws JSONException {
       if (!ignoredFields.contains(prefix)) {
         super.compareValues(prefix, expectedValue, actualValue, result);

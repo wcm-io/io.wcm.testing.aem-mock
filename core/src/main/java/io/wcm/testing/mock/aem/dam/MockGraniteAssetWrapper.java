@@ -36,8 +36,6 @@ import com.adobe.granite.asset.api.AssetMetadata;
 import com.adobe.granite.asset.api.AssetRelation;
 import com.adobe.granite.asset.api.Rendition;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 /**
  * Mock implementation of Adobe Granite {@link Asset}. This is done by wrapping a {@link MockAsset}
  */
@@ -46,7 +44,6 @@ public final class MockGraniteAssetWrapper extends ResourceWrapper implements As
 
   private final com.day.cq.dam.api.Asset asset;
 
-  @SuppressFBWarnings("NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE") // adaption to Resource will always work
   MockGraniteAssetWrapper(com.day.cq.dam.api.Asset asset, Resource resource) {
     super(resource);
     this.asset = asset;

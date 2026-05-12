@@ -121,7 +121,6 @@ public final class MockTagManager implements TagManager {
     if (Strings.CS.startsWith(tagID, getTagRootPath())) {
       // absolute path mode
       if (!tagID.startsWith(getTagRootPath())) {
-        // TODO: seems reasonable, but is it worth enforcing?
         throw new InvalidTagFormatException("Tags are only allowed to be under " + getTagRootPath());
       }
       return tagID;
@@ -463,7 +462,6 @@ public final class MockTagManager implements TagManager {
 
 
   // --- unsupported operations ---
-  //CHECKSTYLE:OFF
 
   @Override
   public boolean canCreateTagByTitle(String tagTitlePath) throws InvalidTagFormatException {

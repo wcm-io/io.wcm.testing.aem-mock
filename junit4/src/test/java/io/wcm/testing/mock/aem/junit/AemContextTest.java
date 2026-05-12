@@ -103,7 +103,6 @@ public class AemContextTest {
   @After
   public void tearDown() {
     // reset required because mockito gets puzzled with the parameterized JUnit rule
-    // TODO: better solution?
     reset(contextBeforeSetup);
     reset(contextAfterSetup);
   }
