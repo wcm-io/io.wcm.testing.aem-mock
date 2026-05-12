@@ -73,6 +73,7 @@ public class MockTagTest {
   private Tag nondescript;
   private Tag nondescript2;
 
+  @SuppressWarnings("java:S1874") // deprecated in java 21, but not in java 11
   private static final Locale LOCALE_PT_BR = new Locale("pt", "br");
 
   @Before
