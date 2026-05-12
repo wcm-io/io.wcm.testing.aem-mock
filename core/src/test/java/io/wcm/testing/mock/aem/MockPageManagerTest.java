@@ -40,7 +40,7 @@ import java.util.Calendar;
 
 import javax.jcr.Node;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.api.resource.ModifiableValueMap;
 import org.apache.sling.api.resource.PersistenceException;
 import org.apache.sling.api.resource.Resource;
@@ -285,7 +285,7 @@ public class MockPageManagerTest {
     Page page1 = this.pageManager.create("/content/sample/en", null, "/apps/sample/templates/homepage", "Title 1");
     Page page2 = this.pageManager.create("/content/sample/en", null, "/apps/sample/templates/homepage", "Title 1");
     assertEquals("title-1", page1.getName());
-    assertTrue(StringUtils.startsWith(page2.getName(), "title-1"));
+    assertTrue(Strings.CS.startsWith(page2.getName(), "title-1"));
     assertNotEquals(page1.getPath(), page2.getPath());
   }
 

@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.jetbrains.annotations.NotNull;
@@ -134,7 +134,7 @@ public final class MockExternalizer implements Externalizer {
     StringBuilder url = new StringBuilder();
 
     // scheme, host name, port
-    url.append(StringUtils.defaultString(scheme, StringUtils.defaultString(domainURI.getScheme(), "http")))
+    url.append(Objects.toString(scheme, Objects.toString(domainURI.getScheme(), "http")))
       .append(SCHEME_SEPARATOR)
       .append(getHost(scheme, domainURI.getHost(), domainURI.getPort()));
 
@@ -152,7 +152,7 @@ public final class MockExternalizer implements Externalizer {
   private String buildAbsoluteLink(@NotNull SlingHttpServletRequest request, @NotNull String scheme, @NotNull String path) {
 
     // return path unchanged if it is already absolute (or if no request available)
-    if (StringUtils.contains(path, SCHEME_SEPARATOR)) {
+    if (Strings.CS.contains(path, SCHEME_SEPARATOR)) {
       return path;
     }
 
@@ -166,8 +166,8 @@ public final class MockExternalizer implements Externalizer {
 
   private static String getHost(String scheme, String host, int port) {
     if (port < 0
-        || (StringUtils.equals(scheme, "http") && port == 80)
-        || (StringUtils.equals(scheme, "https") && port == 443)) {
+        || (Strings.CS.equals(scheme, "http") && port == 80)
+        || (Strings.CS.equals(scheme, "https") && port == 443)) {
       return host;
     }
     else {

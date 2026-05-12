@@ -33,10 +33,12 @@ import io.wcm.testing.mock.aem.context.AemContextImpl;
 /**
  * AEM Mock parameter object with resource resolver type
  * defaulting to {@link ResourceResolverType#RESOURCERESOLVER_MOCK}.
+ *
  * <p>
  * Additionally you can subclass this class and provide further parameters
  * via {@link AemContextBuilder}.
  * </p>
+ *
  * <p>
  * For convenience a set of subclasses already exist to use different resource resolver types.
  * </p>

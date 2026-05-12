@@ -37,6 +37,7 @@ import java.util.function.BinaryOperator;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.jackrabbit.util.ISO9075;
 import org.apache.sling.api.adapter.SlingAdaptable;
 import org.apache.sling.api.resource.Resource;
@@ -80,7 +81,7 @@ final class MockTag extends SlingAdaptable implements Tag, Comparable<Tag> {
     }
     Tag tag = (Tag)o;
     Resource tagResource = tag.adaptTo(Resource.class);
-    return tagResource != null && StringUtils.equals(resource.getPath(), tagResource.getPath());
+    return tagResource != null && Strings.CS.equals(resource.getPath(), tagResource.getPath());
   }
 
   @Override
@@ -333,7 +334,7 @@ final class MockTag extends SlingAdaptable implements Tag, Comparable<Tag> {
   }
 
   private static String escapeTitle(String title) {
-    return StringUtils.replace(StringUtils.replace(title, SEPARATOR, " "), NAMESPACE_DELIMITER, " ");
+    return Strings.CS.replace(Strings.CS.replace(title, SEPARATOR, " "), NAMESPACE_DELIMITER, " ");
   }
 
   @Override
@@ -410,7 +411,7 @@ final class MockTag extends SlingAdaptable implements Tag, Comparable<Tag> {
   private String extractPathPart(final String property, final BinaryOperator<String> pathPartExtractor, final String defaultValue) {
     // If the path contains a slash, we can simply extract the desired part, otherwise, we have to do a fallback to the default value
     // At the same time, we need to always remove the @-sign from any of the returned values, so we can append them correctly later
-    return StringUtils.removeStart(StringUtils.contains(property, String.valueOf('/'))
+    return Strings.CS.removeStart(Strings.CS.contains(property, String.valueOf('/'))
         ? pathPartExtractor.apply(property, String.valueOf('/'))
         : defaultValue,
         String.valueOf('@'));

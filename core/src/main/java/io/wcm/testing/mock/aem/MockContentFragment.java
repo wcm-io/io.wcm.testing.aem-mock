@@ -23,6 +23,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.StreamSupport;
 
 import org.apache.commons.lang3.StringUtils;
@@ -212,8 +213,8 @@ final class MockContentFragment implements ContentFragment {
       }
       Resource child = resourceResolver.create(variations, name, ImmutableValueMap.of(
           "name", name,
-          JcrConstants.JCR_TITLE, StringUtils.defaultString(title, name),
-          JcrConstants.JCR_DESCRIPTION, StringUtils.defaultString(description)));
+          JcrConstants.JCR_TITLE, Objects.toString(title, name),
+          JcrConstants.JCR_DESCRIPTION, Objects.toString(description, "")));
       return new MockContentFragment_VariationDef(child);
     }
     catch (PersistenceException ex) {

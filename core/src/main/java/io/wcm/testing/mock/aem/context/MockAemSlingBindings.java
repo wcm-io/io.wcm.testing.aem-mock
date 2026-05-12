@@ -19,7 +19,7 @@
  */
 package io.wcm.testing.mock.aem.context;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceUtil;
@@ -105,49 +105,49 @@ final class MockAemSlingBindings {
       request = context.request();
     }
 
-    if (StringUtils.equals(property, SlingBindingsProperty.COMPONENT_CONTEXT.key)) {
+    if (Strings.CS.equals(property, SlingBindingsProperty.COMPONENT_CONTEXT.key)) {
       return getWcmComponentContext(request);
     }
-    if (StringUtils.equals(property, SlingBindingsProperty.EDIT_CONTEXT.key())) {
+    if (Strings.CS.equals(property, SlingBindingsProperty.EDIT_CONTEXT.key())) {
       return getEditContext(request);
     }
-    if (StringUtils.equals(property, SlingBindingsProperty.PROPERTIES.key())) {
+    if (Strings.CS.equals(property, SlingBindingsProperty.PROPERTIES.key())) {
       return getProperties(request);
     }
-    if (StringUtils.equals(property, SlingBindingsProperty.PAGE_MANAGER.key())) {
+    if (Strings.CS.equals(property, SlingBindingsProperty.PAGE_MANAGER.key())) {
       return context.pageManager();
     }
-    if (StringUtils.equals(property, SlingBindingsProperty.CURRENT_PAGE.key())) {
+    if (Strings.CS.equals(property, SlingBindingsProperty.CURRENT_PAGE.key())) {
       return getCurrentPage(request);
     }
-    if (StringUtils.equals(property, SlingBindingsProperty.RESOURCE_PAGE.key())) {
+    if (Strings.CS.equals(property, SlingBindingsProperty.RESOURCE_PAGE.key())) {
       return getResourcePage(request, context);
     }
-    if (StringUtils.equals(property, SlingBindingsProperty.PAGE_PROPERTIES.key())) {
+    if (Strings.CS.equals(property, SlingBindingsProperty.PAGE_PROPERTIES.key())) {
       return getPageProperties(request);
     }
-    if (StringUtils.equals(property, SlingBindingsProperty.COMPONENT.key())) {
+    if (Strings.CS.equals(property, SlingBindingsProperty.COMPONENT.key())) {
       return getComponent(request);
     }
-    if (StringUtils.equals(property, SlingBindingsProperty.DESIGNER.key())) {
+    if (Strings.CS.equals(property, SlingBindingsProperty.DESIGNER.key())) {
       return getDesigner(request);
     }
-    if (StringUtils.equals(property, SlingBindingsProperty.CURRENT_DESIGN.key())) {
+    if (Strings.CS.equals(property, SlingBindingsProperty.CURRENT_DESIGN.key())) {
       return getCurrentDesign(request);
     }
-    if (StringUtils.equals(property, SlingBindingsProperty.RESOURCE_DESIGN.key())) {
+    if (Strings.CS.equals(property, SlingBindingsProperty.RESOURCE_DESIGN.key())) {
       return getResourceDesign(request, context);
     }
-    if (StringUtils.equals(property, SlingBindingsProperty.CURRENT_STYLE.key())) {
+    if (Strings.CS.equals(property, SlingBindingsProperty.CURRENT_STYLE.key())) {
       return getStyle(request);
     }
-    if (StringUtils.equals(property, SlingBindingsProperty.XSSAPI.key())) {
+    if (Strings.CS.equals(property, SlingBindingsProperty.XSSAPI.key())) {
       return getXssApi(context);
     }
-    if (StringUtils.equals(property, SlingBindingsProperty.CURRENT_CONTENT_POLICY.key())) {
+    if (Strings.CS.equals(property, SlingBindingsProperty.CURRENT_CONTENT_POLICY.key())) {
       return getCurrentContentPolicy(request);
     }
-    if (StringUtils.equals(property, SlingBindingsProperty.CURRENT_CONTENT_POLICY_PROPS.key())) {
+    if (Strings.CS.equals(property, SlingBindingsProperty.CURRENT_CONTENT_POLICY_PROPS.key())) {
       return getCurrentContentPolicyProperties(request);
     }
 

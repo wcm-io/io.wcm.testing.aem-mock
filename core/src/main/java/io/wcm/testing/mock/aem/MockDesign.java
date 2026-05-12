@@ -31,7 +31,7 @@ import java.util.Set;
 import javax.jcr.RepositoryException;
 import javax.servlet.jsp.PageContext;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceUtil;
 import org.apache.sling.api.resource.ValueMap;
@@ -118,7 +118,7 @@ class MockDesign implements Design {
 
   @Override
   public String getId() {
-    return StringUtils.removeStart(resource.getPath(), MockDesigner.LEGACY_DESIGNS_PATH_PREFIX);
+    return Strings.CS.removeStart(resource.getPath(), MockDesigner.LEGACY_DESIGNS_PATH_PREFIX);
   }
 
   @Override

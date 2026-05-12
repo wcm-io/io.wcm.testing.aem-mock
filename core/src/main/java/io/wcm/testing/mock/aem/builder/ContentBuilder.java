@@ -34,6 +34,7 @@ import java.util.Objects;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.api.resource.ModifiableValueMap;
 import org.apache.sling.api.resource.PersistenceException;
 import org.apache.sling.api.resource.Resource;
@@ -399,7 +400,7 @@ public final class ContentBuilder extends org.apache.sling.testing.mock.sling.bu
     String key = width + "x" + height + ":" + mimeType;
     byte[] data = DUMMY_IMAGE_CACHE.get(key);
     if (data == null) {
-      if (StringUtils.equals(mimeType, MIMETYPE_SVG)) {
+      if (Strings.CS.equals(mimeType, MIMETYPE_SVG)) {
         data = createDummySVGImage(width, height);
       }
       else {
@@ -412,7 +413,7 @@ public final class ContentBuilder extends org.apache.sling.testing.mock.sling.bu
   private static byte[] createDummyRasterImage(long width, long height, String mimeType) {
     Layer layer = new Layer((int)width, (int)height, null);
     try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-      double quality = StringUtils.equals(mimeType, "image/gif") ? 256d : 1.0d;
+      double quality = Strings.CS.equals(mimeType, "image/gif") ? 256d : 1.0d;
       layer.write(mimeType, quality, bos);
       return bos.toByteArray();
     }

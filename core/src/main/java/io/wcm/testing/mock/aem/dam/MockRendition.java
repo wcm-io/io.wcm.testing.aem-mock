@@ -28,7 +28,7 @@ import javax.jcr.Binary;
 import javax.jcr.RepositoryException;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.jackrabbit.api.binary.BinaryDownload;
 import org.apache.jackrabbit.api.binary.BinaryDownloadOptions;
 import org.apache.sling.api.resource.Resource;
@@ -126,7 +126,7 @@ class MockRendition extends ResourceWrapper implements Rendition, com.adobe.gran
     if (!(obj instanceof MockRendition)) {
       return false;
     }
-    return StringUtils.equals(getPath(), ((MockRendition)obj).getPath());
+    return Strings.CS.equals(getPath(), ((MockRendition)obj).getPath());
   }
 
   @Override

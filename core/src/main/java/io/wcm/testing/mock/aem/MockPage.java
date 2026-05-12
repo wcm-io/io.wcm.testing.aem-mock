@@ -25,6 +25,7 @@ import java.util.Locale;
 
 import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.jackrabbit.util.Text;
 import org.apache.sling.api.adapter.SlingAdaptable;
 import org.apache.sling.api.resource.Resource;
@@ -125,7 +126,7 @@ class MockPage extends SlingAdaptable implements Page {
 
   @Override
   public int getDepth() {
-    if (StringUtils.equals("/", this.resource.getPath())) {
+    if (Strings.CS.equals("/", this.resource.getPath())) {
       return 0;
     }
     else {
@@ -365,7 +366,7 @@ class MockPage extends SlingAdaptable implements Page {
     if (!(obj instanceof MockPage)) {
       return false;
     }
-    return StringUtils.equals(getPath(), ((MockPage)obj).getPath());
+    return Strings.CS.equals(getPath(), ((MockPage)obj).getPath());
   }
 
   @Override

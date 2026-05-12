@@ -33,7 +33,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 import org.apache.commons.collections4.IteratorUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.api.resource.ModifiableValueMap;
 import org.apache.sling.api.resource.PersistenceException;
 import org.apache.sling.api.resource.Resource;
@@ -257,7 +257,7 @@ public class MockPageTest {
 
       @Override
       public boolean includes(final Page element) {
-        return !StringUtils.equals("toolbar", element.getName());
+        return !Strings.CS.equals("toolbar", element.getName());
       }
     }));
     assertEquals(0, childPages.size());
@@ -269,7 +269,7 @@ public class MockPageTest {
 
       @Override
       public boolean includes(final Page element) {
-        return !StringUtils.equals("toolbar", element.getName());
+        return !Strings.CS.equals("toolbar", element.getName());
       }
     }, true));
     assertEquals(1, childPages.size());

@@ -33,7 +33,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.apache.commons.collections4.IteratorUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.testing.mock.sling.ResourceResolverType;
 import org.junit.Before;
@@ -96,7 +96,7 @@ public class MockGraniteAssetWrapperTest {
 
   private boolean hasRendition(List<Rendition> renditions, String renditionName) {
     for (Rendition rendition : renditions) {
-      if (StringUtils.equals(rendition.getName(), renditionName)) {
+      if (Strings.CS.equals(rendition.getName(), renditionName)) {
         return true;
       }
     }

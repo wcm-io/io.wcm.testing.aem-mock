@@ -26,7 +26,7 @@ import java.util.Spliterators;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.api.resource.ModifiableValueMap;
 import org.apache.sling.api.resource.PersistenceException;
 import org.apache.sling.api.resource.Resource;
@@ -129,7 +129,7 @@ class MockContentFragment_ContentElement_Structured implements ContentElement {
   @Override
   public ContentVariation getVariation(String variationName) {
     return getVariationsStream()
-      .filter(variation -> StringUtils.equals(variation.getName(), variationName))
+      .filter(variation -> Strings.CS.equals(variation.getName(), variationName))
       .findFirst().orElse(null);
   }
 

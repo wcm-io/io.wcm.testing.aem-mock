@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ValueMap;
@@ -259,7 +259,7 @@ public final class MockLanguageManager implements LanguageManager {
         path = path.substring(0, idx);
       }
       Resource hr = res.getResourceResolver().getResource(path);
-      while (hr != null && !StringUtils.equals(hr.getPath(), "/")) {
+      while (hr != null && !Strings.CS.equals(hr.getPath(), "/")) {
         ValueMap props = hr.getValueMap();
         if (props.get("jcr:content/cq:isLanguageRoot", Boolean.FALSE)) {
           String iso = props.get("jcr:content/jcr:language", "");
@@ -325,7 +325,7 @@ public final class MockLanguageManager implements LanguageManager {
     if (null == res) {
       return null;
     }
-    if (respectContent && !StringUtils.equals(res.getPath(), "/")) {
+    if (respectContent && !Strings.CS.equals(res.getPath(), "/")) {
       ValueMap props = res.getValueMap();
       if (props.get("jcr:content/cq:isLanguageRoot", Boolean.FALSE)) {
         String iso = props.get("jcr:content/jcr:language", "");

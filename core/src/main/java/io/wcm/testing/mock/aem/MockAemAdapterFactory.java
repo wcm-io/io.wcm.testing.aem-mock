@@ -30,8 +30,7 @@ import static io.wcm.testing.mock.aem.MockContentPolicyStorage.RT_CONTENT_POLICY
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
-import com.day.cq.wcm.api.designer.Design;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.api.adapter.AdapterFactory;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
@@ -50,6 +49,7 @@ import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.day.cq.wcm.api.Template;
 import com.day.cq.wcm.api.components.ComponentManager;
+import com.day.cq.wcm.api.designer.Design;
 import com.day.cq.wcm.api.designer.Designer;
 import com.day.cq.wcm.api.policies.ContentPolicy;
 import com.day.cq.wcm.api.policies.ContentPolicyManager;
@@ -142,7 +142,7 @@ public final class MockAemAdapterFactory implements AdapterFactory {
     if (node != null) {
       // JCR-based resource resolver
       try {
-        return StringUtils.equals(node.getPrimaryNodeType().getName(), primaryType);
+        return Strings.CS.equals(node.getPrimaryNodeType().getName(), primaryType);
       }
       catch (RepositoryException ex) {
         // ignore
@@ -152,7 +152,7 @@ public final class MockAemAdapterFactory implements AdapterFactory {
     else {
       // sling resource resolver mock
       ValueMap props = resource.getValueMap();
-      return StringUtils.equals(props.get(JcrConstants.JCR_PRIMARYTYPE, String.class), primaryType);
+      return Strings.CS.equals(props.get(JcrConstants.JCR_PRIMARYTYPE, String.class), primaryType);
     }
   }
 

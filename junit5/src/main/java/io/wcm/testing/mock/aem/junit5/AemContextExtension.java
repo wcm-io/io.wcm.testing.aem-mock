@@ -212,13 +212,13 @@ public final class AemContextExtension implements ParameterResolver, TestInstanc
   }
 
   /**
-   * <p>
    * Checks if a "before-all" context is used in this class.
-   * </p>
+   *
    * <p>
    * In this case the context is initialized/set up once before all tests, and teared down once after all tests.
    * Otherwise setup and teardown of the context happens for each test run.
    * </p>
+   *
    * <p>
    * The "before-all" state is assumed if a) a static AemContext field exists or b) a method annotated with
    * '@BeforeAll' exists with AemContext parameter.

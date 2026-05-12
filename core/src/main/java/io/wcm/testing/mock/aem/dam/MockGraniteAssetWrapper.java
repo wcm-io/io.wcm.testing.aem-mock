@@ -27,7 +27,7 @@ import java.util.Map;
 
 import javax.jcr.Binary;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceWrapper;
 
@@ -101,7 +101,7 @@ public final class MockGraniteAssetWrapper extends ResourceWrapper implements As
     if (!(obj instanceof MockGraniteAssetWrapper)) {
       return false;
     }
-    return StringUtils.equals(getPath(), ((MockGraniteAssetWrapper)obj).getPath());
+    return Strings.CS.equals(getPath(), ((MockGraniteAssetWrapper)obj).getPath());
   }
 
 

@@ -19,27 +19,28 @@
  */
 package io.wcm.testing.mock.aem;
 
-import com.day.cq.wcm.api.NameConstants;
-import com.day.cq.wcm.commons.WCMUtils;
-import com.day.text.Text;
+import java.util.LinkedHashSet;
+import java.util.Objects;
+import java.util.Set;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.api.resource.NonExistingResource;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.day.cq.wcm.api.NameConstants;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.day.cq.wcm.api.designer.Design;
 import com.day.cq.wcm.api.designer.Designer;
 import com.day.cq.wcm.api.designer.Style;
-import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.LinkedHashSet;
-import java.util.Objects;
-import java.util.Set;
+import com.day.cq.wcm.commons.WCMUtils;
+import com.day.text.Text;
 
 /**
  * Mock implementation of {@link Designer}.
@@ -147,9 +148,9 @@ class MockDesigner implements Designer {
 
   @NotNull
   private String idToPath(@NotNull final String id) {
-    if (StringUtils.startsWithAny(id, ArrayUtils.add(resourceResolver.getSearchPath(), "/conf/"))) {
+    if (Strings.CS.startsWithAny(id, ArrayUtils.add(resourceResolver.getSearchPath(), "/conf/"))) {
       return id;
     }
-    return LEGACY_DESIGNS_PATH_PREFIX + StringUtils.removeStart(StringUtils.removeStart(id, LEGACY_DESIGNS_PATH_PREFIX), String.valueOf('/'));
+    return LEGACY_DESIGNS_PATH_PREFIX + Strings.CS.removeStart(Strings.CS.removeStart(id, LEGACY_DESIGNS_PATH_PREFIX), String.valueOf('/'));
   }
 }

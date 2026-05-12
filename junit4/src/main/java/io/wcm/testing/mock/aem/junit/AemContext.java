@@ -53,6 +53,7 @@ public final class AemContext extends AemContextImpl implements TestRule {
 
   /**
    * Initialize AEM context.
+   *
    * <p>
    * If context is initialized with:
    * </p>
@@ -70,6 +71,7 @@ public final class AemContext extends AemContextImpl implements TestRule {
 
   /**
    * Initialize AEM context.
+   *
    * <p>
    * If context is initialized with:
    * </p>
@@ -91,6 +93,7 @@ public final class AemContext extends AemContextImpl implements TestRule {
 
   /**
    * Initialize AEM context.
+   *
    * <p>
    * If context is initialized with:
    * </p>
@@ -116,6 +119,7 @@ public final class AemContext extends AemContextImpl implements TestRule {
 
   /**
    * Initialize AEM context.
+   *
    * <p>
    * If context is initialized with:
    * </p>
@@ -137,6 +141,7 @@ public final class AemContext extends AemContextImpl implements TestRule {
 
   /**
    * Initialize AEM context.
+   *
    * <p>
    * If context is initialized with:
    * </p>

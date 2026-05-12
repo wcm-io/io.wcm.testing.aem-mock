@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -119,7 +119,7 @@ public class MockAssetManagerTest {
 
     @Override
     public void handleEvent(Event event) {
-      if (StringUtils.equals(event.getTopic(), DamEvent.EVENT_TOPIC)) {
+      if (Strings.CS.equals(event.getTopic(), DamEvent.EVENT_TOPIC)) {
         events.add(DamEvent.fromEvent(event));
       }
     }

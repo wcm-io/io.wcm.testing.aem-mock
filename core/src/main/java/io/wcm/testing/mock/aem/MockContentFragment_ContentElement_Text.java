@@ -30,7 +30,7 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.api.resource.Resource;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -129,7 +129,7 @@ class MockContentFragment_ContentElement_Text implements ContentElement {
   }
 
   private String getRenditionName() {
-    if (StringUtils.equals(textElementResource.getName(), "main")) {
+    if (Strings.CS.equals(textElementResource.getName(), "main")) {
       return DamConstants.ORIGINAL_FILE;
     }
     else {
@@ -146,7 +146,7 @@ class MockContentFragment_ContentElement_Text implements ContentElement {
   @Override
   public ContentVariation getVariation(String variationName) {
     return getVariationsStream()
-      .filter(variation -> StringUtils.equals(variation.getName(), variationName))
+      .filter(variation -> Strings.CS.equals(variation.getName(), variationName))
       .findFirst().orElse(null);
   }
 
