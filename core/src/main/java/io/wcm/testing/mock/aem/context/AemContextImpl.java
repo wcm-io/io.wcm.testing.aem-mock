@@ -96,6 +96,7 @@ public class AemContextImpl extends SlingContextImpl {
   }
 
   @Override
+  @SuppressWarnings("java:S1185") // override=inherited
   protected void setResourceResolverType(@Nullable ResourceResolverType resourceResolverType) {
     super.setResourceResolverType(resourceResolverType);
   }
@@ -106,11 +107,13 @@ public class AemContextImpl extends SlingContextImpl {
   }
 
   @Override
+  @SuppressWarnings("java:S1185") // override=inherited
   protected void setUp() {
     super.setUp();
   }
 
   @Override
+  @SuppressWarnings("java:S1185") // override=inherited
   protected void tearDown() {
     super.tearDown();
   }

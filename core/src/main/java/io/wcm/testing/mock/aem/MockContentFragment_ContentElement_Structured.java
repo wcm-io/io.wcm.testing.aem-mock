@@ -73,7 +73,7 @@ class MockContentFragment_ContentElement_Structured implements ContentElement {
 
   @Override
   public String getTitle() {
-    return structuredDataKey;
+    return getName();
   }
 
   @Override

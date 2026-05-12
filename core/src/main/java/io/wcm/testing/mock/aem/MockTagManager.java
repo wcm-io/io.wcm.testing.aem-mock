@@ -238,6 +238,9 @@ public final class MockTagManager implements TagManager {
   }
 
   @Override
+  @SuppressWarnings({
+      "java:S3776", "java:S6541", "java:S135", "java:S1119" // complexity
+  })
   public RangeIterator<Resource> find(String basePath, String[] tagIDs, boolean oneMatchIsEnough) {
     Resource base = resourceResolver.getResource(basePath);
     if (base == null) {

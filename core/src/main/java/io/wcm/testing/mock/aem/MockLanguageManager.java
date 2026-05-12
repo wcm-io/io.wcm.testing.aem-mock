@@ -196,6 +196,9 @@ public final class MockLanguageManager implements LanguageManager {
   }
 
   @Override
+  @SuppressWarnings({
+      "java:S3776", "java:S135" // complexity
+  })
   public Collection<Resource> getLanguageRootResources(ResourceResolver resolver, String path, boolean respectContent) {
     Iterator<Resource> siblings = getLanguageRootSiblings(resolver, path, respectContent);
     if (siblings == null) {
@@ -251,6 +254,7 @@ public final class MockLanguageManager implements LanguageManager {
     return roots;
   }
 
+  @SuppressWarnings("java:S3776") // complexity
   private String getLanguageRootPath(Resource res, boolean respectContent) {
     String path = res.getPath();
     if (respectContent) {

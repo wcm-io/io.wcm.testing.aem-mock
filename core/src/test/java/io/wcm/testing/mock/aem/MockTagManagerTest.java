@@ -190,6 +190,7 @@ public class MockTagManagerTest {
   }
 
   @Test
+  @SuppressWarnings("java:S5961") // test method complexity
   public void testFind() {
     RangeIterator<Resource> resources = tagManager.find("wcmio:");
     assertNotNull(resources);

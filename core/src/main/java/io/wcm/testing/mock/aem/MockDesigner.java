@@ -30,6 +30,7 @@ import org.apache.sling.api.resource.NonExistingResource;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -123,7 +124,7 @@ class MockDesigner implements Designer {
   }
 
   @Override
-  public Style getStyle(Resource resource, String cellPath) {
+  public @Nullable Style getStyle(Resource resource, String cellPath) {
     final PageManager pageManager = Objects.requireNonNull(resourceResolver.adaptTo(PageManager.class));
     final Page page = pageManager.getContainingPage(resource);
     if (page != null) {

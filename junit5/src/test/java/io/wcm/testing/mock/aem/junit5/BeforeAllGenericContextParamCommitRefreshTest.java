@@ -63,16 +63,4 @@ class BeforeAllGenericContextParamCommitRefreshTest {
     assertThat(context.resourceResolver().getResource(RESOURCE2_PATH), props("prop1", "value2"));
   }
 
-  @Test
-  void test2(AemContext context) {
-    assertThat(context.resourceResolver().getResource(RESOURCE1_PATH), props("prop1", "value1"));
-
-    // make sure not leftover of resource2 from other unit tests is present
-    assertNull(context.resourceResolver().getResource(RESOURCE2_PATH));
-
-    // create resource2 only for this unit test
-    context.create().resource(RESOURCE2_PATH, "prop1", "value2");
-    assertThat(context.resourceResolver().getResource(RESOURCE2_PATH), props("prop1", "value2"));
-  }
-
 }

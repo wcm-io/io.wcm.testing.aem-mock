@@ -98,6 +98,7 @@ final class MockAemSlingBindings {
     // static methods only
   }
 
+  @SuppressWarnings("java:S3776") // complexity
   static @Nullable Object resolveSlingBindingProperty(@NotNull AemContextImpl context, @NotNull String property,
       @Nullable SlingHttpServletRequest givenRequest) {
     SlingHttpServletRequest request = givenRequest;
@@ -179,7 +180,7 @@ final class MockAemSlingBindings {
   }
 
   @SuppressWarnings({
-      "null", "unused"
+      "null", "unused", "java:S2589"
   })
   @SuppressFBWarnings("RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE")
   private static Page getResourcePage(SlingHttpServletRequest request, AemContextImpl context) {
@@ -190,7 +191,7 @@ final class MockAemSlingBindings {
     return null;
   }
 
-  private static ValueMap getPageProperties(SlingHttpServletRequest request) {
+  private static @Nullable ValueMap getPageProperties(SlingHttpServletRequest request) {
     Page currentPage = getCurrentPage(request);
     if (currentPage != null) {
       return wrap(currentPage.getProperties());
@@ -199,7 +200,7 @@ final class MockAemSlingBindings {
   }
 
   @SuppressWarnings({
-      "null", "unused"
+      "null", "unused", "java:S2589"
   })
   @SuppressFBWarnings("RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE")
   private static Component getComponent(SlingHttpServletRequest request) {
@@ -223,7 +224,7 @@ final class MockAemSlingBindings {
     return getAndCacheDesign(getResourcePage(request, context), request, getDesigner(request));
   }
 
-  private static Style getStyle(SlingHttpServletRequest request) {
+  private static @Nullable Style getStyle(SlingHttpServletRequest request) {
     ComponentContext wcmComponentContext = getWcmComponentContext(request);
     if (wcmComponentContext != null) {
       ContentPolicy contentPolicy = getCurrentContentPolicy(request);
@@ -255,7 +256,7 @@ final class MockAemSlingBindings {
     return null;
   }
 
-  private static ValueMap getCurrentContentPolicyProperties(SlingHttpServletRequest request) {
+  private static @Nullable ValueMap getCurrentContentPolicyProperties(SlingHttpServletRequest request) {
     ContentPolicy contentPolicy = getCurrentContentPolicy(request);
     if (contentPolicy != null) {
       return wrap(contentPolicy.getProperties());

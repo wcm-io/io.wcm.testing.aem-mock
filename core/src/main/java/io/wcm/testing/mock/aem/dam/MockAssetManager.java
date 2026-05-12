@@ -86,7 +86,9 @@ class MockAssetManager implements AssetManager {
   @SuppressFBWarnings({
       "BAD_PRACTICE", "STYLE"
   })
-  @SuppressWarnings("PMD.AvoidCatchingGenericException")
+  @SuppressWarnings({
+      "PMD.AvoidCatchingGenericException", "java:S1141"
+  })
   public Asset createAsset(String assetPath, InputStream inputStream, String mimeType, boolean autoSave) {
     String assetContentPath = assetPath + "/" + JCR_CONTENT;
     String metadataPath = assetContentPath + "/" + METADATA_FOLDER;

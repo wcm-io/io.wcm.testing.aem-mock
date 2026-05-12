@@ -122,6 +122,7 @@ class MockDesign implements Design {
   }
 
   @Override
+  @SuppressWarnings("java:S112") // runtime exception
   public String getJSON() {
     final Resource contentResource = this.getContentResource();
     if (contentResource != null) {

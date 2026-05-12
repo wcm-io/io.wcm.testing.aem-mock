@@ -89,7 +89,10 @@ public final class MockAemAdapterFactory implements AdapterFactory {
     return null;
   }
 
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({
+      "unchecked",
+      "java:S3776" // complexity
+  })
   private @Nullable <AdapterType> AdapterType getAdapter(@NotNull final Resource resource, @NotNull final Class<AdapterType> type) {
     if (type == Page.class && isPrimaryType(resource, NT_PAGE)) {
       return (AdapterType)new MockPage(resource);

@@ -33,6 +33,7 @@ import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ResourceUtil;
 import org.apache.sling.api.resource.ValueMap;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import com.adobe.cq.wcm.launches.utils.LaunchUtils;
 import com.day.cq.commons.Filter;
@@ -189,7 +190,7 @@ class MockPage extends SlingAdaptable implements Page {
   }
 
   @Override
-  public ValueMap getProperties(final String relPath) {
+  public @Nullable ValueMap getProperties(final String relPath) {
     Resource childResource = getContentResource(relPath);
     if (childResource != null) {
       return childResource.getValueMap();

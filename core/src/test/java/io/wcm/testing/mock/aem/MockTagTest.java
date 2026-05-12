@@ -106,6 +106,7 @@ public class MockTagTest {
   }
 
   @Test
+  @SuppressWarnings("java:S5961") // test method complexity
   public void testListChildren() {
     assertNotNull(wcmio);
     Iterator<Tag> children = wcmio.listChildren();
