@@ -442,7 +442,6 @@ class MockPageManager extends SlingAdaptable implements PageManager {
   }
 
   // AEM 6.5.18
-  @Override
   @SuppressWarnings("unused")
   public Resource move(Resource resource, String destination, String beforeName, boolean shallow,
       boolean resolveConflict, String[] adjustRefs, String[] publishRefs, String arg7) throws WCMException {

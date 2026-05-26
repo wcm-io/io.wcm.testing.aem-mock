@@ -119,14 +119,18 @@ class MockContentPolicyManager implements ContentPolicyManager {
   }
 
   // AEM Cloud
-  @SuppressWarnings("unused")
-  public List<Template> getTemplates(String policyAbsolutePath, @Nullable java.util.function.Predicate<Template> filter) {
+  @SuppressWarnings({
+      "unused", "java:S3740"
+  })
+  public List<Template> getTemplates(String policyAbsolutePath, @Nullable java.util.function.Predicate filter) {
     throw new UnsupportedOperationException();
   }
 
   // AEM Cloud
-  @SuppressWarnings("unused")
-  public boolean isPolicyUsed(String policyAbsolutePath, @Nullable java.util.function.Predicate<Template> filter) {
+  @SuppressWarnings({
+      "unused", "java:S3740"
+  })
+  public boolean isPolicyUsed(String policyAbsolutePath, @Nullable java.util.function.Predicate filter) {
     throw new UnsupportedOperationException();
   }
 
