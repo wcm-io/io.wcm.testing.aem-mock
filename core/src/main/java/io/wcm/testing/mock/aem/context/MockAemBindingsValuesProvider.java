@@ -41,7 +41,7 @@ import io.wcm.testing.mock.aem.context.MockAemSlingBindings.SlingBindingsPropert
  */
 @Component(service = BindingsValuesProvider.class,
     property = "MockSlingBindings-ignore=true")
-class MockAemBindingsValuesProvider implements BindingsValuesProvider {
+public class MockAemBindingsValuesProvider implements BindingsValuesProvider {
 
   static final String PROPERTY_AEM_CONTEXT_OBJECT = "aemContextObject";
 
