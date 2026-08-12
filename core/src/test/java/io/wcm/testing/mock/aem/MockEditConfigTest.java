@@ -44,7 +44,6 @@ import com.day.cq.wcm.api.components.DropTarget;
 import com.day.cq.wcm.api.components.EditConfig;
 import com.day.cq.wcm.api.components.EditLayout;
 import com.day.cq.wcm.api.components.InplaceEditingConfig;
-import com.day.cq.wcm.commons.WCMUtils;
 
 import io.wcm.testing.mock.aem.context.TestAemContext;
 import io.wcm.testing.mock.aem.junit.AemContext;
@@ -83,7 +82,7 @@ public class MockEditConfigTest {
     context.currentPage(page);
     context.currentResource(resource);
 
-    componentContext = WCMUtils.getComponentContext(context.request());
+    componentContext = (ComponentContext)context.request().getAttribute(ComponentContext.CONTEXT_ATTR_NAME);
     underTest = componentContext.getEditContext().getEditConfig();
 
     assertNotNull(underTest);

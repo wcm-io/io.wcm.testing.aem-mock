@@ -40,7 +40,6 @@ import com.day.cq.wcm.api.PageManager;
 import com.day.cq.wcm.api.components.ComponentContext;
 import com.day.cq.wcm.api.designer.Designer;
 import com.day.cq.wcm.api.policies.ContentPolicyMapping;
-import com.day.cq.wcm.commons.WCMUtils;
 
 import io.wcm.testing.mock.aem.MockAemAdapterFactory;
 import io.wcm.testing.mock.aem.MockComponentContext;
@@ -232,7 +231,7 @@ public class AemContextImpl extends SlingContextImpl {
    *         Null if no containing page exists.
    */
   public @Nullable Page currentPage() {
-    ComponentContext context = WCMUtils.getComponentContext(request());
+    ComponentContext context = (ComponentContext)request().getAttribute(ComponentContext.CONTEXT_ATTR_NAME);
     if (context != null) {
       return context.getPage();
     }

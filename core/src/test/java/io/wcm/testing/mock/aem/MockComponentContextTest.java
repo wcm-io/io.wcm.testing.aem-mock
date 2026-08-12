@@ -40,7 +40,6 @@ import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.components.Component;
 import com.day.cq.wcm.api.components.ComponentContext;
 import com.day.cq.wcm.api.designer.Cell;
-import com.day.cq.wcm.commons.WCMUtils;
 
 import io.wcm.testing.mock.aem.context.TestAemContext;
 import io.wcm.testing.mock.aem.junit.AemContext;
@@ -69,7 +68,7 @@ public class MockComponentContextTest {
     context.currentPage(page);
     context.currentResource(resource);
 
-    underTest = WCMUtils.getComponentContext(context.request());
+    underTest = (ComponentContext)context.request().getAttribute(ComponentContext.CONTEXT_ATTR_NAME);
   }
 
   @Test

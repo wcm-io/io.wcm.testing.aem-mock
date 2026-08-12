@@ -32,13 +32,13 @@ import com.day.cq.commons.ValueMapWrapper;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.components.Component;
 import com.day.cq.wcm.api.components.ComponentContext;
+import com.day.cq.wcm.api.components.ComponentManager;
 import com.day.cq.wcm.api.components.EditContext;
 import com.day.cq.wcm.api.designer.Design;
 import com.day.cq.wcm.api.designer.Designer;
 import com.day.cq.wcm.api.designer.Style;
 import com.day.cq.wcm.api.policies.ContentPolicy;
 import com.day.cq.wcm.api.policies.ContentPolicyManager;
-import com.day.cq.wcm.commons.WCMUtils;
 import com.day.cq.wcm.commons.policy.ContentPolicyStyle;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -156,7 +156,7 @@ final class MockAemSlingBindings {
   }
 
   private static ComponentContext getWcmComponentContext(SlingHttpServletRequest request) {
-    return WCMUtils.getComponentContext(request);
+    return (ComponentContext)request.getAttribute(ComponentContext.CONTEXT_ATTR_NAME);
   }
 
   private static EditContext getEditContext(SlingHttpServletRequest request) {
@@ -200,13 +200,16 @@ final class MockAemSlingBindings {
   }
 
   @SuppressWarnings({
-      "null", "unused", "java:S2589"
+      "null", "java:S2589"
   })
   @SuppressFBWarnings("RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE")
   private static Component getComponent(SlingHttpServletRequest request) {
     Resource resource = request.getResource();
     if (resource != null) {
-      return WCMUtils.getComponent(resource);
+      ComponentManager componentManager = request.getResourceResolver().adaptTo(ComponentManager.class);
+      if (componentManager != null) {
+        return componentManager.getComponentOfResource(resource);
+      }
     }
     return null;
   }
