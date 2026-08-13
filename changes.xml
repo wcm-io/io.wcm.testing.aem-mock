@@ -31,7 +31,7 @@
       <action type="update" dev="sseifert">
         Update to latest JCR Mock.
       </action>
-      <action type="update" dev="sseifert">
+      <action type="update" dev="sseifert" issue="108">
         MockTag: Ensure StringUtils.lowerCase is used with Locale.ROOT to avoid locale-specific behavior.
       </action>
     </release>
