@@ -7,5 +7,33 @@
   "ignoreDeps": [
     "com.day.commons:day-commons-gfx",
     "com.ibm.icu:icu4j"
+  ],
+  "baseBranchPatterns": [
+    "$default",
+    "testing/aemcloud-deps",
+    "testing/aemcloud-deps-jsonp11"
+  ],
+  "packageRules": [
+    {
+      "description": "Testing branches: disable all updates by default",
+      "matchBaseBranches": [
+        "testing/aemcloud-deps",
+        "testing/aemcloud-deps-jsonp11"
+      ],
+      "enabled": false
+    },
+    {
+      "description": "Testing branches: only update AEM Cloud dependencies and automerge if build passes",
+      "matchBaseBranches": [
+        "testing/aemcloud-deps",
+        "testing/aemcloud-deps-jsonp11"
+      ],
+      "matchPackageNames": [
+        "io.wcm.maven:io.wcm.maven.aem-cloud-dependencies"
+      ],
+      "enabled": true,
+      "automerge": true,
+      "addLabels": ["automerge"]
+    }
   ]
 }
