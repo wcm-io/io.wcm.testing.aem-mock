@@ -2,6 +2,9 @@ name: Rebase testing branches
 
 on:
   workflow_dispatch:
+  schedule:
+    # At 03:17 UTC on the first day of each month.
+    - cron: '17 3 1 * *'
 
 concurrency:
   group: rebase-testing-branches
