@@ -1,0 +1,79 @@
+name: Rebase testing branches
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: rebase-testing-branches
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  rebase:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: develop
+          fetch-depth: 0
+
+      - name: Rebase testing branches and trigger builds
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch --prune origin \
+            '+refs/heads/develop:refs/remotes/origin/develop' \
+            '+refs/heads/testing/*:refs/remotes/origin/testing/*'
+          develop=$(git rev-parse refs/remotes/origin/develop)
+          mapfile -t branches < <(git for-each-ref --format='%(refname)' refs/remotes/origin/testing/)
+          failed=0
+
+          for remote_ref in "${branches[@]}"; do
+            branch=${remote_ref#refs/remotes/origin/}
+            old_head=$(git rev-parse "$remote_ref")
+            if git merge-base --is-ancestor "$develop" "$old_head"; then
+              echo "Skipping $branch: already based on develop."
+              continue
+            else
+              status=$?
+              if [ "$status" -ne 1 ]; then
+                echo "::error::Unable to check ancestry for $branch."
+                failed=1
+                continue
+              fi
+            fi
+
+            git checkout --detach "$old_head"
+            if ! git rebase --rebase-merges "$develop"; then
+              git rebase --abort
+              echo "::error::Rebase failed for $branch; branch left unchanged."
+              failed=1
+              continue
+            fi
+
+            if ! git push --force-with-lease="refs/heads/$branch:$old_head" \
+              origin "HEAD:refs/heads/$branch"; then
+              echo "::error::Push failed for $branch; no build dispatched."
+              failed=1
+              continue
+            fi
+
+            # GITHUB_TOKEN pushes do not trigger push workflows.
+            if ! gh workflow run maven-build.yml --ref "$branch"; then
+              echo "::error::Rebased $branch, but dispatching its Build workflow failed."
+              failed=1
+              continue
+            fi
+            echo "Rebased $branch and dispatched its Build workflow."
+          done
+
+          exit "$failed"
