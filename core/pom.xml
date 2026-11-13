@@ -158,7 +158,7 @@
           <groupId>org.apache.sling</groupId>
           <artifactId>org.apache.sling.settings</artifactId>
         </exclusion>
-        <!-- exclude to control dependency ordering ist it includes embedded Batik files -->
+        <!-- exclude to control dependency ordering because it includes embedded Batik files -->
         <exclusion>
           <groupId>org.apache.sling</groupId>
           <artifactId>org.apache.sling.xss</artifactId>
@@ -215,20 +215,27 @@
     <dependency>
       <groupId>com.twelvemonkeys.imageio</groupId>
       <artifactId>imageio-tiff</artifactId>
-      <version>3.15.3</version>
+      <version>${imageio.version}</version>
       <scope>test</scope>
     </dependency>
     <!-- Java ImageIO Support for SVG -->
     <dependency>
       <groupId>com.twelvemonkeys.imageio</groupId>
       <artifactId>imageio-batik</artifactId>
-      <version>3.15.3</version>
+      <version>${imageio.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.xmlgraphics</groupId>
       <artifactId>batik-transcoder</artifactId>
       <version>1.20</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- Required for batik -->
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.4.0</version>
       <scope>test</scope>
     </dependency>
 

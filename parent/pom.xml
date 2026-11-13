@@ -69,6 +69,9 @@
     <!-- Loggin in unit tests (testing dependency only) -->
     <logging-logback.version>1.0.0</logging-logback.version>
 
+    <!-- TwelveMonkeys ImageIO (testing dependency only) -->
+    <imageio.version>3.15.3</imageio.version>
+
     <!-- Enable reproducible builds -->
     <project.build.outputTimestamp>2026-05-19T14:26:39Z</project.build.outputTimestamp>
 
