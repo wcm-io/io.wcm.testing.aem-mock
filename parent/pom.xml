@@ -61,7 +61,7 @@
     <sling-mock.version>3.6.2</sling-mock.version>
 
     <!-- Servlet Helpers -->
-    <servlet-helpers.version>1.4.6</servlet-helpers.version>
+    <servlet-helpers.version>2.0.0</servlet-helpers.version>
 
     <!-- Sling Mock Oak (testing dependency only) -->
     <sling-mock-oak.version>4.1.0-1.86.0</sling-mock-oak.version>
