@@ -37,16 +37,40 @@ jobs:
           mapfile -t branches < <(git for-each-ref --format='%(refname)' refs/remotes/origin/testing/)
           failed=0
 
+          {
+            printf '## Testing branch rebase results\n\n'
+            printf 'Found %s testing branches. Develop commit: `%s`.\n\n' "${#branches[@]}" "$develop"
+            if [ "${#branches[@]}" -eq 0 ]; then
+              printf 'No testing branches found.\n'
+            else
+              printf '| Branch | Result | Details |\n'
+              printf '| --- | --- | --- |\n'
+            fi
+          } | tee -a "$GITHUB_STEP_SUMMARY"
+
+          report_result() {
+            local display=$branch
+            display=${display//&/\&amp;}
+            display=${display//</\&lt;}
+            display=${display//>/\&gt;}
+            display=${display//|/\&#124;}
+            display=${display//\`/\&#96;}
+            printf '| <code>%s</code> | %s | %s |\n' "$display" "$1" "$2" \
+              | tee -a "$GITHUB_STEP_SUMMARY"
+          }
+
           for remote_ref in "${branches[@]}"; do
             branch=${remote_ref#refs/remotes/origin/}
             old_head=$(git rev-parse "$remote_ref")
             if git merge-base --is-ancestor "$develop" "$old_head"; then
               echo "Skipping $branch: already based on develop."
+              report_result "Not rebased" "Already based on develop."
               continue
             else
               status=$?
               if [ "$status" -ne 1 ]; then
                 echo "::error::Unable to check ancestry for $branch."
+                report_result "Not rebased" "Ancestry check failed."
                 failed=1
                 continue
               fi
@@ -56,6 +80,7 @@ jobs:
             if ! git rebase --rebase-merges "$develop"; then
               git rebase --abort
               echo "::error::Rebase failed for $branch; branch left unchanged."
+              report_result "Not rebased" "Rebase failed; remote branch unchanged."
               failed=1
               continue
             fi
@@ -63,6 +88,7 @@ jobs:
             if ! git push --force-with-lease="refs/heads/$branch:$old_head" \
               origin "HEAD:refs/heads/$branch"; then
               echo "::error::Push failed for $branch; no build dispatched."
+              report_result "Not rebased" "Push failed; no build dispatched."
               failed=1
               continue
             fi
@@ -70,10 +96,12 @@ jobs:
             # GITHUB_TOKEN pushes do not trigger push workflows.
             if ! gh workflow run maven-build.yml --ref "$branch"; then
               echo "::error::Rebased $branch, but dispatching its Build workflow failed."
+              report_result "Rebased" "Build dispatch failed."
               failed=1
               continue
             fi
             echo "Rebased $branch and dispatched its Build workflow."
+            report_result "Rebased" "Build dispatched."
           done
 
           exit "$failed"

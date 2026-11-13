@@ -32,6 +32,8 @@ workflow in GitHub Actions to rebase all `testing/` branches onto the latest `de
 commit. Branches already containing that commit are skipped. Each successfully
 pushed rebase explicitly triggers the Build workflow using `GITHUB_TOKEN`; no
 personal access token is required.
+The workflow run summary lists every testing branch found, its rebased or not
+rebased result, and details including any failures.
 
 Rebase conflicts and rejected pushes are reported as workflow failures without
 overwriting the affected remote branch, and processing continues for other branches.
