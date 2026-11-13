@@ -76,7 +76,7 @@
     <project.build.outputTimestamp>2026-05-19T14:26:39Z</project.build.outputTimestamp>
 
     <!-- Test against this AEMaaCS version -->
-    <aem-cloud-dependencies.version>2025.9.22758.20250928T092442Z-250900.0001</aem-cloud-dependencies.version>
+    <aem-cloud-dependencies.version>2026.10.29251.20261029T165345Z-261000.0000</aem-cloud-dependencies.version>
 
   </properties>
 
