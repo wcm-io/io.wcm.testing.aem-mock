@@ -30,7 +30,7 @@ import static org.junit.Assert.fail;
 
 import java.util.Iterator;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.api.resource.PersistenceException;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
@@ -190,6 +190,7 @@ public class MockTagManagerTest {
   }
 
   @Test
+  @SuppressWarnings("java:S5961") // test method complexity
   public void testFind() {
     RangeIterator<Resource> resources = tagManager.find("wcmio:");
     assertNotNull(resources);
@@ -267,7 +268,7 @@ public class MockTagManagerTest {
 
   private boolean containsPath(Tag[] tags, String path) {
     for (Tag tag : tags) {
-      if (StringUtils.equals(tag.getPath(), path)) {
+      if (Strings.CS.equals(tag.getPath(), path)) {
         return true;
       }
     }

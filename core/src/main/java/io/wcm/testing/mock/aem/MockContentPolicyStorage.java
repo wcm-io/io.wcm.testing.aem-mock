@@ -31,6 +31,7 @@ import static org.apache.sling.api.resource.ResourceResolver.PROPERTY_RESOURCE_T
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.api.resource.PersistenceException;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
@@ -176,13 +177,13 @@ public final class MockContentPolicyStorage {
    * @return Relative resource type
    */
   private static @NotNull String makeResourceTypeRelative(@NotNull String resourceType) {
-    if (StringUtils.startsWith(resourceType, "/apps/")) {
+    if (Strings.CS.startsWith(resourceType, "/apps/")) {
       return StringUtils.substringAfter(resourceType, "/apps/");
     }
-    else if (StringUtils.startsWith(resourceType, "/libs/")) {
+    else if (Strings.CS.startsWith(resourceType, "/libs/")) {
       return StringUtils.substringAfter(resourceType, "/libs/");
     }
-    else if (StringUtils.startsWith(resourceType, "/")) {
+    else if (Strings.CS.startsWith(resourceType, "/")) {
       return StringUtils.substringAfter(resourceType, "/");
     }
     return resourceType;

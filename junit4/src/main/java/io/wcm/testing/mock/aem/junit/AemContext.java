@@ -53,6 +53,7 @@ public final class AemContext extends AemContextImpl implements TestRule {
 
   /**
    * Initialize AEM context.
+   *
    * <p>
    * If context is initialized with:
    * </p>
@@ -70,6 +71,7 @@ public final class AemContext extends AemContextImpl implements TestRule {
 
   /**
    * Initialize AEM context.
+   *
    * <p>
    * If context is initialized with:
    * </p>
@@ -91,6 +93,7 @@ public final class AemContext extends AemContextImpl implements TestRule {
 
   /**
    * Initialize AEM context.
+   *
    * <p>
    * If context is initialized with:
    * </p>
@@ -116,6 +119,7 @@ public final class AemContext extends AemContextImpl implements TestRule {
 
   /**
    * Initialize AEM context.
+   *
    * <p>
    * If context is initialized with:
    * </p>
@@ -137,6 +141,7 @@ public final class AemContext extends AemContextImpl implements TestRule {
 
   /**
    * Initialize AEM context.
+   *
    * <p>
    * If context is initialized with:
    * </p>
@@ -195,24 +200,16 @@ public final class AemContext extends AemContextImpl implements TestRule {
     }
     else {
       // use ListGenerator rule that iterates over list of resource resolver types
-      Callback<ResourceResolverType> parameterizedSetUpCallback = new Callback<ResourceResolverType>() {
-
-        @Override
-        public void execute(final ResourceResolverType currrentValue) {
-          AemContext.this.setResourceResolverType(currrentValue);
-          plugins.executeBeforeSetUpCallback(AemContext.this);
-          AemContext.this.setUp();
-          plugins.executeAfterSetUpCallback(AemContext.this);
-        }
+      Callback<ResourceResolverType> parameterizedSetUpCallback = currrentValue -> {
+        AemContext.this.setResourceResolverType(currrentValue);
+        plugins.executeBeforeSetUpCallback(AemContext.this);
+        AemContext.this.setUp();
+        plugins.executeAfterSetUpCallback(AemContext.this);
       };
-      Callback<ResourceResolverType> parameterizedTearDownCallback = new Callback<ResourceResolverType>() {
-
-        @Override
-        public void execute(final ResourceResolverType currrentValue) {
-          plugins.executeBeforeTearDownCallback(AemContext.this);
-          AemContext.this.tearDown();
-          plugins.executeAfterTearDownCallback(AemContext.this);
-        }
+      Callback<ResourceResolverType> parameterizedTearDownCallback = currrentValue -> {
+        plugins.executeBeforeTearDownCallback(AemContext.this);
+        AemContext.this.tearDown();
+        plugins.executeAfterTearDownCallback(AemContext.this);
       };
       this.delegate = new ListGenerator<ResourceResolverType>(Arrays.asList(this.resourceResolverTypes),
           parameterizedSetUpCallback, parameterizedTearDownCallback);

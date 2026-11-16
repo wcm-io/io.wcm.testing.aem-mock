@@ -86,6 +86,9 @@ class MockAssetManager implements AssetManager {
   @SuppressFBWarnings({
       "BAD_PRACTICE", "STYLE"
   })
+  @SuppressWarnings({
+      "PMD.AvoidCatchingGenericException", "java:S1141"
+  })
   public Asset createAsset(String assetPath, InputStream inputStream, String mimeType, boolean autoSave) {
     String assetContentPath = assetPath + "/" + JCR_CONTENT;
     String metadataPath = assetContentPath + "/" + METADATA_FOLDER;
@@ -109,7 +112,7 @@ class MockAssetManager implements AssetManager {
             metadataProps.put(TIFF_IMAGEWIDTH, layer.getWidth());
             metadataProps.put(TIFF_IMAGELENGTH, layer.getHeight());
           }
-          /*CHECKSTYLE:OFF*/ catch (Exception ex) { /*CHECKSTYLE:ON*/
+          catch (Exception ex) {
             // ignore
           }
         }

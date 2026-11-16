@@ -157,6 +157,7 @@ class MockPageManager extends SlingAdaptable implements PageManager {
   }
 
   @SuppressFBWarnings("STYLE")
+  @SuppressWarnings("java:S135") // complexity
   private void copyContent(Resource source, Resource target, boolean skipPrimaryType) throws PersistenceException {
     ValueMap sourceProps = source.adaptTo(ValueMap.class);
     ModifiableValueMap targetProps = target.adaptTo(ModifiableValueMap.class);
@@ -458,6 +459,7 @@ class MockPageManager extends SlingAdaptable implements PageManager {
   }
 
   // AEMaaCS 2023.9.13665.20230927T063259Z-230800
+  @Override
   @SuppressWarnings("unused")
   public Resource override(CopyOptions options) throws WCMException {
     throw new UnsupportedOperationException();

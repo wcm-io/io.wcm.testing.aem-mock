@@ -39,7 +39,7 @@ import java.util.Set;
 import javax.jcr.Session;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.api.resource.ModifiableValueMap;
 import org.apache.sling.api.resource.PersistenceException;
 import org.apache.sling.api.resource.Resource;
@@ -118,10 +118,9 @@ public final class MockTagManager implements TagManager {
     if (tagID == null) {
       throw new InvalidTagFormatException("tagID is null");
     }
-    if (StringUtils.startsWith(tagID, getTagRootPath())) {
+    if (Strings.CS.startsWith(tagID, getTagRootPath())) {
       // absolute path mode
       if (!tagID.startsWith(getTagRootPath())) {
-        // TODO: seems reasonable, but is it worth enforcing?
         throw new InvalidTagFormatException("Tags are only allowed to be under " + getTagRootPath());
       }
       return tagID;
@@ -160,7 +159,7 @@ public final class MockTagManager implements TagManager {
   public Tag createTag(String tagID, String title, String description, boolean autoSave)
       throws InvalidTagFormatException {
     String tagPath = getPathFromID(tagID);
-    if (!StringUtils.startsWith(tagPath, TAG_ROOT_PATH)) {
+    if (!Strings.CS.startsWith(tagPath, TAG_ROOT_PATH)) {
       throw new InvalidTagFormatException("Tag path '" + tagPath + "' does not start with: " + TAG_ROOT_PATH);
     }
 
@@ -239,6 +238,9 @@ public final class MockTagManager implements TagManager {
   }
 
   @Override
+  @SuppressWarnings({
+      "java:S3776", "java:S6541", "java:S135", "java:S1119" // complexity
+  })
   public RangeIterator<Resource> find(String basePath, String[] tagIDs, boolean oneMatchIsEnough) {
     Resource base = resourceResolver.getResource(basePath);
     if (base == null) {
@@ -463,7 +465,6 @@ public final class MockTagManager implements TagManager {
 
 
   // --- unsupported operations ---
-  //CHECKSTYLE:OFF
 
   @Override
   public boolean canCreateTagByTitle(String tagTitlePath) throws InvalidTagFormatException {

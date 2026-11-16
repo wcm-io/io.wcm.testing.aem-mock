@@ -49,8 +49,8 @@ final class ContextResourceResolverFactory {
   }
 
   @SuppressWarnings({
-      "PMD.ExceptionAsFlowControl", "java:S2139", "java:S112"
-  }) // ignore exception handling
+      "PMD.AvoidCatchingGenericException", "PMD.ExceptionAsFlowControl", "java:S2139", "java:S112"
+  })
   public static @NotNull ResourceResolverFactory get(@NotNull final ResourceResolverType resourceResolverType,
       @NotNull final BundleContext bundleContext) {
     try {
@@ -81,7 +81,7 @@ final class ContextResourceResolverFactory {
 
       return factory;
     }
-    /*CHECKSTYLE:OFF*/ catch (Exception ex) { /*CHECKSTYLE:ON*/
+    catch (Exception ex) {
       log.error("Failed initializing resource resolver factory, bundleContext={}", bundleContext, ex);
       throw new RuntimeException("Unable to initialize " + resourceResolverType + " resource resolver factory: " + ex.getMessage(), ex);
     }

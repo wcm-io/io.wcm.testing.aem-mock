@@ -19,23 +19,30 @@
  */
 package io.wcm.testing.mock.aem;
 
-import com.day.cq.commons.Language;
-import com.day.cq.wcm.api.LanguageManager;
-import com.day.cq.wcm.api.Page;
-import io.wcm.testing.mock.aem.context.TestAemContext;
-import io.wcm.testing.mock.aem.junit.AemContext;
-import org.apache.sling.api.resource.Resource;
-import org.apache.sling.testing.mock.sling.loader.ContentLoader;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
-import static org.junit.Assert.*;
+import org.apache.sling.api.resource.Resource;
+import org.apache.sling.testing.mock.sling.loader.ContentLoader;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+
+import com.day.cq.commons.Language;
+import com.day.cq.wcm.api.LanguageManager;
+import com.day.cq.wcm.api.Page;
+
+import io.wcm.testing.mock.aem.context.TestAemContext;
+import io.wcm.testing.mock.aem.junit.AemContext;
 
 public class MockLanguageManagerTest {
 
@@ -232,11 +239,9 @@ public class MockLanguageManagerTest {
         ENGLISH_HOMEPAGE, FRENCH_HOMEPAGE
     }, roots2.stream().map(Page::getPath).toArray());
 
-    //NOTE: this situation causes an NPE in current LanguageManager implementation
-    /* Collection<Page> roots3 = languageManager.getLanguageRoots(context.resourceResolver(), "/does/not/exist");
+    Collection<Page> roots3 = languageManager.getLanguageRoots(context.resourceResolver(), "/does/not/exist");
     assertNotNull(roots3);
     assertArrayEquals(new Page[] {}, roots3.toArray(new Page[0]));
-    */
 
     Collection<Page> roots4 = languageManager.getLanguageRoots(context.resourceResolver(), SITE_ROOT);
     assertNotNull(roots4);

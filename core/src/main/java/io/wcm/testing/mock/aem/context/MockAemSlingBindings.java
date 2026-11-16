@@ -19,7 +19,7 @@
  */
 package io.wcm.testing.mock.aem.context;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceUtil;
@@ -32,13 +32,13 @@ import com.day.cq.commons.ValueMapWrapper;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.components.Component;
 import com.day.cq.wcm.api.components.ComponentContext;
+import com.day.cq.wcm.api.components.ComponentManager;
 import com.day.cq.wcm.api.components.EditContext;
 import com.day.cq.wcm.api.designer.Design;
 import com.day.cq.wcm.api.designer.Designer;
 import com.day.cq.wcm.api.designer.Style;
 import com.day.cq.wcm.api.policies.ContentPolicy;
 import com.day.cq.wcm.api.policies.ContentPolicyManager;
-import com.day.cq.wcm.commons.WCMUtils;
 import com.day.cq.wcm.commons.policy.ContentPolicyStyle;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -98,6 +98,7 @@ final class MockAemSlingBindings {
     // static methods only
   }
 
+  @SuppressWarnings("java:S3776") // complexity
   static @Nullable Object resolveSlingBindingProperty(@NotNull AemContextImpl context, @NotNull String property,
       @Nullable SlingHttpServletRequest givenRequest) {
     SlingHttpServletRequest request = givenRequest;
@@ -105,49 +106,49 @@ final class MockAemSlingBindings {
       request = context.request();
     }
 
-    if (StringUtils.equals(property, SlingBindingsProperty.COMPONENT_CONTEXT.key)) {
+    if (Strings.CS.equals(property, SlingBindingsProperty.COMPONENT_CONTEXT.key)) {
       return getWcmComponentContext(request);
     }
-    if (StringUtils.equals(property, SlingBindingsProperty.EDIT_CONTEXT.key())) {
+    if (Strings.CS.equals(property, SlingBindingsProperty.EDIT_CONTEXT.key())) {
       return getEditContext(request);
     }
-    if (StringUtils.equals(property, SlingBindingsProperty.PROPERTIES.key())) {
+    if (Strings.CS.equals(property, SlingBindingsProperty.PROPERTIES.key())) {
       return getProperties(request);
     }
-    if (StringUtils.equals(property, SlingBindingsProperty.PAGE_MANAGER.key())) {
+    if (Strings.CS.equals(property, SlingBindingsProperty.PAGE_MANAGER.key())) {
       return context.pageManager();
     }
-    if (StringUtils.equals(property, SlingBindingsProperty.CURRENT_PAGE.key())) {
+    if (Strings.CS.equals(property, SlingBindingsProperty.CURRENT_PAGE.key())) {
       return getCurrentPage(request);
     }
-    if (StringUtils.equals(property, SlingBindingsProperty.RESOURCE_PAGE.key())) {
+    if (Strings.CS.equals(property, SlingBindingsProperty.RESOURCE_PAGE.key())) {
       return getResourcePage(request, context);
     }
-    if (StringUtils.equals(property, SlingBindingsProperty.PAGE_PROPERTIES.key())) {
+    if (Strings.CS.equals(property, SlingBindingsProperty.PAGE_PROPERTIES.key())) {
       return getPageProperties(request);
     }
-    if (StringUtils.equals(property, SlingBindingsProperty.COMPONENT.key())) {
+    if (Strings.CS.equals(property, SlingBindingsProperty.COMPONENT.key())) {
       return getComponent(request);
     }
-    if (StringUtils.equals(property, SlingBindingsProperty.DESIGNER.key())) {
+    if (Strings.CS.equals(property, SlingBindingsProperty.DESIGNER.key())) {
       return getDesigner(request);
     }
-    if (StringUtils.equals(property, SlingBindingsProperty.CURRENT_DESIGN.key())) {
+    if (Strings.CS.equals(property, SlingBindingsProperty.CURRENT_DESIGN.key())) {
       return getCurrentDesign(request);
     }
-    if (StringUtils.equals(property, SlingBindingsProperty.RESOURCE_DESIGN.key())) {
+    if (Strings.CS.equals(property, SlingBindingsProperty.RESOURCE_DESIGN.key())) {
       return getResourceDesign(request, context);
     }
-    if (StringUtils.equals(property, SlingBindingsProperty.CURRENT_STYLE.key())) {
+    if (Strings.CS.equals(property, SlingBindingsProperty.CURRENT_STYLE.key())) {
       return getStyle(request);
     }
-    if (StringUtils.equals(property, SlingBindingsProperty.XSSAPI.key())) {
+    if (Strings.CS.equals(property, SlingBindingsProperty.XSSAPI.key())) {
       return getXssApi(context);
     }
-    if (StringUtils.equals(property, SlingBindingsProperty.CURRENT_CONTENT_POLICY.key())) {
+    if (Strings.CS.equals(property, SlingBindingsProperty.CURRENT_CONTENT_POLICY.key())) {
       return getCurrentContentPolicy(request);
     }
-    if (StringUtils.equals(property, SlingBindingsProperty.CURRENT_CONTENT_POLICY_PROPS.key())) {
+    if (Strings.CS.equals(property, SlingBindingsProperty.CURRENT_CONTENT_POLICY_PROPS.key())) {
       return getCurrentContentPolicyProperties(request);
     }
 
@@ -155,7 +156,7 @@ final class MockAemSlingBindings {
   }
 
   private static ComponentContext getWcmComponentContext(SlingHttpServletRequest request) {
-    return WCMUtils.getComponentContext(request);
+    return (ComponentContext)request.getAttribute(ComponentContext.CONTEXT_ATTR_NAME);
   }
 
   private static EditContext getEditContext(SlingHttpServletRequest request) {
@@ -179,7 +180,7 @@ final class MockAemSlingBindings {
   }
 
   @SuppressWarnings({
-      "null", "unused"
+      "null", "unused", "java:S2589"
   })
   @SuppressFBWarnings("RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE")
   private static Page getResourcePage(SlingHttpServletRequest request, AemContextImpl context) {
@@ -190,7 +191,7 @@ final class MockAemSlingBindings {
     return null;
   }
 
-  private static ValueMap getPageProperties(SlingHttpServletRequest request) {
+  private static @Nullable ValueMap getPageProperties(SlingHttpServletRequest request) {
     Page currentPage = getCurrentPage(request);
     if (currentPage != null) {
       return wrap(currentPage.getProperties());
@@ -199,13 +200,16 @@ final class MockAemSlingBindings {
   }
 
   @SuppressWarnings({
-      "null", "unused"
+      "null", "java:S2589"
   })
   @SuppressFBWarnings("RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE")
   private static Component getComponent(SlingHttpServletRequest request) {
     Resource resource = request.getResource();
     if (resource != null) {
-      return WCMUtils.getComponent(resource);
+      ComponentManager componentManager = request.getResourceResolver().adaptTo(ComponentManager.class);
+      if (componentManager != null) {
+        return componentManager.getComponentOfResource(resource);
+      }
     }
     return null;
   }
@@ -223,7 +227,7 @@ final class MockAemSlingBindings {
     return getAndCacheDesign(getResourcePage(request, context), request, getDesigner(request));
   }
 
-  private static Style getStyle(SlingHttpServletRequest request) {
+  private static @Nullable Style getStyle(SlingHttpServletRequest request) {
     ComponentContext wcmComponentContext = getWcmComponentContext(request);
     if (wcmComponentContext != null) {
       ContentPolicy contentPolicy = getCurrentContentPolicy(request);
@@ -255,7 +259,7 @@ final class MockAemSlingBindings {
     return null;
   }
 
-  private static ValueMap getCurrentContentPolicyProperties(SlingHttpServletRequest request) {
+  private static @Nullable ValueMap getCurrentContentPolicyProperties(SlingHttpServletRequest request) {
     ContentPolicy contentPolicy = getCurrentContentPolicy(request);
     if (contentPolicy != null) {
       return wrap(contentPolicy.getProperties());

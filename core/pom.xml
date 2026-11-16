@@ -24,7 +24,7 @@
   <parent>
     <groupId>io.wcm</groupId>
     <artifactId>io.wcm.testing.aem-mock.parent</artifactId>
-    <version>5.7.4</version>
+    <version>5.8.0</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
 
@@ -158,7 +158,7 @@
           <groupId>org.apache.sling</groupId>
           <artifactId>org.apache.sling.settings</artifactId>
         </exclusion>
-        <!-- exclude to control dependency ordering ist it includes embedded Batik files -->
+        <!-- exclude to control dependency ordering because it includes embedded Batik files -->
         <exclusion>
           <groupId>org.apache.sling</groupId>
           <artifactId>org.apache.sling.xss</artifactId>
@@ -215,20 +215,27 @@
     <dependency>
       <groupId>com.twelvemonkeys.imageio</groupId>
       <artifactId>imageio-tiff</artifactId>
-      <version>3.13.1</version>
+      <version>${imageio.version}</version>
       <scope>test</scope>
     </dependency>
     <!-- Java ImageIO Support for SVG -->
     <dependency>
       <groupId>com.twelvemonkeys.imageio</groupId>
       <artifactId>imageio-batik</artifactId>
-      <version>3.13.1</version>
+      <version>${imageio.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.xmlgraphics</groupId>
       <artifactId>batik-transcoder</artifactId>
-      <version>1.19</version>
+      <version>1.20</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- Required for batik -->
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.4.0</version>
       <scope>test</scope>
     </dependency>
 

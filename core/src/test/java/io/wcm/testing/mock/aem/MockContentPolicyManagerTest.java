@@ -38,7 +38,6 @@ import com.day.cq.wcm.api.components.ComponentContext;
 import com.day.cq.wcm.api.designer.Style;
 import com.day.cq.wcm.api.policies.ContentPolicy;
 import com.day.cq.wcm.api.policies.ContentPolicyManager;
-import com.day.cq.wcm.commons.WCMUtils;
 
 import io.wcm.testing.mock.aem.context.TestAemContext;
 import io.wcm.testing.mock.aem.junit.AemContext;
@@ -66,7 +65,7 @@ public class MockContentPolicyManagerTest {
     context.currentResource(context.create().resource(page, "resource1",
         PROPERTY_RESOURCE_TYPE, RT_TEST));
 
-    ComponentContext componentContext = WCMUtils.getComponentContext(context.request());
+    ComponentContext componentContext = (ComponentContext)context.request().getAttribute(ComponentContext.CONTEXT_ATTR_NAME);
     ContentPolicy policy = underTest.getPolicy(componentContext);
 
     assertNull(policy);
@@ -84,7 +83,7 @@ public class MockContentPolicyManagerTest {
     context.contentPolicyMapping(RT_TEST,
         "prop1", "value1");
 
-    ComponentContext componentContext = WCMUtils.getComponentContext(context.request());
+    ComponentContext componentContext = (ComponentContext)context.request().getAttribute(ComponentContext.CONTEXT_ATTR_NAME);
     ContentPolicy policy = underTest.getPolicy(componentContext);
 
     assertNotNull(policy);
@@ -111,7 +110,7 @@ public class MockContentPolicyManagerTest {
   public void testWithoutResourceType() {
     context.currentResource(context.create().resource(page, "resource1"));
 
-    ComponentContext componentContext = WCMUtils.getComponentContext(context.request());
+    ComponentContext componentContext = (ComponentContext)context.request().getAttribute(ComponentContext.CONTEXT_ATTR_NAME);
     ContentPolicy policy = underTest.getPolicy(componentContext);
 
     assertNull(policy);
@@ -129,7 +128,7 @@ public class MockContentPolicyManagerTest {
     context.contentPolicyMapping(RT_TEST_2,
         "prop1", "value1");
 
-    ComponentContext componentContext = WCMUtils.getComponentContext(context.request());
+    ComponentContext componentContext = (ComponentContext)context.request().getAttribute(ComponentContext.CONTEXT_ATTR_NAME);
     ContentPolicy policy = underTest.getPolicy(componentContext);
 
     assertNotNull(policy);
@@ -154,7 +153,7 @@ public class MockContentPolicyManagerTest {
                 "child2", Map.of(
                     "prop3", "value3"))));
 
-    ComponentContext componentContext = WCMUtils.getComponentContext(context.request());
+    ComponentContext componentContext = (ComponentContext)context.request().getAttribute(ComponentContext.CONTEXT_ATTR_NAME);
     ContentPolicy policy = underTest.getPolicy(componentContext);
 
     assertNotNull(policy);

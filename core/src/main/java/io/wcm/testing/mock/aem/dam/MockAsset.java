@@ -31,6 +31,7 @@ import javax.jcr.Binary;
 
 import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.jackrabbit.api.security.user.User;
 import org.apache.sling.api.adapter.SlingAdaptable;
 import org.apache.sling.api.resource.PersistenceException;
@@ -175,7 +176,7 @@ class MockAsset extends SlingAdaptable implements Asset {
     Iterator<Rendition> renditions = listRenditions();
     while (renditions.hasNext()) {
       Rendition rendition = renditions.next();
-      if (StringUtils.equals(rendition.getName(), name)) {
+      if (Strings.CS.equals(rendition.getName(), name)) {
         return rendition;
       }
     }
@@ -202,7 +203,7 @@ class MockAsset extends SlingAdaptable implements Asset {
     if (!(obj instanceof MockAsset)) {
       return false;
     }
-    return StringUtils.equals(getPath(), ((MockAsset)obj).getPath());
+    return Strings.CS.equals(getPath(), ((MockAsset)obj).getPath());
   }
 
   @Override

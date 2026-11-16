@@ -54,7 +54,9 @@ final class ReflectionUtil {
    * @param type Field type
    * @return Field or null
    */
-  @SuppressWarnings("PMD.AvoidAccessibilityAlteration")
+  @SuppressWarnings({
+      "PMD.AvoidAccessibilityAlteration", "java:S3011"
+  })
   static @Nullable Field getField(@Nullable Class<?> testClass, @NotNull Class<?> type) {
     if (testClass == null) {
       return null;

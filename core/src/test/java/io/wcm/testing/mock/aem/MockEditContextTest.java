@@ -35,7 +35,6 @@ import com.day.cq.wcm.api.components.Component;
 import com.day.cq.wcm.api.components.ComponentContext;
 import com.day.cq.wcm.api.components.EditConfig;
 import com.day.cq.wcm.api.components.EditContext;
-import com.day.cq.wcm.commons.WCMUtils;
 
 import io.wcm.testing.mock.aem.context.TestAemContext;
 import io.wcm.testing.mock.aem.junit.AemContext;
@@ -67,7 +66,7 @@ public class MockEditContextTest {
     context.currentPage(page);
     context.currentResource(resource);
 
-    componentContext = WCMUtils.getComponentContext(context.request());
+    componentContext = (ComponentContext)context.request().getAttribute(ComponentContext.CONTEXT_ATTR_NAME);
     underTest = componentContext.getEditContext();
 
     assertNotNull(underTest);

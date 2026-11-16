@@ -40,7 +40,6 @@ import com.day.cq.wcm.api.PageManager;
 import com.day.cq.wcm.api.components.ComponentContext;
 import com.day.cq.wcm.api.designer.Designer;
 import com.day.cq.wcm.api.policies.ContentPolicyMapping;
-import com.day.cq.wcm.commons.WCMUtils;
 
 import io.wcm.testing.mock.aem.MockAemAdapterFactory;
 import io.wcm.testing.mock.aem.MockComponentContext;
@@ -96,6 +95,7 @@ public class AemContextImpl extends SlingContextImpl {
   }
 
   @Override
+  @SuppressWarnings("java:S1185") // override=inherited
   protected void setResourceResolverType(@Nullable ResourceResolverType resourceResolverType) {
     super.setResourceResolverType(resourceResolverType);
   }
@@ -106,11 +106,13 @@ public class AemContextImpl extends SlingContextImpl {
   }
 
   @Override
+  @SuppressWarnings("java:S1185") // override=inherited
   protected void setUp() {
     super.setUp();
   }
 
   @Override
+  @SuppressWarnings("java:S1185") // override=inherited
   protected void tearDown() {
     super.tearDown();
   }
@@ -229,7 +231,7 @@ public class AemContextImpl extends SlingContextImpl {
    *         Null if no containing page exists.
    */
   public @Nullable Page currentPage() {
-    ComponentContext context = WCMUtils.getComponentContext(request());
+    ComponentContext context = (ComponentContext)request().getAttribute(ComponentContext.CONTEXT_ATTR_NAME);
     if (context != null) {
       return context.getPage();
     }
